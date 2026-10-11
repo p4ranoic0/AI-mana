@@ -1,0 +1,3 @@
+// Copy to Local.xcconfig and set your own Apple Developer Team ID and bundle prefix.
+AIMANA_TEAM_ID = YOUR_TEAM_ID
+AIMANA_BUNDLE_PREFIX = com.example

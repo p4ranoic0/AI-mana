@@ -1,0 +1,281 @@
+name: AImana
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: "17.0"
+    macOS: "14.0"
+  createIntermediateGroups: true
+configs:
+  Debug: debug
+  Release: release
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    DEVELOPMENT_TEAM: $(AIMANA_TEAM_ID)
+    CODE_SIGN_STYLE: Automatic
+    AIMANA_EXTRA_PROVIDER_IDS: ""
+packages:
+  AImanaCore:
+    path: AImanaCore
+  Relay:
+    path: Relay
+targets:
+  AImana:
+    type: application
+    configFiles:
+      Debug: Config/Identity.xcconfig
+      Release: Config/Identity.xcconfig
+    platform: iOS
+    sources:
+      - App
+      - Views
+      - ViewModels
+      - Intents   # shared with UsageWidget: Siri/Shortcuts intents, the widgets' refresh button, the control
+      - Assets.xcassets
+      - path: Resources
+        optional: true
+    dependencies:
+      - package: AImanaCore
+      - target: UsageWidget
+      - target: AImanaWatch   # embedded under Watch/ in the iOS app
+    entitlements:
+      path: App/AImana.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.$(AIMANA_BUNDLE_PREFIX).aimana
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)$(AIMANA_BUNDLE_PREFIX).aimana
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: "AI·mana"
+        AppIdentifierPrefix: $(AppIdentifierPrefix)
+        AImanaBundlePrefix: $(AIMANA_BUNDLE_PREFIX)
+        AImanaExtraProviderIDs: $(AIMANA_EXTRA_PROVIDER_IDS)
+        UILaunchScreen: {}
+        NSSupportsLiveActivities: true
+        BGTaskSchedulerPermittedIdentifiers:
+          - $(AIMANA_BUNDLE_PREFIX).aimana.refresh
+        UIBackgroundModes:
+          - fetch
+        # iPad: every orientation and no UIRequiresFullScreen, so Split View, Slide Over and Stage Manager work.
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(AIMANA_BUNDLE_PREFIX).aimana
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+        Release:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: ""
+  UsageWidget:
+    type: app-extension
+    configFiles:
+      Debug: Config/Identity.xcconfig
+      Release: Config/Identity.xcconfig
+    platform: iOS
+    sources:
+      - Widgets
+      - Intents
+    dependencies:
+      - package: AImanaCore
+    entitlements:
+      path: Widgets/UsageWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.$(AIMANA_BUNDLE_PREFIX).aimana
+        keychain-access-groups:
+          - $(AppIdentifierPrefix)$(AIMANA_BUNDLE_PREFIX).aimana
+    info:
+      path: Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: "AI·mana"
+        AppIdentifierPrefix: $(AppIdentifierPrefix)
+        AImanaBundlePrefix: $(AIMANA_BUNDLE_PREFIX)
+        AImanaExtraProviderIDs: $(AIMANA_EXTRA_PROVIDER_IDS)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(AIMANA_BUNDLE_PREFIX).aimana.widget
+        TARGETED_DEVICE_FAMILY: "1,2"
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+        Release:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: ""
+  # Menu bar app that publishes usage for the iPhone (replaces the usage-relay LaunchAgent). Not sandboxed: it reads
+  # ~/.claude and ~/.codex for local usage data.
+  AImanaMac:
+    type: application
+    configFiles:
+      Debug: Config/Identity.xcconfig
+      Release: Config/Identity.xcconfig
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - Mac
+    dependencies:
+      - package: AImanaCore
+      - package: Relay
+        product: RelayKit
+    info:
+      path: Mac/Info.plist
+      properties:
+        CFBundleDisplayName: "AI·mana"
+        AImanaBundlePrefix: $(AIMANA_BUNDLE_PREFIX)
+        AImanaExtraProviderIDs: $(AIMANA_EXTRA_PROVIDER_IDS)
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        LSUIElement: true
+        LSApplicationCategoryType: public.app-category.developer-tools
+        NSHumanReadableCopyright: ""
+    settings:
+      base:
+        PRODUCT_NAME: AImana
+        PRODUCT_BUNDLE_IDENTIFIER: $(AIMANA_BUNDLE_PREFIX).aimana.mac
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        ENABLE_HARDENED_RUNTIME: YES
+        SWIFT_EMIT_LOC_STRINGS: YES
+        CODE_SIGN_IDENTITY: "Apple Development"
+  # Apple Watch companion: one screen and the face complications. No network or credentials on the watch: the
+  # iPhone pushes a compact WatchPayload through WatchConnectivity (ViewModels/WatchSync.swift).
+  AImanaWatch:
+    type: application
+    configFiles:
+      Debug: Config/Identity.xcconfig
+      Release: Config/Identity.xcconfig
+    platform: watchOS
+    deploymentTarget: "10.0"
+    sources:
+      - Watch
+      - WatchShared
+    dependencies:
+      - package: AImanaCore
+      - target: AImanaWatchWidgets
+    entitlements:
+      path: Watch/AImanaWatch.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.$(AIMANA_BUNDLE_PREFIX).aimana
+    info:
+      path: Watch/Info.plist
+      properties:
+        CFBundleDisplayName: "AI·mana"
+        AImanaBundlePrefix: $(AIMANA_BUNDLE_PREFIX)
+        AImanaExtraProviderIDs: $(AIMANA_EXTRA_PROVIDER_IDS)
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: $(AIMANA_BUNDLE_PREFIX).aimana
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(AIMANA_BUNDLE_PREFIX).aimana.watchkitapp
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+        Release:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: ""
+  AImanaWatchWidgets:
+    type: app-extension
+    configFiles:
+      Debug: Config/Identity.xcconfig
+      Release: Config/Identity.xcconfig
+    platform: watchOS
+    deploymentTarget: "10.0"
+    sources:
+      - WatchWidgets
+      - WatchShared
+    dependencies:
+      - package: AImanaCore
+    entitlements:
+      path: WatchWidgets/AImanaWatchWidgets.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.$(AIMANA_BUNDLE_PREFIX).aimana
+    info:
+      path: WatchWidgets/Info.plist
+      properties:
+        CFBundleDisplayName: "AI·mana"
+        AImanaBundlePrefix: $(AIMANA_BUNDLE_PREFIX)
+        AImanaExtraProviderIDs: $(AIMANA_EXTRA_PROVIDER_IDS)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(AIMANA_BUNDLE_PREFIX).aimana.watchkitapp.widgets
+      configs:
+        Debug:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: DEBUG
+        Release:
+          SWIFT_ACTIVE_COMPILATION_CONDITIONS: ""
+  AImanaUITests:
+    type: bundle.ui-testing
+    configFiles:
+      Debug: Config/Identity.xcconfig
+      Release: Config/Identity.xcconfig
+    platform: iOS
+    sources:
+      - UITests
+    dependencies:
+      - target: AImana
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(AIMANA_BUNDLE_PREFIX).aimana.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: AImana
+schemes:
+  AImana:
+    build:
+      targets:
+        AImana: all
+        UsageWidget: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+  UsageWidget:
+    build:
+      targets:
+        UsageWidget: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+  AImanaMac:
+    build:
+      targets:
+        AImanaMac: all
+    run:
+      config: Debug
+      commandLineArguments:
+        "-AImanaOutputPath /tmp/AImana-debug/usage-relay.json": false
+        "-AImanaStateDir /tmp/AImana-debug/state": false
+    profile:
+      config: Release
+    archive:
+      config: Release
+  AImanaWatch:
+    build:
+      targets:
+        AImanaWatch: all
+        AImanaWatchWidgets: all
+    run:
+      config: Debug
+      commandLineArguments:
+        "-AImanaWatchSample fresh": false
+        "-AImanaWatchGallery YES": false
+    archive:
+      config: Release
