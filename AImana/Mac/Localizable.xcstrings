@@ -50,13 +50,7 @@
             "value": "AI·mana"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AI·mana"
-          }
-        },
-        "fr": {
+        "de": {
           "stringUnit": {
             "state": "translated",
             "value": "AI·mana"
@@ -68,7 +62,13 @@
             "value": "AI·mana"
           }
         },
-        "de": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI·mana"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "AI·mana"

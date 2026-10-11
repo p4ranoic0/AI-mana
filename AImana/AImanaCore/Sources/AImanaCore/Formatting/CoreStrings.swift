@@ -2,8 +2,7 @@ import Foundation
 
 /// Localized copy owned by the package, independent of the app and widget bundles.
 public enum CoreStrings {
-    #if os(Linux)
-    // SwiftPM copies string catalogs as resources on Linux, but does not compile them into .lproj bundles.
+    // SwiftPM may copy string catalogs without compiling them into .lproj bundles.
     private static let catalog: [String: [String: String]] = {
         guard let url = Bundle.module.url(forResource: "Localizable", withExtension: "xcstrings"),
               let data = try? Data(contentsOf: url),
@@ -16,25 +15,35 @@ public enum CoreStrings {
             }
         }
     }()
-    #endif
+
+    private static func catalogText(_ key: String, candidates: [String]) -> String {
+        for candidate in candidates {
+            if let value = catalog[key]?[candidate] { return value }
+        }
+        return key
+    }
 
     public static func text(_ key: String, locale: Locale? = nil) -> String {
         let language = locale?.identifier ?? Locale.preferredLanguages.first ?? "en"
         let candidates = [language, language.replacingOccurrences(of: "_", with: "-"),
                           String(language.prefix(2)), "en"]
         #if os(Linux)
-        for candidate in candidates {
-            if let value = catalog[key]?[candidate] { return value }
-        }
-        return key
+        return catalogText(key, candidates: candidates)
         #else
+        var hasCompiledLocalization = false
         for candidate in candidates {
-            if let path = Bundle.module.path(forResource: candidate, ofType: "lproj"),
-               let bundle = Bundle(path: path) {
-                return bundle.localizedString(forKey: key, value: key, table: nil)
+            if let path = Bundle.module.path(forResource: candidate, ofType: "lproj") {
+                hasCompiledLocalization = true
+                if let bundle = Bundle(path: path) {
+                    return bundle.localizedString(forKey: key, value: key, table: nil)
+                }
             }
         }
-        return Bundle.module.localizedString(forKey: key, value: key, table: nil)
+        let bundled = Bundle.module.localizedString(forKey: key, value: key, table: nil)
+        if !hasCompiledLocalization && bundled == key {
+            return catalogText(key, candidates: candidates)
+        }
+        return bundled
         #endif
     }
 

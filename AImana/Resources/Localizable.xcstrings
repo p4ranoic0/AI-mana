@@ -173,13 +173,7 @@
             "value": "%1$@ · %2$@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ · %2$@"
-          }
-        },
-        "fr": {
+        "de": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ · %2$@"
@@ -191,7 +185,13 @@
             "value": "%1$@ · %2$@"
           }
         },
-        "de": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$@"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ · %2$@"
@@ -215,13 +215,7 @@
             "value": "%1$@ %2$@"
           }
         },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ %2$@"
-          }
-        },
-        "fr": {
+        "de": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ %2$@"
@@ -233,7 +227,13 @@
             "value": "%1$@ %2$@"
           }
         },
-        "de": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ %2$@"
+          }
+        },
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ %2$@"
