@@ -113,7 +113,7 @@ parser is isolated and covered by fixture tests. If numbers look wrong, please o
 AI·mana is free. If it saves you from running out of quota halfway through a task, you can support its
 development:
 
-- [Ko-fi](https://ko-fi.com/hgarcia): one-time or monthly, by card or PayPal.
+- [Ko-fi](https://ko-fi.com/post/AImana-your-AI-coding-quotas-on-iPhone-Watch-an-S1D028MW28): one-time or monthly, by card or PayPal. Write "AI·mana" in your message.
 
 Stars, bug reports and translations help too.
 

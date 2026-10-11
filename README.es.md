@@ -117,7 +117,7 @@ está aislado y cubierto por tests con datos de ejemplo. Si ves números raros, 
 
 AI·mana es gratis. Si te ahorra quedarte sin cuota a mitad de una tarea, puedes apoyar su desarrollo:
 
-- [Ko-fi](https://ko-fi.com/hgarcia): única o mensual, con tarjeta o PayPal.
+- [Ko-fi](https://ko-fi.com/post/AImana-your-AI-coding-quotas-on-iPhone-Watch-an-S1D028MW28): única o mensual, con tarjeta o PayPal. Escribe "AI·mana" en tu mensaje.
 
 También ayudan las estrellas, los reportes de errores y las traducciones.
 
