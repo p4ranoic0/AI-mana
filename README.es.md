@@ -17,6 +17,13 @@ Es gratis y de código abierto (MIT). No tiene cuenta ni servidor, y usa **solo 
 > AI·mana es un proyecto independiente. No está afiliado a Anthropic, OpenAI, GitHub, OpenRouter, DeepSeek, Moonshot
 > AI ni xAI, ni cuenta con su respaldo o patrocinio. Sus nombres se usan solo para indicar compatibilidad.
 
+<p align="center">
+  <img src="docs/screenshots/dashboard-light.png" width="200" alt="Panel, tema claro">
+  <img src="docs/screenshots/dashboard-dark.png" width="200" alt="Panel, tema oscuro">
+  <img src="docs/screenshots/detail.png" width="200" alt="Detalle de Claude Code con presupuesto diario">
+  <img src="docs/screenshots/balances.png" width="200" alt="Saldos de proveedores de API">
+</p>
+
 ## Funciones
 
 **iPhone y iPad**

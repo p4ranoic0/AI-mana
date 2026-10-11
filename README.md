@@ -13,6 +13,13 @@ It is free and open source (MIT). It has no account and no server, and it uses *
 > AI·mana is an independent project. It is not affiliated with, endorsed by or sponsored by Anthropic, OpenAI,
 > GitHub, OpenRouter, DeepSeek, Moonshot AI or xAI. Their names are used only to describe compatibility.
 
+<p align="center">
+  <img src="docs/screenshots/dashboard-light.png" width="200" alt="Dashboard, light theme">
+  <img src="docs/screenshots/dashboard-dark.png" width="200" alt="Dashboard, dark theme">
+  <img src="docs/screenshots/detail.png" width="200" alt="Claude Code detail with daily budget">
+  <img src="docs/screenshots/balances.png" width="200" alt="API provider balances">
+</p>
+
 ## Features
 
 **iPhone and iPad**
