@@ -11,13 +11,7 @@
             "value": "—"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "—"
-          }
-        },
-        "fr": {
+        "en": {
           "stringUnit": {
             "state": "translated",
             "value": "—"
@@ -29,13 +23,19 @@
             "value": "—"
           }
         },
-        "en": {
+        "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "—"
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "—"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "—"
@@ -53,13 +53,7 @@
             "value": "· %@"
           }
         },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "· %@"
-          }
-        },
-        "fr": {
+        "en": {
           "stringUnit": {
             "state": "translated",
             "value": "· %@"
@@ -71,13 +65,19 @@
             "value": "· %@"
           }
         },
-        "en": {
+        "fr": {
           "stringUnit": {
             "state": "translated",
             "value": "· %@"
           }
         },
         "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "· %@"
+          }
+        },
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "· %@"

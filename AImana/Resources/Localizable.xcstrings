@@ -179,7 +179,7 @@
             "value": "%1$@ · %2$@"
           }
         },
-        "pt-BR": {
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ · %2$@"
@@ -191,13 +191,13 @@
             "value": "%1$@ · %2$@"
           }
         },
-        "es": {
+        "it": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ · %2$@"
           }
         },
-        "it": {
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ · %2$@"
@@ -221,7 +221,7 @@
             "value": "%1$@ %2$@"
           }
         },
-        "pt-BR": {
+        "es": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ %2$@"
@@ -233,13 +233,13 @@
             "value": "%1$@ %2$@"
           }
         },
-        "es": {
+        "it": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ %2$@"
           }
         },
-        "it": {
+        "pt-BR": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ %2$@"
