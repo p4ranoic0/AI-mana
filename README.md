@@ -54,81 +54,129 @@ It is free and open source (MIT). It has no account and no server, and it uses *
 
 ```
 Claude Code statusline ─┐
-Codex session logs ─────┼─▶ AI·mana for Mac ─▶ iCloud Drive/AImana/usage-relay.json ─▶ iPhone · iPad · Watch · widgets
-                        │
-Your API keys ──────────┴──────────────────────────────── (read directly on the iPhone) ─┘
+                        ├─▶ AI·mana for Mac, or usage-relay ─▶ usage-relay.json ─────────▶ iPhone · iPad · Watch
+Codex session logs ─────┘   on Windows and Linux               in iCloud Drive or OneDrive
+
+Your API keys ───────────────────────────────────────────────────────────────────────────▶ read on the iPhone
 ```
 
-The iPhone reads the summary that your Mac publishes. Requests to API providers go directly from your device to
-that provider. AI·mana runs no server and has no analytics. See [PRIVACY.md](PRIVACY.md).
+The iPhone reads the summary that your computer publishes. Requests to API providers go directly from your device
+to that provider. AI·mana runs no server and has no analytics. See [PRIVACY.md](PRIVACY.md).
 
-## Requirements
+## Get started
 
-- iOS / iPadOS 17 or later, watchOS 10 or later, macOS 14 or later.
-- Xcode 26 or later and [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`).
-- For Claude Code and Codex data: the AI·mana Mac app on a Mac signed in to the same iCloud account as the iPhone.
+Setup has three steps. Follow them in order.
+
+### What you need
+
+- An iPhone or iPad with iOS / iPadOS 17 or later (Apple Watch: watchOS 10 or later).
+- A Mac with Xcode 26 or later, to install the iPhone app. AI·mana is not in the App Store yet.
 - An Apple ID. A free account works, but Apple makes apps built with it expire after 7 days, so you must rebuild
   every week.
+- For Claude Code and Codex quotas: the computer where you use them (Mac, Windows or Linux) and a folder it shares
+  with your iPhone (iCloud Drive or OneDrive). API balances need no computer.
 
-## Build and install
+### Step 1: install the app on your iPhone
 
-To install the apps, build them from source:
+1. Install [XcodeGen](https://github.com/yonaskolb/XcodeGen): `brew install xcodegen`.
+2. Download the code and open the project:
 
-```bash
-git clone https://github.com/p4ranoic0/AI-mana.git AImana
-cd AImana
-cp AImana/Config/Local.xcconfig.example AImana/Config/Local.xcconfig
-# Edit Local.xcconfig with your Team ID and a bundle prefix you own (for example com.yourname).
-cd AImana && xcodegen generate && open AImana.xcodeproj
-```
+   ```bash
+   git clone https://github.com/p4ranoic0/AI-mana.git AImana
+   cd AImana
+   cp AImana/Config/Local.xcconfig.example AImana/Config/Local.xcconfig
+   ```
 
-1. **Mac:** run the `AImanaMac` scheme. In its settings, install the Claude Code statusline integration and
-   check that iCloud Drive is available. The app publishes automatically.
-2. **iPhone:** run the `AImana` scheme on your device. In Settings › AImana for Mac, tap
-   **Choose relay file…** and pick `iCloud Drive/AImana/usage-relay.json`.
-3. Add the widgets, the Watch app or the Live Activity as you like.
+3. Edit `AImana/Config/Local.xcconfig`: set your Team ID and a bundle prefix you own (for example `com.yourname`).
+4. Generate and open the project:
 
-Run the tests with `swift test` in `AImana/AImanaCore` and in `AImana/Relay`.
+   ```bash
+   cd AImana && xcodegen generate && open AImana.xcodeproj
+   ```
 
-### Relay CLI for macOS, Linux and Windows
+5. Connect your iPhone, choose the `AImana` scheme and your device, and press Run.
 
-Download a prebuilt `usage-relay` binary from the
-[Releases page](https://github.com/p4ranoic0/AI-mana/releases), or build from source.
-With [Homebrew](https://github.com/p4ranoic0/homebrew-tap) on macOS or Linux:
+To track only API balances, you are done: add your keys in the app's settings.
 
-```sh
-brew install p4ranoic0/tap/usage-relay
-```
+### Step 2: publish your usage from your computer
 
-On Linux, the binary also needs the system `libcurl` library (for Ubuntu: `apt install libcurl4`).
-To build it from source, run `swift build -c release --package-path AImana/Relay`, then
-`AImana/Relay/.build/release/usage-relay setup --output /path/to/synced/usage-relay.json`.
-On Linux, `usage-relay setup` publishes once, installs Claude capture when present, and sets up a systemd user timer.
-If systemd is unavailable, it prints a crontab line for you to add. Use `usage-relay doctor` to check the setup and
-`usage-relay uninstall` to remove the timer and restore your previous statusline. Without `--output`, Linux writes to
-`~/AImana/usage-relay.json`. State and support files use `${XDG_DATA_HOME:-~/.local/share}/aimana`;
-caches use `${XDG_CACHE_HOME:-~/.cache}/aimana`.
+Do this on the computer where you use Claude Code or Codex. Pick your system:
 
-On Windows, download the Windows x86_64 ZIP from Releases, extract all files together (including
-`usage-relay-task.exe` next to `usage-relay.exe`), then run `.\usage-relay.exe setup`
-in PowerShell. Or install with [Scoop](https://scoop.sh/):
+**Mac**
 
-```powershell
-scoop bucket add aimana https://github.com/p4ranoic0/scoop-bucket
-scoop install usage-relay
-usage-relay setup
-```
+1. In the same Xcode project, choose the `AImanaMac` scheme and **My Mac**, and press Run. The app appears in the
+   menu bar.
+2. In its settings, install the Claude Code statusline integration and check that iCloud Drive is available.
 
-Scoop installations need both executables from the release ZIP. `setup` uses Scoop's `current` link so updates keep
-the scheduled task and Claude statusline working. `AIMANA_TASK_NAME` is only for isolated scheduler tests.
+The app publishes `iCloud Drive/AImana/usage-relay.json` by itself.
 
-The default Windows output is `iCloudDrive/AImana/usage-relay.json` under your user folder when iCloud Drive exists,
-otherwise `OneDrive/AImana/usage-relay.json` when OneDrive is configured. You can choose any synced folder with
-`--output FILE`; `--interval MINUTES` changes the default five-minute schedule. On iPhone, open AI·mana › Settings ›
-**Choose relay file…** and select that file in the Files picker. iCloud for Windows can upload with a delay;
-OneDrive also works in the iPhone Files picker.
+**Windows**
 
-**WSL:** The Linux binary also works inside WSL. If Claude Code and Codex run on Windows, point it at their Windows
+1. Install [Scoop](https://scoop.sh/) if you do not have it, then in PowerShell:
+
+   ```powershell
+   scoop bucket add aimana https://github.com/p4ranoic0/scoop-bucket
+   scoop install usage-relay
+   usage-relay setup
+   ```
+
+2. `setup` prints the path of the published file. Keep it for step 3.
+
+Without Scoop: download the Windows ZIP from [Releases](https://github.com/p4ranoic0/AI-mana/releases), extract
+all files into one folder, and run `.\usage-relay.exe setup` from that folder.
+
+**Linux**
+
+1. Install with [Homebrew](https://github.com/p4ranoic0/homebrew-tap), or download the Linux archive from
+   [Releases](https://github.com/p4ranoic0/AI-mana/releases):
+
+   ```sh
+   brew install p4ranoic0/tap/usage-relay
+   ```
+
+   The binary needs the system `libcurl` (Ubuntu: `sudo apt install libcurl4`).
+2. Publish into a folder that syncs with your iPhone:
+
+   ```sh
+   usage-relay setup --output /path/to/synced/folder/usage-relay.json
+   ```
+
+`setup` finds your Claude Code and Codex data, publishes once, installs the Claude statusline capture and schedules
+a publish every five minutes in the background (a hidden scheduled task on Windows, a systemd user timer on Linux).
+
+### Step 3: connect the iPhone
+
+1. Open AI·mana on your iPhone and go to **Settings › AI·mana for Mac**. This section is also used for Windows
+   and Linux.
+2. Tap **Choose relay file…** and pick `usage-relay.json` in the Files picker (folder `iCloud Drive/AImana`, or the
+   one `setup` printed).
+3. Your Claude Code and Codex quotas appear on the dashboard. Add the widgets, the Watch app or the Live Activity if
+   you like.
+
+### If something does not show up
+
+- Windows or Linux: run `usage-relay doctor`. It checks each part and prints how to fix what is missing.
+- Claude Code numbers appear after your next Claude Code message, when its statusline runs.
+- iCloud for Windows can take a while to upload. OneDrive also works in the iPhone Files picker.
+- To remove the background task and restore your previous statusline: `usage-relay uninstall`.
+
+## More details
+
+### Updating
+
+- iPhone and Mac app: `git pull`, then run the schemes again from Xcode.
+- Windows: `scoop update usage-relay`. Linux: `brew upgrade usage-relay`. The background task keeps working.
+
+### Relay CLI reference
+
+`usage-relay setup [--output FILE] [--interval MINUTES]`, `doctor`, `uninstall`, `run [--output FILE]`,
+`check FILE`, `costs` and `--version`. The default output is `iCloudDrive/AImana/usage-relay.json` on Windows when
+iCloud Drive exists (otherwise OneDrive, otherwise `AImana` in your user folder), and `~/AImana/usage-relay.json` on
+Linux. If systemd is not available on Linux, `setup` prints a crontab line for you to add. Linux state uses
+`${XDG_DATA_HOME:-~/.local/share}/aimana` and caches use `${XDG_CACHE_HOME:-~/.cache}/aimana`; Windows uses
+`%LOCALAPPDATA%\AImana`. To build the CLI from source: `swift build -c release --package-path AImana/Relay`.
+
+**WSL:** the Linux binary also works inside WSL. If Claude Code and Codex run on Windows, point it at their Windows
 data and publish into the Windows synced folder:
 
 ```sh
@@ -136,6 +184,10 @@ WINHOME="$(wslpath "$(cmd.exe /C 'echo %USERPROFILE%' | tr -d '\r')")"
 CLAUDE_CONFIG_DIR="$WINHOME/.claude" CODEX_HOME="$WINHOME/.codex" \
   usage-relay setup --output "$WINHOME/iCloudDrive/AImana/usage-relay.json"
 ```
+
+### Tests
+
+Run `swift test` in `AImana/AImanaCore` and in `AImana/Relay`.
 
 ## When a provider changes something
 
