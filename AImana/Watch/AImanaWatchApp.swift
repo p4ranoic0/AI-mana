@@ -4,9 +4,9 @@ import SwiftUI
 @main
 struct AImanaWatchApp: App {
     init() {
-        WatchConnector.shared.activate()
+        if !WatchState.isDemo { WatchConnector.shared.activate() }
 #if DEBUG
-        WatchConnector.shared.loadSampleIfRequested()
+        if !WatchState.isDemo { WatchConnector.shared.loadSampleIfRequested() }
 #endif
     }
 

@@ -17,6 +17,7 @@ enum MacSettings {
 
 @MainActor @Observable
 final class RelayController {
+    let isDemo: Bool
     private(set) var envelope: RelayEnvelope?
     private(set) var lastPublish: Date?
     private(set) var lastError: String?
@@ -30,6 +31,7 @@ final class RelayController {
 
     var refreshMinutes: Int {
         didSet {
+            guard !isDemo else { return }
             defaults.set(refreshMinutes, forKey: MacSettings.refreshMinutesKey)
             restartLoop()
         }
@@ -37,6 +39,7 @@ final class RelayController {
     var sourceEnabled: [String: Bool] = [:]
 
     func setSource(_ id: String, enabled: Bool) {
+        guard !isDemo else { return }
         sourceEnabled[id] = enabled
         if let key = MacSourceConfiguration.defaultsKeys[id] { defaults.set(enabled, forKey: key) }
         publishSoon()
@@ -57,6 +60,7 @@ final class RelayController {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
+        isDemo = ProcessInfo.processInfo.arguments.contains("-demo")
         var paths = RelayPaths.standard
         if let dir = defaults.string(forKey: MacSettings.stateDirKey), !dir.isEmpty {
             paths.stateDirectory = URL(fileURLWithPath: (dir as NSString).expandingTildeInPath)
@@ -73,10 +77,15 @@ final class RelayController {
             isRedirected = false
         }
         installer = StatuslineInstaller(paths: paths)
-        notifier = MacNotifier(stateDirectory: paths.stateDirectory, output: output)
-        let stored = defaults.integer(forKey: MacSettings.refreshMinutesKey)
+        notifier = MacNotifier(stateDirectory: paths.stateDirectory, output: output, isDemo: isDemo)
+        let stored = isDemo ? MacSettings.defaultRefreshMinutes : defaults.integer(forKey: MacSettings.refreshMinutesKey)
         refreshMinutes = MacSettings.refreshChoices.contains(stored) ? stored : MacSettings.defaultRefreshMinutes
-        sourceEnabled = MacSourceConfiguration.defaultsKeys.mapValues { defaults.bool(forKey: $0) }
+        sourceEnabled = isDemo ? [:] : MacSourceConfiguration.defaultsKeys.mapValues { defaults.bool(forKey: $0) }
+        if isDemo {
+            envelope = DemoProviders.macEnvelope()
+            lastPublish = envelope?.generatedAt
+            return
+        }
         envelope = try? RelayEnvelope.decode(Data(contentsOf: output))
         lastPublish = envelope?.generatedAt
         refreshStatus()
@@ -104,6 +113,7 @@ final class RelayController {
     }
 
     func publishNow(refreshOptional: Bool = true) async {
+        guard !isDemo else { return }
         guard !isPublishing else { return }
         isPublishing = true
         lastPublishStart = Date()
@@ -154,6 +164,7 @@ final class RelayController {
     // MARK: Status
 
     func refreshStatus() {
+        guard !isDemo else { return }
         statuslineStatus = installer.status()
         lastStatuslineCapture = installer.lastCapture()
         legacyJobInstalled = LegacyRelayJob.isPlistInstalled()
@@ -178,22 +189,26 @@ final class RelayController {
     }
 
     var iCloudDriveAvailable: Bool {
-        FileManager.default.fileExists(atPath: output.deletingLastPathComponent().deletingLastPathComponent().path)
+        if isDemo { return false }
+        return FileManager.default.fileExists(atPath: output.deletingLastPathComponent().deletingLastPathComponent().path)
     }
 
     // MARK: Statusline
 
     func installStatusline() {
+        guard !isDemo else { return }
         statuslineMessage = Self.describe { try installer.install() }
         refreshStatus()
     }
 
     func uninstallStatusline() {
+        guard !isDemo else { return }
         statuslineMessage = Self.describe { try installer.uninstall() }
         refreshStatus()
     }
 
     func forgetStatusline() {
+        guard !isDemo else { return }
         installer.forget()
         statuslineMessage = nil
         refreshStatus()
@@ -220,6 +235,7 @@ final class RelayController {
     // MARK: Launch at login
 
     func setLaunchAtLogin(_ enabled: Bool) {
+        guard !isDemo else { return }
         do {
             if enabled { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
         } catch {

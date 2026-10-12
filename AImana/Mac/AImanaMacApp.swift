@@ -1,4 +1,5 @@
 import AImanaCore
+import AppKit
 import SwiftUI
 
 @main
@@ -14,7 +15,7 @@ struct AImanaMacApp: App {
         .menuBarExtraStyle(.window)
 
         Settings {
-            SettingsView(controller: controller)
+            if !controller.isDemo { SettingsView(controller: controller) }
         }
     }
 }
@@ -33,5 +34,26 @@ private struct MenuBarLabel: View {
             Image(systemName: "gauge.with.dots.needle.33percent")
             if let used { Text(UsageFormatter.percentText(used)) }
         }
+        .onAppear {
+            if controller.isDemo && ProcessInfo.processInfo.arguments.contains("-open-menu") {
+                DemoMenuWindow.show(controller: controller)
+            }
+        }
+    }
+}
+
+@MainActor private enum DemoMenuWindow {
+    static var window: NSWindow?
+
+    static func show(controller: RelayController) {
+        guard window == nil else { return }
+        let panel = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 340, height: 620),
+                             styleMask: [.titled, .closable], backing: .buffered, defer: false)
+        panel.title = "AI·mana"
+        panel.contentViewController = NSHostingController(rootView: MenuView(controller: controller))
+        panel.center()
+        panel.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+        window = panel
     }
 }

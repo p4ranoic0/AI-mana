@@ -24,6 +24,12 @@ Es gratis y de código abierto (MIT). No tiene cuenta ni servidor, y usa **solo 
   <img src="docs/screenshots/balances.png" width="200" alt="Saldos de proveedores de API">
 </p>
 
+<p align="center">
+  <img src="docs/screenshots/ipad-dashboard.png" height="300" alt="Panel en iPad">
+  <img src="docs/screenshots/mac-menu.png" height="300" alt="App de la barra de menús del Mac">
+  <img src="docs/screenshots/watch.png" height="200" alt="App del Apple Watch">
+</p>
+
 ## Funciones
 
 **iPhone y iPad**

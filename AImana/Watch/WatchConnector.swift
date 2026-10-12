@@ -9,6 +9,7 @@ import WidgetKit
 @Observable
 final class WatchState {
     static let shared = WatchState()
+    nonisolated static let isDemo = ProcessInfo.processInfo.arguments.contains("-demo")
 
     private(set) var payload: WatchPayload?
     /// Set while asking the iPhone; `requestFailed` when it could not be reached.
@@ -16,14 +17,16 @@ final class WatchState {
     private(set) var requestFailed = false
 
     private init() {
-        payload = WatchPayloadStore.shared().load()
+        payload = Self.isDemo ? DemoProviders.watchPayload() : WatchPayloadStore.shared().load()
     }
 
     func reload() {
+        guard !Self.isDemo else { return }
         payload = WatchPayloadStore.shared().load()
     }
 
     func requestFromPhone() {
+        guard !Self.isDemo else { return }
         guard !isRequesting else { return }
         isRequesting = true
         requestFailed = false
@@ -44,6 +47,7 @@ final class WatchConnector: NSObject, WCSessionDelegate, @unchecked Sendable {
     private let store = WatchPayloadStore.shared()
 
     func activate() {
+        guard !WatchState.isDemo else { return }
         guard WCSession.isSupported() else { return }
         let session = WCSession.default
         guard session.delegate == nil else { return }
@@ -62,6 +66,7 @@ final class WatchConnector: NSObject, WCSessionDelegate, @unchecked Sendable {
 
     /// Lets a WatchConnectivity background wake finish delivering before the system suspends the app.
     func waitForPendingContent() async {
+        guard !WatchState.isDemo else { return }
         activate()
         for _ in 0..<20 where WCSession.default.activationState != .activated || WCSession.default.hasContentPending {
             try? await Task.sleep(nanoseconds: 250_000_000)
@@ -70,6 +75,7 @@ final class WatchConnector: NSObject, WCSessionDelegate, @unchecked Sendable {
 
     @discardableResult
     func receive(_ message: [String: Any]) -> Bool {
+        guard !WatchState.isDemo else { return false }
         guard let payload = WatchPayload.from(message: message) else { return false }
         if (try? store.save(payload)) == true {
             WidgetCenter.shared.reloadAllTimelines()

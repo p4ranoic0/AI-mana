@@ -31,10 +31,10 @@ final class MacNotifier {
 
     /// `stateDirectory` holds the preferences and the dedupe state; `output` is the published file, read back to
     /// rebuild the daily summary when the settings change.
-    init(stateDirectory: URL, output: URL) {
+    init(stateDirectory: URL, output: URL, isDemo: Bool = false) {
         let file = NotificationPreferencesFile(url: stateDirectory.appendingPathComponent("notification-preferences.json"))
         preferencesFile = file
-        preferences = file.load()
+        preferences = isDemo ? NotificationPreferences() : file.load()
         delivery = NotificationDelivery(
             lock: FileLock(url: stateDirectory.appendingPathComponent("notifications.lock"), timeout: 10),
             stateFile: NotificationStateFile(url: stateDirectory.appendingPathComponent("notification-state.json"),
@@ -42,7 +42,7 @@ final class MacNotifier {
             settings: NotificationSettingsSource(
                 preferences: { file.load() },
                 savedUsages: { (try? RelayEnvelope.decode(Data(contentsOf: output)))?.entries.compactMap(\.usage) ?? [] }))
-        if preferences.isEnabled { installPresenter() }
+        if !isDemo && preferences.isEnabled { installPresenter() }
     }
 
     // MARK: Publishing

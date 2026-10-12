@@ -20,6 +20,12 @@ It is free and open source (MIT). It has no account and no server, and it uses *
   <img src="docs/screenshots/balances.png" width="200" alt="API provider balances">
 </p>
 
+<p align="center">
+  <img src="docs/screenshots/ipad-dashboard.png" height="300" alt="iPad dashboard">
+  <img src="docs/screenshots/mac-menu.png" height="300" alt="Mac menu bar app">
+  <img src="docs/screenshots/watch.png" height="200" alt="Apple Watch app">
+</p>
+
 ## Features
 
 **iPhone and iPad**

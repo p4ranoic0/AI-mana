@@ -37,7 +37,7 @@ struct WatchDashboardView: View {
                         } else {
                             emptyState
                         }
-                        refreshButton.id("refresh")
+                        if !WatchState.isDemo { refreshButton.id("refresh") }
                     }
                     .padding(.horizontal, SoftTheme.Space.xs)
                 }

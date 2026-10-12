@@ -6,8 +6,13 @@ import SwiftUI
 struct MenuView: View {
     @Bindable var controller: RelayController
     @Environment(\.openSettings) private var openSettings
-    @State private var expandedProviders: [String: Bool] =
-        UserDefaults.standard.dictionary(forKey: "menu.expandedProviders")?.compactMapValues { $0 as? Bool } ?? [:]
+    @State private var expandedProviders: [String: Bool]
+
+    init(controller: RelayController) {
+        self.controller = controller
+        _expandedProviders = State(initialValue: controller.isDemo ? ["claude": true, "codex": true] :
+            UserDefaults.standard.dictionary(forKey: "menu.expandedProviders")?.compactMapValues { $0 as? Bool } ?? [:])
+    }
 
     private var providerIDs: [String] { ["claude", "codex"] + controller.enabledOptionalProviders }
 
@@ -26,7 +31,7 @@ struct MenuView: View {
                     row += CGFloat(usage.windows.count - (headline == nil ? 0 : 1)) * 53 + 16
                 }
                 if controller.cost(id, days: 1) != nil && controller.cost(id, days: 7) != nil {
-                    row += 38
+                    row += controller.isDemo ? 103 : 38
                 }
             }
             return height + row + 1
@@ -52,7 +57,7 @@ struct MenuView: View {
 
     private func toggle(_ id: String) {
         expandedProviders[id] = !isExpanded(id)
-        UserDefaults.standard.set(expandedProviders, forKey: "menu.expandedProviders")
+        if !controller.isDemo { UserDefaults.standard.set(expandedProviders, forKey: "menu.expandedProviders") }
     }
 
     private func name(_ id: String) -> String {
@@ -89,12 +94,16 @@ struct MenuView: View {
                     .foregroundStyle(.orange)
             }
             HStack {
-                Button("Publish now") { Task { await controller.publishNow() } }
-                    .disabled(controller.isPublishing)
+                if !controller.isDemo {
+                    Button("Publish now") { Task { await controller.publishNow() } }
+                        .disabled(controller.isPublishing)
+                }
                 Spacer()
-                Button("Settings…") {
-                    NSApp.activate(ignoringOtherApps: true)
-                    openSettings()
+                if !controller.isDemo {
+                    Button("Settings…") {
+                        NSApp.activate(ignoringOtherApps: true)
+                        openSettings()
+                    }
                 }
                 Button("Quit") { NSApp.terminate(nil) }
             }
@@ -254,11 +263,33 @@ private struct CostLine: View {
     let controller: RelayController
 
     var body: some View {
-        if let today = controller.cost(providerID, days: 1), let week = controller.cost(providerID, days: 7) {
-            HStack(spacing: SoftTheme.Space.lg) {
-                CostCell(title: "Today", amount: today.usd)
-                CostCell(title: "7 days", amount: week.usd)
-                Spacer(minLength: 0)
+        if let today = controller.cost(providerID, days: 1),
+           let week = controller.cost(providerID, days: 7) {
+            if controller.isDemo, let month = controller.cost(providerID, days: 30) {
+                VStack(alignment: .leading, spacing: SoftTheme.Space.xs) {
+                    HStack(spacing: SoftTheme.Space.lg) {
+                        CostCell(title: "Today", amount: today.usd)
+                        CostCell(title: "7 days", amount: week.usd)
+                        CostCell(title: "30 days", amount: month.usd)
+                    }
+                    if let models = controller.envelope?.costs.first(where: { $0.providerID == providerID })?.days.last?.models {
+                        ForEach(models) { model in
+                            HStack {
+                                Text(model.model).lineLimit(1)
+                                Spacer()
+                                Text(UsageFormatter.usdText(model.usd ?? 0)).monospacedDigit()
+                            }
+                            .font(.caption2)
+                            .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            } else {
+                HStack(spacing: SoftTheme.Space.lg) {
+                    CostCell(title: "Today", amount: today.usd)
+                    CostCell(title: "7 days", amount: week.usd)
+                    Spacer(minLength: 0)
+                }
             }
         }
     }
@@ -281,7 +312,9 @@ private struct PublishFooter: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            if let last = controller.lastPublish {
+            if controller.isDemo {
+                Text("Sample data").font(.caption)
+            } else if let last = controller.lastPublish {
                 Text(String(format: String(localized: "Last publish %@ (%@)"),
                             last.formatted(date: .omitted, time: .shortened), relative(last)))
                     .font(.caption)
