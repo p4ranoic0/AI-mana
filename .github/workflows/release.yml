@@ -24,7 +24,8 @@ jobs:
         run: |
           set -euo pipefail
           binary="$(swift build -c release --package-path AImana/Relay --arch arm64 --arch x86_64 --show-bin-path)/usage-relay"
-          lipo -verify_arch arm64 x86_64 "$binary"
+          archs="$(lipo -archs "$binary")"
+          [[ " $archs " == *" arm64 "* && " $archs " == *" x86_64 "* ]]
           actual="$("$binary" --version)"
           [[ "$actual" =~ ^usage-relay\ [0-9]+\.[0-9]+\.[0-9]+$ ]]
           version="${actual#usage-relay }"
@@ -41,7 +42,7 @@ jobs:
             '  xattr -d com.apple.quarantine usage-relay' \
             'You can also build from source.' > package/README.txt
           tar -czf "dist/usage-relay-${version}-macos-universal.tar.gz" -C package usage-relay LICENSE README.txt
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: usage-relay-macos-universal
           path: dist/*.tar.gz
@@ -82,7 +83,7 @@ jobs:
             'Linux requires the system libcurl library (for Ubuntu: apt install libcurl4).' \
             'You can also build from source.' > package/README.txt
           tar -czf "dist/usage-relay-${version}-linux-${{ matrix.arch }}.tar.gz" -C package usage-relay LICENSE README.txt
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v7
         with:
           name: usage-relay-linux-${{ matrix.arch }}
           path: dist/*.tar.gz
@@ -96,7 +97,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v8
         with:
           pattern: usage-relay-*
           path: dist
