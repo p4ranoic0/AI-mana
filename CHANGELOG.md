@@ -4,6 +4,10 @@ All notable changes to AI·mana are documented here. This project follows [Keep 
 
 ## [Unreleased]
 
+### Added
+
+- [Homebrew tap](https://github.com/p4ranoic0/homebrew-tap) that installs the relay CLI on macOS and Linux.
+
 ## [1.0.0] - 2026-10-11
 
 ### Added

@@ -94,6 +94,12 @@ Run the tests with `swift test` in `AImana/AImanaCore` and in `AImana/Relay`.
 
 Download a prebuilt `usage-relay` binary for macOS or Linux from the
 [Releases page](https://github.com/p4ranoic0/AI-mana/releases), or build from source.
+With [Homebrew](https://github.com/p4ranoic0/homebrew-tap) on macOS or Linux:
+
+```sh
+brew install p4ranoic0/tap/usage-relay
+```
+
 On Linux, the binary also needs the system `libcurl` library (for Ubuntu: `apt install libcurl4`).
 To build it from source, run `swift build -c release --package-path AImana/Relay`, then
 `AImana/Relay/.build/release/usage-relay run --output /path/to/synced/usage-relay.json`.
