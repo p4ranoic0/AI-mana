@@ -90,9 +90,9 @@ cd AImana && xcodegen generate && open AImana.xcodeproj
 
 Run the tests with `swift test` in `AImana/AImanaCore` and in `AImana/Relay`.
 
-### Relay CLI for macOS and Linux
+### Relay CLI for macOS, Linux and Windows
 
-Download a prebuilt `usage-relay` binary for macOS or Linux from the
+Download a prebuilt `usage-relay` binary from the
 [Releases page](https://github.com/p4ranoic0/AI-mana/releases), or build from source.
 With [Homebrew](https://github.com/p4ranoic0/homebrew-tap) on macOS or Linux:
 
@@ -102,20 +102,40 @@ brew install p4ranoic0/tap/usage-relay
 
 On Linux, the binary also needs the system `libcurl` library (for Ubuntu: `apt install libcurl4`).
 To build it from source, run `swift build -c release --package-path AImana/Relay`, then
-`AImana/Relay/.build/release/usage-relay run --output /path/to/synced/usage-relay.json`.
-Choose that file
-on the iPhone with **Choose relay file…**. Without `--output`, Linux writes to
+`AImana/Relay/.build/release/usage-relay setup --output /path/to/synced/usage-relay.json`.
+On Linux, `usage-relay setup` publishes once, installs Claude capture when present, and sets up a systemd user timer.
+If systemd is unavailable, it prints a crontab line for you to add. Use `usage-relay doctor` to check the setup and
+`usage-relay uninstall` to remove the timer and restore your previous statusline. Without `--output`, Linux writes to
 `~/AImana/usage-relay.json`. State and support files use `${XDG_DATA_HOME:-~/.local/share}/aimana`;
 caches use `${XDG_CACHE_HOME:-~/.cache}/aimana`.
 
-The `statusline` installer is unavailable through the Linux CLI because its generated script relies on
-macOS `plutil` when `jq` is absent. The relay can still read an existing Claude statusline capture file
-from its support directory, and it reads Codex session logs directly.
+On Windows, download the Windows x86_64 ZIP from Releases, extract all files together (including
+`usage-relay-task.exe` next to `usage-relay.exe`), then run `.\usage-relay.exe setup`
+in PowerShell. Or install with [Scoop](https://scoop.sh/):
 
-## Roadmap
+```powershell
+scoop bucket add aimana https://github.com/p4ranoic0/scoop-bucket
+scoop install usage-relay
+usage-relay setup
+```
 
-- **Windows** (planned, no date): publish the relay file to a synced folder (iCloud for Windows, Dropbox,
-  OneDrive or Syncthing) that the iPhone opens with **Choose relay file…**.
+Scoop installations need both executables from the release ZIP. `setup` uses Scoop's `current` link so updates keep
+the scheduled task and Claude statusline working. `AIMANA_TASK_NAME` is only for isolated scheduler tests.
+
+The default Windows output is `iCloudDrive/AImana/usage-relay.json` under your user folder when iCloud Drive exists,
+otherwise `OneDrive/AImana/usage-relay.json` when OneDrive is configured. You can choose any synced folder with
+`--output FILE`; `--interval MINUTES` changes the default five-minute schedule. On iPhone, open AI·mana › Settings ›
+**Choose relay file…** and select that file in the Files picker. iCloud for Windows can upload with a delay;
+OneDrive also works in the iPhone Files picker.
+
+**WSL:** The Linux binary also works inside WSL. If Claude Code and Codex run on Windows, point it at their Windows
+data and publish into the Windows synced folder:
+
+```sh
+WINHOME="$(wslpath "$(cmd.exe /C 'echo %USERPROFILE%' | tr -d '\r')")"
+CLAUDE_CONFIG_DIR="$WINHOME/.claude" CODEX_HOME="$WINHOME/.codex" \
+  usage-relay setup --output "$WINHOME/iCloudDrive/AImana/usage-relay.json"
+```
 
 ## When a provider changes something
 

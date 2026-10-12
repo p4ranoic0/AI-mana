@@ -18,7 +18,8 @@ private struct Sandbox {
         root = try makeTempDir()
         installer = StatuslineInstaller(settingsFile: root.appendingPathComponent(".claude/settings.json"),
                                         supportDirectory: root.appendingPathComponent("Support AImana"),
-                                        dataFile: root.appendingPathComponent("Support AImana/claude-statusline.json"))
+                                        dataFile: root.appendingPathComponent("Support AImana/claude-statusline.json"),
+                                        platform: .macOS)
     }
 
     func write(_ text: String) throws {
@@ -183,6 +184,7 @@ private struct Sandbox {
         #expect(try box.read() == "{ // comment\n \"a\": 1 }")
     }
 
+    #if !os(Windows)
     @Test func symlinkedSettingsAreEditedInPlace() throws {
         let box = try Sandbox()
         let real = box.root.appendingPathComponent("dotfiles/settings.json")
@@ -196,6 +198,7 @@ private struct Sandbox {
         try box.installer.uninstall()
         #expect(try String(contentsOf: real, encoding: .utf8) == #"{"a": 1}"#)
     }
+    #endif
 
     private func jsonString(_ s: String) -> String {
         String(decoding: try! JSONSerialization.data(withJSONObject: s, options: [.fragmentsAllowed, .withoutEscapingSlashes]), as: UTF8.self)
@@ -203,7 +206,7 @@ private struct Sandbox {
 }
 
 /// Runs the generated wrapper with /bin/sh, the way Claude Code does.
-#if !os(Linux)
+#if canImport(Darwin)
 @Suite struct StatuslineScriptTests {
     private static let input = #"{"session_id":"x","model":{"id":"claude-opus","display_name":"Opus"},"workspace":{"current_dir":"/tmp"},"cost":null,"rate_limits":{"five_hour":{"used_percentage":23.5,"resets_at":1738425600},"seven_day":{"used_percentage":41.2,"resets_at":1738857600}}}"#
 

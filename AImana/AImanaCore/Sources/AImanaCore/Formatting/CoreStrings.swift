@@ -27,7 +27,7 @@ public enum CoreStrings {
         let language = locale?.identifier ?? Locale.preferredLanguages.first ?? "en"
         let candidates = [language, language.replacingOccurrences(of: "_", with: "-"),
                           String(language.prefix(2)), "en"]
-        #if os(Linux)
+        #if !canImport(Darwin)
         return catalogText(key, candidates: candidates)
         #else
         var hasCompiledLocalization = false

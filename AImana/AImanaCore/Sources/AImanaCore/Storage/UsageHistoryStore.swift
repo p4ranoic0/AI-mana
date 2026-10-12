@@ -11,7 +11,7 @@ public final class UsageHistoryStore: @unchecked Sendable {
     }
 
     public static func appGroup(_ identifier: String, fileName: String = "usage-history.json") -> UsageHistoryStore? {
-        #if os(Linux)
+        #if !canImport(Darwin)
         nil
         #else
         FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier)

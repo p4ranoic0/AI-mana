@@ -36,15 +36,53 @@ var paths = RelayPaths.standard
 if let state = value("--state-dir") { paths.stateDirectory = path(state) }
 if let cache = value("--cache-dir") { paths.caches = path(cache) }
 let publisher = RelayPublisher(paths: paths)
+func fail(_ message: String, code: Int32 = 1) -> Never {
+    FileHandle.standardError.write(Data((message + "\n").utf8))
+    exit(code)
+}
+if ["setup", "doctor", "uninstall"].contains(args.first ?? "") {
+    #if canImport(Darwin)
+    print("The AI·mana Mac app manages the relay in Settings.")
+    exit(0)
+    #else
+    let setup = RelaySetup(paths: paths)
+    do {
+        switch args[0] {
+        case "setup":
+            let options = try SetupOptions(arguments: Array(args.dropFirst()))
+            for line in try await setup.setup(options) { print(line) }
+        case "doctor":
+            guard args.count == 1 else { throw SetupError.invalidArguments }
+            let result = setup.doctor()
+            for line in result.lines { print(line) }
+            exit(result.healthy ? 0 : 1)
+        default:
+            guard args.count == 1 else { throw SetupError.invalidArguments }
+            for line in try setup.uninstall() { print(line) }
+        }
+        exit(0)
+    } catch {
+        fail("\(args[0]) failed: \(error). Usage: usage-relay setup [--output FILE] [--interval MINUTES]", code: 2)
+    }
+    #endif
+}
+if args.first == "statusline-capture" {
+    guard args.count == 1 else { fail("usage: usage-relay statusline-capture", code: 2) }
+    let input = FileHandle.standardInput.readDataToEndOfFile()
+    do {
+        print(try StatuslineCapture.save(input, to: paths.claudeStatuslineFile))
+        exit(0)
+    } catch { fail("statusline capture failed: \(error)") }
+}
 if args.first == "run" {
-    let options = RelayOptions(output: value("--output").map(path) ?? value("--out").map(path) ?? RelayPaths.defaultOutput,
+    let options = RelayOptions(output: value("--output").map(path) ?? value("--out").map(path) ?? paths.defaultOutput,
                                includeCosts: !args.contains("--no-costs"))
-    do { _ = try await publisher.publish(options); exit(0) }
+    do { _ = try await RelayRun.publish(paths: paths, options: options); exit(0) }
     catch {
-        #if os(Linux)
-        FileHandle.standardError.write(Data("publish failed: \(error)\n".utf8))
-        #else
+        #if canImport(Darwin)
         fputs("publish failed: \(error)\n", stderr)
+        #else
+        FileHandle.standardError.write(Data("publish failed: \(error)\n".utf8))
         #endif
         exit(1)
     }
@@ -67,10 +105,6 @@ if args.first == "check", args.count > 1 {
     }
 }
 if args.first == "statusline", args.count > 1 {
-    #if os(Linux)
-    FileHandle.standardError.write(Data("statusline install/uninstall/status is unavailable on Linux; publish with 'usage-relay run --output FILE' instead.\n".utf8))
-    exit(2)
-    #else
     // Same installer as AImana for Mac's Settings: backs up settings.json and restores it exactly on uninstall.
     let installer = StatuslineInstaller(paths: paths)
     do {
@@ -87,15 +121,10 @@ if args.first == "statusline", args.count > 1 {
         print("statusline \(args[1]) failed: \(error)")
         exit(1)
     }
-    #endif
 }
 if args.first == "costs" {
     await printCosts(publisher)
     exit(0)
 }
-#if os(Linux)
-print("usage-relay --version\nusage-relay run [--output FILE] [--no-costs] [--state-dir DIR] [--cache-dir DIR]\nusage-relay check FILE\nusage-relay costs\nPass --output with a path inside a synced folder to share usage-relay.json with your iPhone.")
-#else
-print("usage-relay --version\nusage-relay run [--output FILE] [--no-costs] [--state-dir DIR]\nusage-relay check FILE\nusage-relay costs\nusage-relay statusline install|uninstall|status")
-#endif
+print("usage-relay --version\nusage-relay run [--output FILE] [--no-costs] [--state-dir DIR] [--cache-dir DIR]\nusage-relay setup [--output FILE] [--interval MINUTES]\nusage-relay doctor\nusage-relay uninstall\nusage-relay check FILE\nusage-relay costs\nusage-relay statusline install|uninstall|status")
 exit(args.isEmpty ? 0 : 2)

@@ -12,7 +12,7 @@ public final class WatchPayloadStore: @unchecked Sendable {
     }
 
     public static func shared() -> WatchPayloadStore {
-        #if os(Linux)
+        #if !canImport(Darwin)
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         #else
         let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppGroup.identifier)

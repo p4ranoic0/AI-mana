@@ -30,7 +30,7 @@ public struct NotificationStateFile: Sendable {
     }
 
     public static func appGroup() -> NotificationStateFile {
-        #if os(Linux)
+        #if !canImport(Darwin)
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         #else
         let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: AppGroup.identifier)

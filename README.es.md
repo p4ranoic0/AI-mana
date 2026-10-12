@@ -96,9 +96,9 @@ cd AImana && xcodegen generate && open AImana.xcodeproj
 
 Para correr los tests: `swift test` en `AImana/AImanaCore` y en `AImana/Relay`.
 
-### Relay para macOS y Linux
+### Relay para macOS, Linux y Windows
 
-Descarga un binario precompilado de `usage-relay` para macOS o Linux en la
+Descarga un binario precompilado de `usage-relay` en la
 [página de Releases](https://github.com/p4ranoic0/AI-mana/releases), o compílalo desde el código.
 Con [Homebrew](https://github.com/p4ranoic0/homebrew-tap) en macOS o Linux:
 
@@ -108,19 +108,41 @@ brew install p4ranoic0/tap/usage-relay
 
 En Linux, el binario también necesita la biblioteca `libcurl` del sistema (en Ubuntu: `apt install libcurl4`).
 Para compilarlo desde el código, ejecuta `swift build -c release --package-path AImana/Relay` y luego
-`AImana/Relay/.build/release/usage-relay run --output /ruta/sincronizada/usage-relay.json`.
-En el iPhone, abre ese archivo con **Elegir archivo del relay…**. Sin `--output`, Linux escribe en
+`AImana/Relay/.build/release/usage-relay setup --output /ruta/sincronizada/usage-relay.json`.
+En Linux, `usage-relay setup` publica una vez, instala la captura de Claude si corresponde y crea un temporizador
+de systemd del usuario. Si systemd no está disponible, muestra una línea de crontab para agregar manualmente.
+`usage-relay doctor` revisa la instalación y `usage-relay uninstall` quita el temporizador y restaura el statusline.
+Sin `--output`, Linux escribe en
 `~/AImana/usage-relay.json`. Los datos y el estado usan `${XDG_DATA_HOME:-~/.local/share}/aimana`;
 las cachés usan `${XDG_CACHE_HOME:-~/.cache}/aimana`.
 
-La CLI de Linux no ofrece el instalador `statusline`: su script depende de `plutil` de macOS si no
-hay `jq`. El relay sí puede leer una captura de statusline existente en su directorio de datos
-y lee directamente los registros de sesiones de Codex.
+En Windows, descarga el ZIP x86_64 de Releases, extrae todos los archivos juntos (incluido
+`usage-relay-task.exe` junto a `usage-relay.exe`) y ejecuta `.\usage-relay.exe setup`
+en PowerShell. También puedes usar [Scoop](https://scoop.sh/):
 
-## Roadmap
+```powershell
+scoop bucket add aimana https://github.com/p4ranoic0/scoop-bucket
+scoop install usage-relay
+usage-relay setup
+```
 
-- **Windows** (planeado, sin fecha): publicar el archivo del relay en una carpeta sincronizada
-  (iCloud para Windows, Dropbox, OneDrive o Syncthing) que el iPhone abra con **Elegir archivo del relay…**.
+Las instalaciones de Scoop necesitan ambos ejecutables del ZIP de Releases. `setup` usa el enlace `current` de Scoop
+para mantener la tarea programada y el statusline tras actualizar. `AIMANA_TASK_NAME` es solo para pruebas aisladas.
+
+Por defecto, Windows publica en `iCloudDrive/AImana/usage-relay.json` dentro de tu carpeta de usuario si existe
+iCloud Drive; si no, usa `OneDrive/AImana/usage-relay.json` cuando OneDrive esté configurado. Puedes cambiar la ruta
+con `--output FILE` y el intervalo predeterminado de cinco minutos con `--interval MINUTES`. En el iPhone, ve a
+AI·mana › Configuración › **Elegir archivo del relay…** y selecciona el archivo en Archivos. iCloud para Windows puede
+tardar en subir los cambios; OneDrive también funciona en el selector de Archivos del iPhone.
+
+**WSL:** El binario de Linux también funciona dentro de WSL. Si Claude Code y Codex se ejecutan en Windows,
+apunta a sus datos allí y publica en la carpeta sincronizada de Windows:
+
+```sh
+WINHOME="$(wslpath "$(cmd.exe /C 'echo %USERPROFILE%' | tr -d '\r')")"
+CLAUDE_CONFIG_DIR="$WINHOME/.claude" CODEX_HOME="$WINHOME/.codex" \
+  usage-relay setup --output "$WINHOME/iCloudDrive/AImana/usage-relay.json"
+```
 
 ## Cuando un proveedor cambia algo
 

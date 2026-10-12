@@ -27,7 +27,7 @@ import Testing
         #expect(PublishDebounce.delay(lastPublishStart: t0, now: t0, minInterval: 60) == 60)
     }
 
-    #if !os(Linux)
+    #if canImport(Darwin)
     @Test func watcherFiresOnAtomicReplaceButNotOnOtherFiles() async throws {
         let dir = FileManager.default.temporaryDirectory.appendingPathComponent("watch-\(UUID().uuidString)")
         defer { try? FileManager.default.removeItem(at: dir) }
@@ -63,7 +63,7 @@ import Testing
     #endif
 }
 
-#if !os(Linux)
+#if canImport(Darwin)
 private final class Counter: @unchecked Sendable {
     private let lock = NSLock()
     private var count = 0

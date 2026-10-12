@@ -4,8 +4,13 @@ All notable changes to AI·mana are documented here. This project follows [Keep 
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-12
+
 ### Added
 
+- Native Windows x86_64 relay and scheduled background publishing, with iCloud Drive and OneDrive output defaults.
+- `usage-relay setup`, `doctor`, and `uninstall` for Windows and Linux, including Claude statusline capture.
+- End-to-end CI checks of setup, scheduled publishing and uninstall on Windows and Linux.
 - [Homebrew tap](https://github.com/p4ranoic0/homebrew-tap) that installs the relay CLI on macOS and Linux.
 
 ## [1.0.0] - 2026-10-11

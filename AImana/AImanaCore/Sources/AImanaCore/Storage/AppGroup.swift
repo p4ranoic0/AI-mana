@@ -9,7 +9,7 @@ public enum AppGroup {
     public static var identifier: String { "group.\(bundlePrefix).aimana" }
     public static var keychainService: String { "\(bundlePrefix).aimana" }
     public static var sharedContainerAvailable: Bool {
-        #if os(Linux)
+        #if !canImport(Darwin)
         false
         #else
         FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier) != nil
@@ -52,7 +52,7 @@ public enum AppGroup {
 
     /// A lock file shared by every process in the App Group (same fallback as the snapshot).
     public static func lock(_ name: String, timeout: TimeInterval = 15) -> FileLock {
-        #if os(Linux)
+        #if !canImport(Darwin)
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         #else
         let dir = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier)

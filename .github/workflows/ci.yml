@@ -3,6 +3,28 @@ on:
   push:
   pull_request:
 jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: compnerd/gha-setup-swift@397094e75494a93fa8d81db0268dbc8f5d6cf7c6 # v0.4.1
+        with:
+          swift-version: swift-6.1-release
+          swift-build: 6.1-RELEASE
+      - name: Build core
+        run: swift build --package-path AImana/AImanaCore
+      - name: Test core
+        run: swift test --package-path AImana/AImanaCore
+      - name: Build relay
+        run: swift build --package-path AImana/Relay
+      - name: Test relay
+        run: swift test --package-path AImana/Relay
+      - name: Windows setup and scheduled publish
+        shell: pwsh
+        run: |
+          swift build -c release --package-path AImana/Relay
+          if ($LASTEXITCODE -ne 0) { throw 'Release build failed' }
+          & .\.github\scripts\relay-e2e-windows.ps1
   linux:
     runs-on: ubuntu-latest
     container: swift:6.1
@@ -16,6 +38,17 @@ jobs:
         run: swift build --package-path AImana/Relay
       - name: Test relay
         run: swift test --package-path AImana/Relay
+  linux-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Linux setup and scheduled publish
+        run: |
+          docker run --rm -v "$PWD:/work" -w /work swift:6.1 swift build -c release --static-swift-stdlib --package-path AImana/Relay
+          sudo chown -R "$(id -u):$(id -g)" AImana/Relay/.build
+          relay_bin="$(find AImana/Relay/.build -type f -path '*/release/usage-relay' -print -quit)"
+          test -x "$relay_bin"
+          AIMANA_RELAY_BIN="$PWD/$relay_bin" bash .github/scripts/relay-e2e-linux.sh
   build:
     runs-on: macos-26
     steps:

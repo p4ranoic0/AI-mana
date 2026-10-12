@@ -5,7 +5,7 @@ public protocol RelayDataSource: Sendable {
 }
 
 /// Reads a file with `NSFileCoordinator`, first asking iCloud to download it if it is only a placeholder.
-#if !os(Linux)
+#if canImport(Darwin)
 public struct CoordinatedFileSource: RelayDataSource {
     private let url: URL
     private let downloadTimeout: TimeInterval

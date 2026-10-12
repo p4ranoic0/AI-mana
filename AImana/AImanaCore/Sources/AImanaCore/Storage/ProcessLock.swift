@@ -1,4 +1,7 @@
 import Foundation
+#if os(Windows)
+import WinSDK
+#endif
 
 /// Mutual exclusion that holds across processes (the app and its widget run at the same time and share the
 /// Keychain and the App Group), and across separate instances inside one process.
@@ -37,6 +40,24 @@ public final class FileLock: ProcessLock, @unchecked Sendable {
     }
 
     private func acquire() async throws -> Held {
+        #if os(Windows)
+        let deadline = Date().addingTimeInterval(timeout)
+        let wide = Array(url.path.utf16) + [0]
+        while true {
+            let handle = wide.withUnsafeBufferPointer {
+                CreateFileW($0.baseAddress, DWORD(GENERIC_READ) | DWORD(GENERIC_WRITE), 0, nil,
+                            DWORD(OPEN_ALWAYS), DWORD(FILE_ATTRIBUTE_NORMAL), nil)
+            }
+            if handle != INVALID_HANDLE_VALUE { return Held(handle: handle) }
+            let error = GetLastError()
+            guard (error == ERROR_SHARING_VIOLATION || error == ERROR_LOCK_VIOLATION),
+                  Date() < deadline, !Task.isCancelled else {
+                throw error == ERROR_SHARING_VIOLATION || error == ERROR_LOCK_VIOLATION
+                    ? ProcessLockError.timedOut : ProcessLockError.unavailable
+            }
+            try? await Task.sleep(nanoseconds: UInt64(pollInterval * 1_000_000_000))
+        }
+        #else
         let fd = open(url.path, O_CREAT | O_RDWR | O_CLOEXEC, 0o644)
         guard fd >= 0 else { throw ProcessLockError.unavailable }
         let deadline = Date().addingTimeInterval(timeout)
@@ -48,14 +69,22 @@ public final class FileLock: ProcessLock, @unchecked Sendable {
             try? await Task.sleep(nanoseconds: UInt64(pollInterval * 1_000_000_000))
         }
         return Held(fd: fd)
+        #endif
     }
 
     /// One acquisition. Released exactly once: by the holder, or by the expiring-activity handler.
     private final class Held: @unchecked Sendable {
+        #if os(Windows)
+        private var handle: HANDLE?
+        #else
         private var fd: Int32
+        #endif
         private let state = NSLock()
         private let done = DispatchSemaphore(value: 0)
 
+        #if os(Windows)
+        init(handle: HANDLE?) { self.handle = handle }
+        #else
         init(fd: Int32) {
             self.fd = fd
             #if os(iOS)
@@ -64,8 +93,17 @@ public final class FileLock: ProcessLock, @unchecked Sendable {
             }
             #endif
         }
+        #endif
 
         func release() {
+            #if os(Windows)
+            let toClose: HANDLE? = state.withLock {
+                let current = handle
+                handle = nil
+                return current
+            }
+            if let toClose { CloseHandle(toClose) }
+            #else
             let toClose: Int32 = state.withLock {
                 let current = fd
                 fd = -1
@@ -75,6 +113,7 @@ public final class FileLock: ProcessLock, @unchecked Sendable {
             flock(toClose, LOCK_UN)
             close(toClose)
             done.signal()
+            #endif
         }
     }
 }

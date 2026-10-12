@@ -125,7 +125,7 @@ public struct RelayPublisher: Sendable {
         do {
             try FileManager.default.createDirectory(at: options.output.deletingLastPathComponent(),
                                                     withIntermediateDirectories: true)
-            try envelope.encoded().write(to: options.output, options: .atomic)
+            try AtomicRelayFile.write(envelope.encoded(), to: options.output)
         } catch {
             log("write failed: \(error)")
             throw RelayPublishError.writeFailed(error.localizedDescription)

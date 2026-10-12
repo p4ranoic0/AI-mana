@@ -10,6 +10,56 @@ permissions:
   contents: read
 
 jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: compnerd/gha-setup-swift@397094e75494a93fa8d81db0268dbc8f5d6cf7c6 # v0.4.1
+        with:
+          swift-version: swift-6.1-release
+          swift-build: 6.1-RELEASE
+      - name: Build release
+        run: swift build -c release --package-path AImana/Relay
+      - name: Verify and package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $bin = (swift build -c release --package-path AImana/Relay --show-bin-path).Trim()
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot locate release binary' }
+          $binary = Join-Path $bin 'usage-relay.exe'
+          $actual = (& $binary --version).Trim()
+          if ($actual -notmatch '^usage-relay ([0-9]+\.[0-9]+\.[0-9]+)$') { throw "Unexpected version: $actual" }
+          $version = $Matches[1]
+          if ($env:GITHUB_EVENT_NAME -eq 'push' -and $version -ne $env:GITHUB_REF_NAME.TrimStart('v')) {
+            throw 'Binary version does not match the release tag'
+          }
+          New-Item -ItemType Directory -Force package, dist | Out-Null
+          Copy-Item $binary package/usage-relay.exe
+          $taskBinary = Join-Path $bin 'usage-relay-task.exe'
+          if (-not (Test-Path $taskBinary)) { throw 'Missing Windows scheduled-task executable' }
+          Copy-Item $taskBinary package/usage-relay-task.exe
+          Copy-Item LICENSE package/LICENSE
+          @'
+          Run .\usage-relay.exe setup from PowerShell. Then choose the published file in AI·mana on iPhone.
+          Keep usage-relay.exe and usage-relay-task.exe together. The scheduled task runs without a visible console window.
+          '@ | Set-Content package/README.txt
+          $swiftBin = Split-Path (Get-Command swift.exe).Source
+          Get-ChildItem $swiftBin -Filter '*.dll' -File | ForEach-Object { Copy-Item $_.FullName package/ }
+          $savedPath = $env:PATH
+          try {
+            $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
+            $isolated = (& (Resolve-Path package/usage-relay.exe) --version).Trim()
+            if ($LASTEXITCODE -ne 0 -or $isolated -ne $actual) { throw 'Packaged executable cannot run without the Swift toolchain on PATH' }
+            $taskCheck = Start-Process -FilePath (Resolve-Path package/usage-relay-task.exe) -ArgumentList '--self-check' -Wait -PassThru
+            if ($taskCheck.ExitCode -ne 0) { throw 'Packaged task executable cannot run without the Swift toolchain on PATH' }
+          } finally { $env:PATH = $savedPath }
+          Compress-Archive -Path package/* -DestinationPath "dist/usage-relay-$version-windows-x86_64.zip"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: usage-relay-windows-x86_64
+          path: dist/*.zip
+          if-no-files-found: error
+
   macos:
     runs-on: macos-26
     steps:
@@ -91,7 +141,7 @@ jobs:
 
   release:
     if: github.event_name == 'push'
-    needs: [macos, linux]
+    needs: [macos, linux, windows]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -111,8 +161,8 @@ jobs:
           tag="$GITHUB_REF_NAME"
           version="${tag#v}"
           cd dist
-          test "$(find . -maxdepth 1 -name '*.tar.gz' | wc -l | tr -d ' ')" -eq 3
-          sha256sum ./*.tar.gz > SHA256SUMS.txt
+          test "$(find . -maxdepth 1 \( -name '*.tar.gz' -o -name '*.zip' \) | wc -l | tr -d ' ')" -eq 4
+          sha256sum ./*.tar.gz ./*.zip > SHA256SUMS.txt
           cd ..
           awk -v version="$version" '
             $0 ~ "^## \\[" version "\\] - " { in_section=1 }
@@ -120,5 +170,5 @@ jobs:
             in_section { print }
           ' CHANGELOG.md > release-notes.md
           test -s release-notes.md
-          gh release create "$tag" dist/*.tar.gz dist/SHA256SUMS.txt \
+          gh release create "$tag" dist/*.tar.gz dist/*.zip dist/SHA256SUMS.txt \
             --title "AI·mana $tag" --notes-file release-notes.md

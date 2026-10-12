@@ -11,7 +11,7 @@ public final class SnapshotStore: @unchecked Sendable {
     }
 
     public static func appGroup(_ identifier: String, fileName: String = "usage-snapshot.json") -> SnapshotStore? {
-        #if os(Linux)
+        #if !canImport(Darwin)
         nil
         #else
         FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: identifier)

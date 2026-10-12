@@ -6,6 +6,17 @@ import FoundationNetworking
 
 /// Every location the relay reads or writes. Tests and debug runs point these at temporary directories.
 public struct RelayPaths: Sendable, Equatable {
+    public enum Platform: Sendable { case macOS, linux, windows }
+    public static var currentPlatform: Platform {
+        #if os(Windows)
+        .windows
+        #elseif os(Linux)
+        .linux
+        #else
+        .macOS
+        #endif
+    }
+    public var platform: Platform
     public var home: URL
     /// Relay-owned state: `history.json` and the publish lock.
     public var stateDirectory: URL
@@ -18,19 +29,27 @@ public struct RelayPaths: Sendable, Equatable {
     public var environment: [String: String]
 
     public init(home: URL, stateDirectory: URL? = nil, caches: URL? = nil, supportDirectory: URL? = nil,
-                environment: [String: String] = [:]) {
+                environment: [String: String] = [:], platform: Platform = currentPlatform) {
         self.home = home
-        #if os(Linux)
-        let dataHome = environment["XDG_DATA_HOME"].flatMap { $0.isEmpty ? nil : URL(fileURLWithPath: $0) }
-            ?? home.appendingPathComponent(".local/share", isDirectory: true)
-        let cacheHome = environment["XDG_CACHE_HOME"].flatMap { $0.isEmpty ? nil : URL(fileURLWithPath: $0) }
-            ?? home.appendingPathComponent(".cache", isDirectory: true)
-        let support = supportDirectory ?? dataHome.appendingPathComponent("aimana", isDirectory: true)
-        self.caches = caches ?? cacheHome.appendingPathComponent("aimana", isDirectory: true)
-        #else
-        let support = supportDirectory ?? home.appendingPathComponent("Library/Application Support/AImana", isDirectory: true)
-        self.caches = caches ?? home.appendingPathComponent("Library/Caches/AImana", isDirectory: true)
-        #endif
+        self.platform = platform
+        let support: URL
+        switch platform {
+        case .linux:
+            let dataHome = environment["XDG_DATA_HOME"].flatMap { $0.isEmpty ? nil : URL(fileURLWithPath: $0) }
+                ?? home.appendingPathComponent(".local/share", isDirectory: true)
+            let cacheHome = environment["XDG_CACHE_HOME"].flatMap { $0.isEmpty ? nil : URL(fileURLWithPath: $0) }
+                ?? home.appendingPathComponent(".cache", isDirectory: true)
+            support = supportDirectory ?? dataHome.appendingPathComponent("aimana", isDirectory: true)
+            self.caches = caches ?? cacheHome.appendingPathComponent("aimana", isDirectory: true)
+        case .windows:
+            let local = environment["LOCALAPPDATA"].flatMap { $0.isEmpty ? nil : URL(fileURLWithPath: $0) }
+                ?? home.appendingPathComponent("AppData/Local", isDirectory: true)
+            support = supportDirectory ?? local.appendingPathComponent("AImana", isDirectory: true)
+            self.caches = caches ?? support.appendingPathComponent("Cache", isDirectory: true)
+        case .macOS:
+            support = supportDirectory ?? home.appendingPathComponent("Library/Application Support/AImana", isDirectory: true)
+            self.caches = caches ?? home.appendingPathComponent("Library/Caches/AImana", isDirectory: true)
+        }
         self.supportDirectory = support
         self.stateDirectory = stateDirectory ?? support
         self.claudeStatuslineFile = support.appendingPathComponent(ClaudeStatuslineSource.fileName)
@@ -38,21 +57,34 @@ public struct RelayPaths: Sendable, Equatable {
     }
 
     public static var standard: RelayPaths {
-        RelayPaths(home: FileManager.default.homeDirectoryForCurrentUser,
-                   environment: ProcessInfo.processInfo.environment)
+        let environment = ProcessInfo.processInfo.environment
+        let home = currentPlatform == .windows
+            ? environment["USERPROFILE"].map { URL(fileURLWithPath: $0) } ?? FileManager.default.homeDirectoryForCurrentUser
+            : FileManager.default.homeDirectoryForCurrentUser
+        return RelayPaths(home: home, environment: environment)
     }
 
     /// iCloud Drive › AImana › usage-relay.json — the file the iPhone reads.
     public static var defaultOutput: URL {
-        #if os(Linux)
-        FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("AImana")
-            .appendingPathComponent(RelayEnvelope.fileName)
-        #else
-        FileManager.default.homeDirectoryForCurrentUser
-            .appendingPathComponent("Library/Mobile Documents/com~apple~CloudDocs/AImana")
-            .appendingPathComponent(RelayEnvelope.fileName)
-        #endif
+        standard.defaultOutput
+    }
+
+    public var defaultOutput: URL {
+        let folder: URL
+        switch platform {
+        case .macOS: folder = home.appendingPathComponent("Library/Mobile Documents/com~apple~CloudDocs/AImana")
+        case .linux: folder = home.appendingPathComponent("AImana")
+        case .windows:
+            let iCloud = home.appendingPathComponent("iCloudDrive", isDirectory: true)
+            if FileManager.default.fileExists(atPath: iCloud.path) {
+                folder = iCloud.appendingPathComponent("AImana")
+            } else if let oneDrive = environment["OneDrive"], !oneDrive.isEmpty {
+                folder = URL(fileURLWithPath: oneDrive).appendingPathComponent("AImana")
+            } else {
+                folder = home.appendingPathComponent("AImana")
+            }
+        }
+        return folder.appendingPathComponent(RelayEnvelope.fileName)
     }
 
     public var historyFile: URL { stateDirectory.appendingPathComponent("history.json") }

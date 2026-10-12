@@ -1,5 +1,5 @@
 import Foundation
-#if os(Linux)
+#if !canImport(Darwin) && canImport(CoreFoundation)
 import CoreFoundation
 #endif
 
@@ -41,9 +41,18 @@ public enum ClaudeStatuslineSource {
     }
 
     public static func number(_ value: Any?) -> Double? {
-        if let n = value as? NSNumber, CFGetTypeID(n) != CFBooleanGetTypeID() { return n.doubleValue }
+        if let n = value as? NSNumber, !isBoolean(n) { return n.doubleValue }
         if let s = value as? String { return Double(s.trimmingCharacters(in: .whitespaces)) }
         return nil
+    }
+
+    private static func isBoolean(_ n: NSNumber) -> Bool {
+        #if canImport(CoreFoundation)
+        CFGetTypeID(n) == CFBooleanGetTypeID()
+        #else
+        // Windows' Foundation does not export CoreFoundation; JSON booleans keep their own NSNumber subclass.
+        type(of: n) == type(of: NSNumber(value: true))
+        #endif
     }
 
     /// Epoch seconds (or milliseconds, if implausibly large) or an ISO 8601 string.
