@@ -2052,83 +2052,83 @@
         }
       }
     },
-    "Sign in again on your Mac": {
+    "Sign in again on your computer": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Auf dem Mac erneut anmelden"
+            "value": "Auf deinem Computer erneut anmelden"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sign in again on your Mac"
+            "value": "Sign in again on your computer"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inicia sesión de nuevo en tu Mac"
+            "value": "Inicia sesión de nuevo en tu computadora"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reconnectez-vous sur votre Mac"
+            "value": "Reconnectez-vous sur votre ordinateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Accedi di nuovo sul Mac"
+            "value": "Accedi di nuovo sul tuo computer"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Entre novamente no Mac"
+            "value": "Entre novamente no seu computador"
           }
         }
       }
     },
-    "Sign in on Mac": {
+    "Sign in on your computer": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Auf Mac anmelden"
+            "value": "Auf deinem Computer anmelden"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sign in on Mac"
+            "value": "Sign in on your computer"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inicia sesión en Mac"
+            "value": "Inicia sesión en tu computadora"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connectez-vous sur Mac"
+            "value": "Connectez-vous sur votre ordinateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Accedi sul Mac"
+            "value": "Accedi sul tuo computer"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Entre no Mac"
+            "value": "Entre no seu computador"
           }
         }
       }

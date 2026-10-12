@@ -4,6 +4,10 @@ All notable changes to AI·mana are documented here. This project follows [Keep 
 
 ## [Unreleased]
 
+### Changed
+
+- The iPhone, iPad, widgets and Watch now say "your computer" instead of "your Mac" for the relay, which can run on a Mac, Windows or Linux. The Settings section is now called "Your computer".
+
 ## [1.1.0] - 2026-10-12
 
 ### Added

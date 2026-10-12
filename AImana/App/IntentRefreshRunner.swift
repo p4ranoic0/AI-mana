@@ -3,7 +3,7 @@ import Foundation
 import WidgetKit
 
 /// The app's side of the shared intents (Siri, Shortcuts, the widgets' refresh button): the same refresh as the
-/// dashboard's pull-to-refresh, so the Mac relay is read too and the open dashboard shows the result.
+/// dashboard's pull-to-refresh, so the relay file is read too and the open dashboard shows the result.
 @MainActor
 enum IntentRefreshRunner {
     /// Refreshes when any of `providerIDs` is missing or older than `maxAge`; returns by `deadline` at the latest,

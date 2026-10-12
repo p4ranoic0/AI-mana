@@ -67,11 +67,11 @@ struct NotificationText {
                 threadID: thread(providerID), trigger: .now)
         }
         if origin == .mac {
-            // The Mac reads the CLI's own sign-in, so the fix happens in the tool there.
+            // The relay reads the CLI's own sign-in, so the fix happens in the tool on that computer.
             return PlannedNotification(
                 id: "login.\(providerID)", kind: .loginExpired, providerID: providerID, lane: nil,
-                title: CoreStrings.format("AImana for Mac lost access to %@", locale: locale, displayName),
-                body: CoreStrings.format("Sign in to %@ again on your Mac so this iPhone keeps getting your usage.",
+                title: CoreStrings.format("Your computer lost access to %@", locale: locale, displayName),
+                body: CoreStrings.format("Sign in to %@ again on your computer so this iPhone keeps getting your usage.",
                                          locale: locale, displayName),
                 threadID: thread(providerID), trigger: .now)
         }

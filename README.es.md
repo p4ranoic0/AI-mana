@@ -153,7 +153,8 @@ usuario en Linux).
 
 ### Paso 3: conecta el iPhone
 
-1. Abre AI·mana en tu iPhone y ve a **Ajustes › AI·mana para Mac**. Esta sección sirve también para Windows y Linux.
+1. Abre AI·mana en tu iPhone y ve a **Ajustes › Tu computadora**. En el primer uso, el panel muestra el mismo
+   botón.
 2. Toca **Elegir archivo del relay…** y elige `usage-relay.json` en el selector de Archivos (carpeta
    `iCloud Drive/AImana`, o la que mostró `setup`).
 3. Tus cuotas de Claude Code y Codex aparecen en el panel. Añade los widgets, la app del Watch o la Live Activity si

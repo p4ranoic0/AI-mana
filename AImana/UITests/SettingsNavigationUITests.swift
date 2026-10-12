@@ -6,6 +6,24 @@ final class SettingsNavigationUITests: XCTestCase {
         continueAfterFailure = false
     }
 
+    func testFirstRunCardExplainsBothRelayOptions() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-show-relay-setup", "-AppleLanguages", "(en)"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Connect your computer"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Windows or Linux")).firstMatch.exists)
+        XCTAssertTrue(app.buttons["Choose relay file…"].exists)
+    }
+
+    func testSettingsShowsComputerRelayInstructions() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-demo", "-open-settings", "-settings-scroll-relay", "-AppleLanguages", "(en)"]
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Your computer"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "iCloud Drive or OneDrive")).firstMatch.exists)
+        XCTAssertTrue(app.buttons["Choose relay file…"].exists)
+    }
+
     func testEachAPIKeyProviderOpensItsOwnScreen() {
         for name in ["GitHub Copilot", "OpenRouter", "DeepSeek", "Moonshot (Kimi)", "xAI"] {
             let app = XCUIApplication()

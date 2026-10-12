@@ -48,7 +48,7 @@ struct NotificationSettingsView: View {
                 } header: {
                     Text("Other alerts")
                 } footer: {
-                    Text("Fast pace alerts once per window when the projection says the quota runs out before it resets. Quota available again follows windows that ran out or passed your highest threshold. Sign-in alerts cover AImana for Mac's access to Claude Code and Codex.")
+                    Text("Fast pace alerts once per window when the projection says the quota runs out before it resets. Quota available again follows windows that ran out or passed your highest threshold. Sign-in alerts cover your computer's access to Claude Code and Codex.")
                 }
                 .listRowBackground(SoftTheme.pink.opacity(scheme == .dark ? 0.12 : 0.17))
 

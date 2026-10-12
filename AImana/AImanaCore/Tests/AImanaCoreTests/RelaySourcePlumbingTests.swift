@@ -112,8 +112,8 @@ private func usage(_ id: String) -> UsageInfo {
                                             preferences: NotificationPreferences(isEnabled: true), now: t0, locale: en)
         let alert = try? #require(plan.deliver.first)
         #expect(alert?.kind == .loginExpired)
-        #expect(alert?.title == "AI·mana for Mac lost access to OpenAI Codex")
-        #expect(alert?.body.contains("on your Mac") == true)
+        #expect(alert?.title == "Your computer lost access to OpenAI Codex")
+        #expect(alert?.body.contains("on your computer") == true)
         #expect(plan.state.loginNotified == ["codex"])
     }
 
@@ -126,7 +126,7 @@ private func usage(_ id: String) -> UsageInfo {
                                             macLoginProviderIDs: ["claude"],
                                             preferences: NotificationPreferences(isEnabled: true), now: t0, locale: en)
         let titles = plan.deliver.map(\.title)
-        #expect(titles.contains("AI·mana for Mac lost access to Claude Code"))
+        #expect(titles.contains("Your computer lost access to Claude Code"))
         #expect(titles.contains("ChatGPT sign-in expired"))
         #expect(plan.state.loginNotified == ["claude", "codex"])
     }

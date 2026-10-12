@@ -20,11 +20,11 @@ enum AppStrings {
 }
 
 extension RelaySource {
-    /// Where the Mac got a provider's numbers, as a short caption for detail and Settings.
+    /// Where the computer got a provider's numbers, as a short caption for detail and Settings.
     var caption: String {
         switch self {
-        case .statusline: AppStrings.text("From Claude Code on your Mac")
-        case .logs: AppStrings.text("From Codex logs on your Mac")
+        case .statusline: AppStrings.text("From Claude Code on your computer")
+        case .logs: AppStrings.text("From Codex logs on your computer")
         case .endpoint: ""
         }
     }

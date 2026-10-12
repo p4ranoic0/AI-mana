@@ -16,7 +16,7 @@ struct DashboardView: View {
     @State private var accent = AppearancePreferences.accent()
     /// Debug aid: `-open-detail claude` pushes that provider's detail screen at launch.
     @State private var detailID: String?
-    /// False until the user picks the file AImana for Mac publishes; the dashboard then shows the setup card.
+    /// False until the user picks the file published by their computer; the dashboard then shows the setup card.
     @State private var relayConnected = Self.isRelayConnected
     @State private var settingsDetent: PresentationDetent = .medium
     @State private var bottomBarHeight: CGFloat = 0
@@ -102,7 +102,12 @@ struct DashboardView: View {
                     .accessibilityLabel("Quota display mode")
                     .padding(.vertical, SoftTheme.Space.xs)
 
-                    if model.states.isEmpty && !model.hasLoaded {
+                    if ProcessInfo.processInfo.arguments.contains("-show-relay-setup") {
+                        MacSetupCard {
+                            relayConnected = Self.isRelayConnected
+                            Task { await model.refresh() }
+                        }
+                    } else if model.states.isEmpty && !model.hasLoaded {
                         ProgressView("Loading usage…")
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, SoftTheme.Space.xxl)
@@ -215,10 +220,10 @@ struct DashboardView: View {
     private var emptyState: some View {
         let relayUnavailable = model.states.contains { $0.error == .relayUnavailable }
         return ContentUnavailableView {
-            Text(AppStrings.text(relayUnavailable ? "Mac relay unavailable" : "No usage data"))
+            Text(AppStrings.text(relayUnavailable ? "Relay unavailable" : "No usage data"))
         } description: {
             Text(AppStrings.text(relayUnavailable ? "Connect the relay file in Settings to see your quotas."
-                                                  : "Connect the Mac relay or refresh to load your quotas."))
+                                                  : "Connect the relay file in Settings or refresh to load your quotas."))
         } actions: {
             Button("Open Settings") { showSettings = true }
                 .buttonStyle(.borderedProminent)

@@ -4,11 +4,11 @@ import Foundation
 /// Copy owned by the watch app and its complications (each target bundles `Localizable.xcstrings`).
 enum WatchStrings {
     static var signInLocation: String {
-        text("Check AImana for Mac")
+        text("Check the relay on your computer")
     }
 
     static var shortSignInLocation: String {
-        text("Check AImana for Mac")
+        text("Check relay")
     }
 
     static func text(_ key: String) -> String {

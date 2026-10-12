@@ -9,6 +9,7 @@ import Testing
         let watch = DemoProviders.watchPayload(now: now)
 
         #expect(mac.entries.map(\.providerID) == ["claude", "codex"])
+        #expect(mac.entries.map(\.usage?.source) == [.statusline, .logs])
         #expect(watch.providers.map(\.id) == ["claude", "codex"])
         for (entry, provider) in zip(mac.entries, watch.providers) {
             #expect(entry.usage?.window(.session)?.usedPercent == provider.session?.usedPercent)

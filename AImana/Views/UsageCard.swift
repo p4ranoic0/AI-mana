@@ -400,8 +400,8 @@ private struct ErrorBanner: View {
             if APIKeyProvider.isAPIKeyProvider(providerID) {
                 return AppStrings.text("The saved key was not accepted. Replace it in Settings → More providers.")
             }
-            return AppStrings.text("Sign in again on your Mac (Claude Code / Codex), then refresh.")
-        case .relayUnavailable: return AppStrings.text("Mac relay file not found. Open Settings to connect it.") + stale
+            return AppStrings.text("Sign in again to Claude Code / Codex on your computer, then refresh.")
+        case .relayUnavailable: return AppStrings.text("Relay file not found. Open Settings to connect it.") + stale
         case .rateLimited(let until):
             if let until { return AppStrings.format("Rate limited until %@.", until.formatted(date: .omitted, time: .shortened)) + stale }
             return AppStrings.text("Rate limited.") + stale

@@ -64,7 +64,7 @@ struct GetUsageIntent: AppIntent {
 /// Fetches now (the widgets' refresh button, Siri, Shortcuts) and reloads the widgets.
 ///
 /// A `LiveActivityIntent` so that a tap on the widget button runs it in the app's process, which can also read the
-/// Mac relay; a plain intent would run in the widget extension without access to the relay file.
+/// relay file; a plain intent would run in the widget extension without access to that file.
 struct RefreshUsageIntent: LiveActivityIntent {
     static let title: LocalizedStringResource = "Refresh Usage"
     static let description = IntentDescription("Fetches the latest Claude Code and OpenAI Codex usage and updates the widgets.")

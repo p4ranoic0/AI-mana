@@ -146,8 +146,8 @@ a publish every five minutes in the background (a hidden scheduled task on Windo
 
 ### Step 3: connect the iPhone
 
-1. Open AI·mana on your iPhone and go to **Settings › AI·mana for Mac**. This section is also used for Windows
-   and Linux.
+1. Open AI·mana on your iPhone and go to **Settings › Your computer**. On first launch, the dashboard shows the
+   same button.
 2. Tap **Choose relay file…** and pick `usage-relay.json` in the Files picker (folder `iCloud Drive/AImana`, or the
    one `setup` printed).
 3. Your Claude Code and Codex quotas appear on the dashboard. Add the widgets, the Watch app or the Live Activity if

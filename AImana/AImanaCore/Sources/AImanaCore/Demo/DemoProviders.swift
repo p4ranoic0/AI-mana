@@ -20,7 +20,8 @@ public enum DemoProviders {
                                                   windowMinutes: $0.3, resetsAt: now.addingTimeInterval($0.2)) }
             return UsageInfo(providerID: id, providerName: displayName, windows: lanes, plan: plan,
                              lastUpdated: now, details: details,
-                             history: DemoProviders.history(providerID: id, lanes: lanes, sessionGain: sessionGain, now: now))
+                             history: DemoProviders.history(providerID: id, lanes: lanes, sessionGain: sessionGain, now: now),
+                             source: id == "claude" ? .statusline : id == "codex" ? .logs : nil)
         }
     }
 

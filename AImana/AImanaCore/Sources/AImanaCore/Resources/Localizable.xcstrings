@@ -3212,42 +3212,42 @@
         }
       }
     },
-    "Sign in to %@ again on your Mac so this iPhone keeps getting your usage.": {
+    "Sign in to %@ again on your computer so this iPhone keeps getting your usage.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Melde dich auf deinem Mac erneut bei %@ an, damit dieses iPhone weiter deine Nutzung erhält."
+            "value": "Melde dich auf deinem Computer erneut bei %@ an, damit dieses iPhone weiter deine Nutzung erhält."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sign in to %@ again on your Mac so this iPhone keeps getting your usage."
+            "value": "Sign in to %@ again on your computer so this iPhone keeps getting your usage."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vuelve a iniciar sesión en %@ en tu Mac para que este iPhone siga recibiendo tu uso."
+            "value": "Vuelve a iniciar sesión en %@ en tu computadora para que este iPhone siga recibiendo tu uso."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reconnectez-vous à %@ sur votre Mac pour que cet iPhone continue de recevoir votre utilisation."
+            "value": "Reconnectez-vous à %@ sur votre ordinateur pour que cet iPhone continue de recevoir votre utilisation."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Accedi di nuovo a %@ sul Mac perché questo iPhone continui a ricevere il tuo utilizzo."
+            "value": "Accedi di nuovo a %@ sul tuo computer perché questo iPhone continui a ricevere il tuo utilizzo."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Entre novamente no %@ no seu Mac para que este iPhone continue recebendo seu uso."
+            "value": "Entre novamente no %@ no seu computador para que este iPhone continue recebendo seu uso."
           }
         }
       }
@@ -3811,6 +3811,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Semanal · %@"
+          }
+        }
+      }
+    },
+    "Your computer lost access to %@": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Computer hat keinen Zugriff mehr auf %@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your computer lost access to %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu computadora perdió el acceso a %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre ordinateur n’a plus accès à %@"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il tuo computer non ha più accesso a %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu computador perdeu o acesso ao %@"
           }
         }
       }

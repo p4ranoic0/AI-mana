@@ -1,7 +1,7 @@
 import AImanaCore
 import Foundation
 
-/// Lets the widgets fetch providers with on-phone credentials while the app is closed. The Mac relay file is
+/// Lets the widgets fetch providers with on-phone credentials while the app is closed. The relay file is
 /// opened through the app's security-scoped bookmark, so relay-only providers use the app's saved snapshot.
 ///
 /// The fetch writes the same snapshot and history the app does, keeps the snapshot's relay-only fields (costs,

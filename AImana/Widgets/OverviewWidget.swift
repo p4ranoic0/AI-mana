@@ -206,7 +206,7 @@ private struct OverviewBar: View {
     }
 }
 
-/// Only shown when the Mac relay published a cost report; the phone cannot compute costs itself.
+/// Only shown when the relay published a cost report; the phone cannot compute costs itself.
 private struct OverviewCostRow: View {
     let items: [UsageInfo]
     let now: Date

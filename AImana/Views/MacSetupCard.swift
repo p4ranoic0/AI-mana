@@ -2,8 +2,7 @@ import AImanaCore
 import SwiftUI
 import UniformTypeIdentifiers
 
-/// First-run card shown while no relay file is connected: how the Mac and the iPhone fit together, and the picker
-/// for the file AImana for Mac publishes.
+/// First-run card shown while no relay file is connected: how the computer and iPhone fit together.
 struct MacSetupCard: View {
     @Environment(\.colorScheme) private var scheme
     let onConnected: () -> Void
@@ -11,20 +10,20 @@ struct MacSetupCard: View {
     @State private var errorMessage: String?
 
     private static let steps = [
-        "Install AImana for Mac and open it.",
-        "It publishes your usage to iCloud Drive, in the AImana folder.",
-        "Choose usage-relay.json from that folder here.",
+        "On a Mac, install AImana for Mac. On Windows or Linux, install usage-relay and run usage-relay setup.",
+        "Choose the published usage-relay.json below.",
     ]
 
     private static var description: String {
-        "AImana reads Claude Code, Codex and costs from AImana for Mac."
+        "AImana reads Claude Code, Codex and costs from the relay on your computer."
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: SoftTheme.Space.lg) {
             VStack(alignment: .leading, spacing: SoftTheme.Space.sm) {
-                Text("Set up AImana for Mac")
+                Text("Connect your computer")
                     .softText(.headline)
+                    .fixedSize(horizontal: false, vertical: true)
                 Text(AppStrings.text(Self.description))
                     .softText(.body)
                     .foregroundStyle(.secondary)
@@ -33,7 +32,7 @@ struct MacSetupCard: View {
 
             VStack(alignment: .leading, spacing: SoftTheme.Space.md) {
                 ForEach(Array(Self.steps.enumerated()), id: \.offset) { index, step in
-                    HStack(alignment: .firstTextBaseline, spacing: SoftTheme.Space.md) {
+                    HStack(alignment: .top, spacing: SoftTheme.Space.md) {
                         Text(verbatim: "\(index + 1)")
                             .softText(.caption).fontWeight(.semibold)
                             .monospacedDigit()
@@ -43,7 +42,9 @@ struct MacSetupCard: View {
                         Text(AppStrings.text(step))
                             .softText(.body)
                             .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
 

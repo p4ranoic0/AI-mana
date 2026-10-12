@@ -1,82 +1,82 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "Fast pace alerts once per window when the projection says the quota runs out before it resets. Quota available again follows windows that ran out or passed your highest threshold. Sign-in alerts cover AImana for Mac's access to Claude Code and Codex.": {
+    "Fast pace alerts once per window when the projection says the quota runs out before it resets. Quota available again follows windows that ran out or passed your highest threshold. Sign-in alerts cover your computer's access to Claude Code and Codex.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hohes Tempo warnt einmal pro Zeitfenster, wenn die Prognose zeigt, dass das Kontingent vor dem Zurücksetzen aufgebraucht ist. Kontingent wieder verfügbar gilt für Zeitfenster, die aufgebraucht waren oder deine höchste Schwelle überschritten haben. Anmeldehinweise betreffen den Zugriff von AI·mana für Mac auf Claude Code und Codex."
+            "value": "Hohes Tempo warnt einmal pro Zeitfenster, wenn die Prognose zeigt, dass das Kontingent vor dem Zurücksetzen aufgebraucht ist. Kontingent wieder verfügbar gilt für Zeitfenster, die aufgebraucht waren oder deine höchste Schwelle überschritten haben. Anmeldehinweise betreffen den Zugriff deines Computers auf Claude Code und Codex."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fast pace alerts once per window when the projection says the quota runs out before it resets. Quota available again follows windows that ran out or passed your highest threshold. Sign-in alerts cover AI·mana for Mac's access to Claude Code and Codex."
+            "value": "Fast pace alerts once per window when the projection says the quota runs out before it resets. Quota available again follows windows that ran out or passed your highest threshold. Sign-in alerts cover your computer's access to Claude Code and Codex."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ritmo acelerado avisa una vez por ventana cuando la proyección indica que la cuota se agota antes del reinicio. Cuota disponible otra vez sigue las ventanas que se agotaron o pasaron tu umbral más alto. Las alertas de sesión cubren el acceso de AI·mana para Mac a Claude Code y Codex."
+            "value": "Ritmo acelerado avisa una vez por ventana cuando la proyección indica que la cuota se agota antes del reinicio. Cuota disponible otra vez sigue las ventanas que se agotaron o pasaron tu umbral más alto. Las alertas de sesión cubren el acceso de tu computadora a Claude Code y Codex."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rythme rapide prévient une fois par fenêtre quand la projection indique que le quota sera épuisé avant sa réinitialisation. Quota de nouveau disponible suit les fenêtres épuisées ou ayant dépassé votre seuil le plus haut. Les alertes de connexion concernent l’accès d’AI·mana pour Mac à Claude Code et Codex."
+            "value": "Rythme rapide prévient une fois par fenêtre quand la projection indique que le quota sera épuisé avant sa réinitialisation. Quota de nouveau disponible suit les fenêtres épuisées ou ayant dépassé votre seuil le plus haut. Les alertes de connexion concernent l’accès de votre ordinateur à Claude Code et Codex."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ritmo elevato avvisa una volta per finestra quando la proiezione indica che la quota finisce prima del ripristino. Quota di nuovo disponibile segue le finestre esaurite o oltre la soglia più alta. Gli avvisi di accesso riguardano l’accesso di AI·mana per Mac a Claude Code e Codex."
+            "value": "Ritmo elevato avvisa una volta per finestra quando la proiezione indica che la quota finisce prima del ripristino. Quota di nuovo disponibile segue le finestre esaurite o oltre la soglia più alta. Gli avvisi di accesso riguardano l’accesso del tuo computer a Claude Code e Codex."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ritmo acelerado avisa uma vez por janela quando a projeção indica que a cota acaba antes de renovar. Cota disponível de novo acompanha janelas que se esgotaram ou passaram do seu limite mais alto. Os alertas de login cobrem o acesso do AI·mana para Mac ao Claude Code e ao Codex."
+            "value": "Ritmo acelerado avisa uma vez por janela quando a projeção indica que a cota acaba antes de renovar. Cota disponível de novo acompanha janelas que se esgotaram ou passaram do seu limite mais alto. Os alertas de login cobrem o acesso do seu computador ao Claude Code e ao Codex."
           }
         }
       }
     },
-    "AImana reads Claude Code, Codex and costs from AImana for Mac.": {
+    "AImana reads Claude Code, Codex and costs from the relay on your computer.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana liest die Nutzung von Claude Code und Codex sowie Kosten aus AI·mana für Mac."
+            "value": "AI·mana liest die Nutzung von Claude Code und Codex sowie Kosten vom Relay auf deinem Computer."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana reads Claude Code, Codex and costs from AI·mana for Mac."
+            "value": "AI·mana reads Claude Code, Codex and costs from the relay on your computer."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana lee el uso de Claude Code, Codex y los costos desde AI·mana para Mac."
+            "value": "AI·mana lee el uso de Claude Code, Codex y los costos desde el relay de tu computadora."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana lit l’utilisation de Claude Code et de Codex ainsi que les coûts depuis AI·mana pour Mac."
+            "value": "AI·mana lit l’utilisation de Claude Code et de Codex ainsi que les coûts depuis le relais de votre ordinateur."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana legge l’utilizzo di Claude Code e Codex e i costi da AI·mana per Mac."
+            "value": "AI·mana legge l’utilizzo di Claude Code e Codex e i costi dal relay sul tuo computer."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O AI·mana lê o uso do Claude Code e do Codex e os custos do AI·mana para Mac."
+            "value": "O AI·mana lê o uso do Claude Code e do Codex e os custos do relay no seu computador."
           }
         }
       }
@@ -903,42 +903,42 @@
         }
       }
     },
-    "A reading is recorded each time AImana refreshes, and every few minutes by the Mac relay.": {
+    "A reading is recorded each time AImana refreshes, and every few minutes by the relay on your computer.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bei jeder Aktualisierung von AI·mana wird ein Messwert gespeichert, und alle paar Minuten vom Mac-Relay."
+            "value": "Bei jeder Aktualisierung von AI·mana wird ein Messwert gespeichert, und alle paar Minuten vom Relay auf deinem Computer."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A reading is recorded each time AI·mana refreshes, and every few minutes by the Mac relay."
+            "value": "A reading is recorded each time AI·mana refreshes, and every few minutes by the relay on your computer."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Se guarda una lectura cada vez que AI·mana se actualiza, y cada pocos minutos desde el relay de la Mac."
+            "value": "Se guarda una lectura cada vez que AI·mana se actualiza, y cada pocos minutos desde el relay de tu computadora."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Un relevé est enregistré à chaque actualisation d'AI·mana, et toutes les quelques minutes par le relais du Mac."
+            "value": "Un relevé est enregistré à chaque actualisation d’AI·mana, et toutes les quelques minutes par le relais de votre ordinateur."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Una rilevazione viene salvata a ogni aggiornamento di AI·mana e ogni pochi minuti dal relay del Mac."
+            "value": "Una rilevazione viene salvata a ogni aggiornamento di AI·mana e ogni pochi minuti dal relay sul tuo computer."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Uma leitura é registrada sempre que o AI·mana atualiza, e a cada poucos minutos pelo relay do Mac."
+            "value": "Uma leitura é registrada sempre que o AI·mana atualiza, e a cada poucos minutos pelo relay no seu computador."
           }
         }
       }
@@ -1066,82 +1066,82 @@
         }
       }
     },
-    "AImana for Mac": {
+    "Your computer": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana für Mac"
+            "value": "Dein Computer"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana for Mac"
+            "value": "Your computer"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana para Mac"
+            "value": "Tu computadora"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana pour Mac"
+            "value": "Votre ordinateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana per Mac"
+            "value": "Il tuo computer"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana para Mac"
+            "value": "Seu computador"
           }
         }
       }
     },
-    "AImana for Mac publishes usage-relay.json to iCloud Drive, in the AImana folder. Choose that file once.": {
+    "AImana for Mac, or usage-relay on Windows and Linux, publishes usage-relay.json to a synced folder (iCloud Drive or OneDrive). Choose that file once.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana für Mac veröffentlicht usage-relay.json in iCloud Drive im Ordner AImana. Wähle diese Datei einmal aus."
+            "value": "AI·mana für Mac oder usage-relay unter Windows und Linux veröffentlicht usage-relay.json in einem synchronisierten Ordner (iCloud Drive oder OneDrive). Wähle diese Datei einmal aus."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana for Mac publishes usage-relay.json to iCloud Drive, in the AI·mana folder. Choose that file once."
+            "value": "AI·mana for Mac, or usage-relay on Windows and Linux, publishes usage-relay.json to a synced folder (iCloud Drive or OneDrive). Choose that file once."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana para Mac publica usage-relay.json en iCloud Drive, en la carpeta AImana. Elige ese archivo una sola vez."
+            "value": "AI·mana para Mac, o usage-relay en Windows y Linux, publica usage-relay.json en una carpeta sincronizada (iCloud Drive o OneDrive). Elige ese archivo una sola vez."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana pour Mac publie usage-relay.json dans iCloud Drive, dans le dossier AImana. Choisissez ce fichier une seule fois."
+            "value": "AI·mana pour Mac, ou usage-relay sous Windows et Linux, publie usage-relay.json dans un dossier synchronisé (iCloud Drive ou OneDrive). Choisissez ce fichier une seule fois."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana per Mac pubblica usage-relay.json su iCloud Drive, nella cartella AImana. Scegli quel file una sola volta."
+            "value": "AI·mana per Mac, oppure usage-relay su Windows e Linux, pubblica usage-relay.json in una cartella sincronizzata (iCloud Drive o OneDrive). Scegli quel file una sola volta."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O AI·mana para Mac publica usage-relay.json no iCloud Drive, na pasta AImana. Escolha esse arquivo uma vez."
+            "value": "O AI·mana para Mac, ou o usage-relay no Windows e Linux, publica usage-relay.json em uma pasta sincronizada (iCloud Drive ou OneDrive). Escolha esse arquivo uma vez."
           }
         }
       }
@@ -1268,82 +1268,82 @@
         }
       }
     },
-    "API-equivalent estimate from logs on your Mac; not your subscription bill": {
+    "API-equivalent estimate from logs on your computer; not your subscription bill": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "API-äquivalente Schätzung aus Mac-Protokollen; keine Abonnementrechnung"
+            "value": "API-äquivalente Schätzung aus Protokollen auf deinem Computer; keine Abonnementrechnung"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "API-equivalent estimate from logs on your Mac; not your subscription bill"
+            "value": "API-equivalent estimate from logs on your computer; not your subscription bill"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Estimación equivalente a API de los registros de tu Mac; no es tu factura de suscripción"
+            "value": "Estimación equivalente a API de los registros de tu computadora; no es tu factura de suscripción"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Estimation équivalente à l'API depuis les journaux du Mac ; ce n'est pas votre facture d'abonnement"
+            "value": "Estimation équivalente à l’API depuis les journaux de votre ordinateur ; ce n’est pas votre facture d’abonnement"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stima equivalente alle API dai log del Mac; non è la fattura dell'abbonamento"
+            "value": "Stima equivalente alle API dai log del tuo computer; non è la fattura dell’abbonamento"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Estimativa equivalente à API dos logs do Mac; não é sua fatura de assinatura"
+            "value": "Estimativa equivalente à API dos logs do seu computador; não é sua fatura de assinatura"
           }
         }
       }
     },
-    "API-equivalent estimates from logs on your Mac": {
+    "API-equivalent estimates from logs on your computer": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "API-äquivalente Schätzungen aus Mac-Protokollen"
+            "value": "API-äquivalente Schätzungen aus Protokollen auf deinem Computer"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "API-equivalent estimates from logs on your Mac"
+            "value": "API-equivalent estimates from logs on your computer"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Estimaciones equivalentes a API de los registros de tu Mac"
+            "value": "Estimaciones equivalentes a API de los registros de tu computadora"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Estimations équivalentes à l'API depuis les journaux du Mac"
+            "value": "Estimations équivalentes à l’API depuis les journaux de votre ordinateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stime equivalenti alle API dai log del Mac"
+            "value": "Stime equivalenti alle API dai log del tuo computer"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Estimativas equivalentes à API dos logs do Mac"
+            "value": "Estimativas equivalentes à API dos logs do seu computador"
           }
         }
       }
@@ -1714,43 +1714,43 @@
         }
       }
     },
-    "Choose usage-relay.json from that folder here.": {
+    "Choose the published usage-relay.json below.": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wähle hier usage-relay.json aus diesem Ordner."
+            "value": "Wähle unten die veröffentlichte Datei usage-relay.json aus."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choose usage-relay.json from that folder here."
+            "value": "Choose the published usage-relay.json below."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Elige aquí usage-relay.json de esa carpeta."
+            "value": "Elige abajo el archivo usage-relay.json publicado."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Choisissez ici usage-relay.json dans ce dossier."
+            "value": "Choisissez ci-dessous le fichier usage-relay.json publié."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Scegli qui usage-relay.json da quella cartella."
+            "value": "Scegli qui sotto il file usage-relay.json pubblicato."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Escolha aqui o usage-relay.json dessa pasta."
+            "value": "Escolha abaixo o arquivo usage-relay.json publicado."
           }
         }
       }
@@ -1958,83 +1958,83 @@
         }
       }
     },
-    "Connect the Mac relay or refresh to load your quotas.": {
+    "Connect the relay file in Settings or refresh to load your quotas.": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verbinde das Mac-Relay oder aktualisiere, um Kontingente zu laden."
+            "value": "Verbinde die Relay-Datei in den Einstellungen oder aktualisiere, um deine Kontingente zu laden."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connect the Mac relay or refresh to load your quotas."
+            "value": "Connect the relay file in Settings or refresh to load your quotas."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conecta el relay de Mac o actualiza para cargar tus cuotas."
+            "value": "Conecta el archivo del relay en Ajustes o actualiza para cargar tus cuotas."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connectez le relais Mac ou actualisez pour charger vos quotas."
+            "value": "Connectez le fichier du relais dans Réglages ou actualisez pour charger vos quotas."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Collega il relay Mac o aggiorna per caricare le quote."
+            "value": "Collega il file relay in Impostazioni o aggiorna per caricare le tue quote."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conecte o relay do Mac ou atualize para carregar suas cotas."
+            "value": "Conecte o arquivo do relay em Ajustes ou atualize para carregar suas cotas."
           }
         }
       }
     },
-    "Connect the Mac relay to see cost estimates.": {
+    "Connect the relay to see cost estimates.": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verbinde das Mac-Relay für Kostenschätzungen."
+            "value": "Verbinde das Relay, um Kostenschätzungen zu sehen."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connect the Mac relay to see cost estimates."
+            "value": "Connect the relay to see cost estimates."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conecta el relay de Mac para ver estimaciones de costo."
+            "value": "Conecta el relay para ver estimaciones de costo."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Connectez le relais Mac pour voir les estimations de coût."
+            "value": "Connectez le relais pour voir les estimations de coût."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Collega il relay Mac per vedere le stime dei costi."
+            "value": "Collega il relay per vedere le stime dei costi."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conecte o relay do Mac para ver estimativas de custo."
+            "value": "Conecte o relay para ver estimativas de custo."
           }
         }
       }
@@ -3549,84 +3549,84 @@
         }
       }
     },
-    "From Claude Code on your Mac": {
+    "From Claude Code on your computer": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Von Claude Code auf deinem Mac"
+            "value": "Von Claude Code auf deinem Computer"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "From Claude Code on your Mac"
+            "value": "From Claude Code on your computer"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Desde Claude Code en tu Mac"
+            "value": "Desde Claude Code en tu computadora"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Depuis Claude Code sur votre Mac"
+            "value": "Depuis Claude Code sur votre ordinateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Da Claude Code sul tuo Mac"
+            "value": "Da Claude Code sul tuo computer"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Do Claude Code no seu Mac"
+            "value": "Do Claude Code no seu computador"
           }
         }
       }
     },
-    "From Codex logs on your Mac": {
+    "From Codex logs on your computer": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aus den Codex-Protokollen auf deinem Mac"
+            "value": "Aus den Codex-Protokollen auf deinem Computer"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "From Codex logs on your Mac"
+            "value": "From Codex logs on your computer"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Desde los registros de Codex en tu Mac"
+            "value": "Desde los registros de Codex en tu computadora"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Depuis les journaux de Codex sur votre Mac"
+            "value": "Depuis les journaux de Codex sur votre ordinateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dai log di Codex sul tuo Mac"
+            "value": "Dai log di Codex sul tuo computer"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dos registros do Codex no seu Mac"
+            "value": "Dos registros do Codex no seu computador"
           }
         }
       }
@@ -4162,43 +4162,43 @@
         }
       }
     },
-    "Install AImana for Mac and open it.": {
+    "On a Mac, install AImana for Mac. On Windows or Linux, install usage-relay and run usage-relay setup.": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installiere AI·mana für Mac und öffne es."
+            "value": "Installiere auf einem Mac AI·mana für Mac. Installiere unter Windows oder Linux usage-relay und führe usage-relay setup aus."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Install AI·mana for Mac and open it."
+            "value": "On a Mac, install AI·mana for Mac. On Windows or Linux, install usage-relay and run usage-relay setup."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Instala AI·mana para Mac y ábrelo."
+            "value": "En una Mac, instala AI·mana para Mac. En Windows o Linux, instala usage-relay y ejecuta usage-relay setup."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installez AI·mana pour Mac et ouvrez-le."
+            "value": "Sur Mac, installez AI·mana pour Mac. Sous Windows ou Linux, installez usage-relay et exécutez usage-relay setup."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Installa AI·mana per Mac e aprila."
+            "value": "Su Mac, installa AI·mana per Mac. Su Windows o Linux, installa usage-relay ed esegui usage-relay setup."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Instale o AI·mana para Mac e abra-o."
+            "value": "No Mac, instale o AI·mana para Mac. No Windows ou Linux, instale o usage-relay e execute usage-relay setup."
           }
         }
       }
@@ -4239,47 +4239,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "O iOS decide com que frequência o AI·mana pode atualizar em segundo plano, então os alertas podem chegar atrasados. Abrir o app verifica na hora."
-          }
-        }
-      }
-    },
-    "It publishes your usage to iCloud Drive, in the AImana folder.": {
-      "extractionState": "stale",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Es veröffentlicht deine Nutzung in iCloud Drive im Ordner AImana."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "It publishes your usage to iCloud Drive, in the AI·mana folder."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Publica tu uso en iCloud Drive, en la carpeta AImana."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Il publie votre utilisation dans iCloud Drive, dans le dossier AImana."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Pubblica il tuo utilizzo su iCloud Drive, nella cartella AImana."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ele publica seu uso no iCloud Drive, na pasta AImana."
           }
         }
       }
@@ -4530,84 +4489,84 @@
         }
       }
     },
-    "Mac relay file not found. Open Settings to connect it.": {
+    "Relay file not found. Open Settings to connect it.": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mac-Relay-Datei nicht gefunden. In Einstellungen verbinden."
+            "value": "Relay-Datei nicht gefunden. Öffne die Einstellungen, um sie zu verbinden."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mac relay file not found. Open Settings to connect it."
+            "value": "Relay file not found. Open Settings to connect it."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "No se encontró el archivo del relay de Mac. Ábrelo en Ajustes."
+            "value": "No se encontró el archivo del relay. Abre Ajustes para conectarlo."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fichier du relais Mac introuvable. Ouvrez Réglages pour le connecter."
+            "value": "Fichier du relais introuvable. Ouvrez Réglages pour le connecter."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "File relay Mac non trovato. Apri Impostazioni per collegarlo."
+            "value": "File relay non trovato. Apri Impostazioni per collegarlo."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arquivo do relay do Mac não encontrado. Abra Ajustes para conectá-lo."
+            "value": "Arquivo do relay não encontrado. Abra Ajustes para conectá-lo."
           }
         }
       }
     },
-    "Mac relay unavailable": {
+    "Relay unavailable": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mac-Relay nicht verfügbar"
+            "value": "Relay nicht verfügbar"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mac relay unavailable"
+            "value": "Relay unavailable"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Relay de Mac no disponible"
+            "value": "Relay no disponible"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Relais Mac indisponible"
+            "value": "Relais indisponible"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Relay Mac non disponibile"
+            "value": "Relay non disponibile"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Relay do Mac indisponível"
+            "value": "Relay indisponível"
           }
         }
       }
@@ -6894,42 +6853,42 @@
         }
       }
     },
-    "Set up AImana for Mac": {
+    "Connect your computer": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana für Mac einrichten"
+            "value": "Verbinde deinen Computer"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set up AI·mana for Mac"
+            "value": "Connect your computer"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configura AI·mana para Mac"
+            "value": "Conecta tu computadora"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configurer AI·mana pour Mac"
+            "value": "Connectez votre ordinateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configura AI·mana per Mac"
+            "value": "Collega il tuo computer"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Configure o AI·mana para Mac"
+            "value": "Conecte seu computador"
           }
         }
       }
@@ -7178,43 +7137,43 @@
         }
       }
     },
-    "Sign in again on your Mac (Claude Code / Codex), then refresh.": {
+    "Sign in again to Claude Code / Codex on your computer, then refresh.": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Auf dem Mac erneut bei Claude Code / Codex anmelden und aktualisieren."
+            "value": "Melde dich auf deinem Computer erneut bei Claude Code / Codex an und aktualisiere dann."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sign in again on your Mac (Claude Code / Codex), then refresh."
+            "value": "Sign in again to Claude Code / Codex on your computer, then refresh."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vuelve a iniciar sesión en tu Mac (Claude Code / Codex) y actualiza."
+            "value": "Vuelve a iniciar sesión en Claude Code / Codex en tu computadora y actualiza."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reconnectez-vous sur votre Mac (Claude Code / Codex), puis actualisez."
+            "value": "Reconnectez-vous à Claude Code / Codex sur votre ordinateur, puis actualisez."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Accedi di nuovo sul Mac (Claude Code / Codex), poi aggiorna."
+            "value": "Accedi di nuovo a Claude Code / Codex sul tuo computer, poi aggiorna."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Entre novamente no Mac (Claude Code / Codex) e atualize."
+            "value": "Entre novamente no Claude Code / Codex no seu computador e atualize."
           }
         }
       }
@@ -8033,43 +7992,43 @@
         }
       }
     },
-    "Widgets show what your Mac published the last time AImana ran, with how old it is. iOS decides when AImana can refresh in the background.": {
+    "Widgets show what your computer published the last time AImana ran, with how old it is. iOS decides when AImana can refresh in the background.": {
       "extractionState": "stale",
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Widgets zeigen, was dein Mac beim letzten Ausführen von AI·mana veröffentlicht hat, samt Alter der Daten. iOS entscheidet, wann AI·mana im Hintergrund aktualisieren darf."
+            "value": "Widgets zeigen, was dein Computer beim letzten Ausführen von AI·mana veröffentlicht hat, samt Alter der Daten. iOS entscheidet, wann AI·mana im Hintergrund aktualisieren darf."
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Widgets show what your Mac published the last time AI·mana ran, with how old it is. iOS decides when AI·mana can refresh in the background."
+            "value": "Widgets show what your computer published the last time AI·mana ran, with how old it is. iOS decides when AI·mana can refresh in the background."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Los widgets muestran lo que tu Mac publicó la última vez que se ejecutó AI·mana, con su antigüedad. iOS decide cuándo AI·mana puede actualizarse en segundo plano."
+            "value": "Los widgets muestran lo que tu computadora publicó la última vez que se ejecutó AI·mana, con su antigüedad. iOS decide cuándo AI·mana puede actualizarse en segundo plano."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les widgets affichent ce que votre Mac a publié lors de la dernière exécution d’AI·mana, avec son ancienneté. iOS décide quand AI·mana peut se mettre à jour en arrière-plan."
+            "value": "Les widgets affichent ce que votre ordinateur a publié lors de la dernière exécution d’AI·mana, avec son ancienneté. iOS décide quand AI·mana peut se mettre à jour en arrière-plan."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "I widget mostrano ciò che il Mac ha pubblicato l’ultima volta che AI·mana è stata eseguita, con la sua età. iOS decide quando AI·mana può aggiornarsi in background."
+            "value": "I widget mostrano ciò che il tuo computer ha pubblicato l’ultima volta che AI·mana è stata eseguita, con l’età dei dati. iOS decide quando AI·mana può aggiornarsi in background."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Os widgets mostram o que o seu Mac publicou na última vez que o AI·mana foi executado, com a idade dos dados. O iOS decide quando o AI·mana pode atualizar em segundo plano."
+            "value": "Os widgets mostram o que o seu computador publicou na última vez que o AI·mana foi executado, com a idade dos dados. O iOS decide quando o AI·mana pode atualizar em segundo plano."
           }
         }
       }

@@ -22,9 +22,9 @@ enum WidgetStrings {
         []
     }
 
-    /// "Sign in again" for providers the phone signs in to (their login may be renewed here or on the Mac), "Sign in
-    /// again on your Mac" when every provider involved is read only from the Mac relay.
+    /// "Sign in again" for providers the phone signs in to, "Sign in again on your computer" when every
+    /// provider involved is read only from the relay.
     static func signInAgain(for providerIDs: Set<String>) -> String {
-        providerIDs.isDisjoint(with: phoneSignInProviderIDs) ? text("Sign in again on your Mac") : text("Sign in again")
+        providerIDs.isDisjoint(with: phoneSignInProviderIDs) ? text("Sign in again on your computer") : text("Sign in again")
     }
 }

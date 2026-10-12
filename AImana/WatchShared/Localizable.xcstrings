@@ -1,42 +1,42 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "Check AImana for Mac": {
+    "Check the relay on your computer": {
       "localizations": {
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "AI·mana für Mac prüfen"
+            "value": "Relay auf deinem Computer prüfen"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Check AI·mana for Mac"
+            "value": "Check the relay on your computer"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Revisa AI·mana para Mac"
+            "value": "Revisa el relay en tu computadora"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vérifiez AI·mana pour Mac"
+            "value": "Vérifiez le relais sur votre ordinateur"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Controlla AI·mana per Mac"
+            "value": "Controlla il relay sul tuo computer"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verifique o AI·mana para Mac"
+            "value": "Verifique o relay no seu computador"
           }
         }
       }
@@ -530,6 +530,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sua cota de sessão mais usada, com a redefinição."
+          }
+        }
+      }
+    },
+    "Check relay": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relay prüfen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check relay"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisa el relay"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifiez le relais"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Controlla il relay"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verifique o relay"
           }
         }
       }

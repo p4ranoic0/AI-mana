@@ -10,11 +10,11 @@ public struct UsageInfo: Codable, Sendable, Equatable, Identifiable {
     public let lastUpdated: Date
     /// Credits and other balances; empty when the provider reports none. Older snapshots lack this key.
     public let details: [UsageDetail]
-    /// Local API-equivalent cost estimate, when the Mac relay publishes one.
+    /// Local API-equivalent cost estimate, when the relay publishes one.
     public let cost: CostReport?
     /// Recorded used-% readings, newest last. Empty when the relay has no history yet.
     public let history: [HistorySeries]
-    /// Where the Mac got this reading, when it came through the relay and the Mac said. Nil for phone readings,
+    /// Where the computer got this reading, when it came through the relay and included a source. Nil for phone readings,
     /// older relays and source values this build does not know.
     public let source: RelaySource?
 
@@ -68,7 +68,7 @@ public struct UsageInfo: Codable, Sendable, Equatable, Identifiable {
                   lastUpdated: lastUpdated, details: details, cost: cost, history: history, source: source)
     }
 
-    /// Same snapshot, tagged with where the Mac got it.
+    /// Same snapshot, tagged with where the computer got it.
     public func withSource(_ source: RelaySource?) -> UsageInfo {
         UsageInfo(providerID: providerID, providerName: providerName, windows: windows, plan: plan,
                   lastUpdated: lastUpdated, details: details, cost: cost, history: history, source: source)

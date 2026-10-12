@@ -290,7 +290,7 @@ private struct BurndownWindowView: View {
             } else {
                 VStack(alignment: .leading, spacing: SoftTheme.Space.sm) {
                     Text("Collecting data...").softText(.body).fontWeight(.semibold)
-                    Text("A reading is recorded each time AImana refreshes, and every few minutes by the Mac relay.")
+                    Text("A reading is recorded each time AImana refreshes, and every few minutes by the relay on your computer.")
                         .softText(.caption).foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -377,7 +377,7 @@ struct CostReportView: View {
                     }
                 }
             }
-            Text("API-equivalent estimate from logs on your Mac; not your subscription bill")
+            Text("API-equivalent estimate from logs on your computer; not your subscription bill")
                 .softText(.caption).foregroundStyle(.secondary)
         }
         .padding(SoftTheme.cardPadding)

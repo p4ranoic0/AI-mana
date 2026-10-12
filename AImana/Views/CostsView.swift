@@ -13,7 +13,7 @@ struct CostsView: View {
                 VStack(alignment: .leading, spacing: SoftTheme.Space.xl) {
                     VStack(alignment: .leading, spacing: SoftTheme.Space.xs) {
                         Text("Costs").softText(.title)
-                        Text("API-equivalent estimates from logs on your Mac")
+                        Text("API-equivalent estimates from logs on your computer")
                             .softText(.body).foregroundStyle(.secondary)
                     }
                     if sizeClass == .regular {
@@ -28,7 +28,7 @@ struct CostsView: View {
                     if usages.isEmpty {
                         VStack(alignment: .leading, spacing: SoftTheme.Space.sm) {
                             Text("No usage data").softText(.headline)
-                            Text("Connect the Mac relay to see cost estimates.")
+                            Text("Connect the relay to see cost estimates.")
                                 .softText(.body).foregroundStyle(.secondary)
                         }
                     }

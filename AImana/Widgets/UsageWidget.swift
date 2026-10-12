@@ -443,7 +443,7 @@ struct LockRectangularView: View {
         } else {
             Text(entry.loginRequiredIDs.isEmpty ? WidgetStrings.text("AImana · No quota")
                  : entry.loginRequiredIDs.isDisjoint(with: WidgetStrings.phoneSignInProviderIDs)
-                 ? WidgetStrings.text("Sign in on Mac") : WidgetStrings.text("Sign in again"))
+                 ? WidgetStrings.text("Sign in on your computer") : WidgetStrings.text("Sign in again"))
                 .font(.caption).lineLimit(1).minimumScaleFactor(0.8)
         }
     }

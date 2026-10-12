@@ -2,7 +2,7 @@ import AImanaCore
 import SwiftUI
 import UniformTypeIdentifiers
 
-/// Connects the app to the file AImana for Mac publishes in iCloud Drive.
+/// Connects the app to the relay file published by the user's computer.
 struct SettingsView: View {
     @Environment(\.colorScheme) private var scheme
     @Binding var mode: DisplayMode
@@ -17,7 +17,7 @@ struct SettingsView: View {
     @State private var errorMessage: String?
     @State private var refreshInterval = RefreshPreferences.interval()
     @State private var liveActivitiesEnabled = LiveActivityPreferences.isEnabled()
-    /// Where the Mac got each provider's numbers, from the last saved snapshot.
+    /// Where the computer got each provider's numbers, from the last saved snapshot.
     @State private var sources = Self.savedSources()
     /// Debug aid for screenshots: `-open-notifications` opens the Notifications screen directly.
     @State private var showNotifications = ProcessInfo.processInfo.arguments.contains("-open-notifications")
@@ -82,7 +82,7 @@ struct SettingsView: View {
                 } header: {
                     Text("Updates")
                 } footer: {
-                    Text("Widgets show what your Mac published the last time AImana ran, with how old it is. iOS decides when AImana can refresh in the background.")
+                    Text("Widgets show what your computer published the last time AImana ran, with how old it is. iOS decides when AImana can refresh in the background.")
                 }
                 .listRowBackground(SoftTheme.olive.opacity(scheme == .dark ? 0.14 : 0.18))
                 .onChange(of: refreshInterval) { _, interval in
@@ -118,9 +118,9 @@ struct SettingsView: View {
                         Text(errorMessage).foregroundStyle(.red)
                     }
                 } header: {
-                    Text("AImana for Mac")
+                    Text("Your computer")
                 } footer: {
-                    Text("AImana for Mac publishes usage-relay.json to iCloud Drive, in the AImana folder. Choose that file once.")
+                    Text("AImana for Mac, or usage-relay on Windows and Linux, publishes usage-relay.json to a synced folder (iCloud Drive or OneDrive). Choose that file once.")
                 }
                 .listRowBackground(SoftTheme.blue.opacity(scheme == .dark ? 0.12 : 0.20))
                 .id("relay")
@@ -133,7 +133,7 @@ struct SettingsView: View {
                 if launchArgs.contains("-open-more-providers") || launchArgs.contains("-open-api-key") {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { showMoreProviders = true }
                 }
-                // Debug aid for screenshots: `-settings-scroll-relay` jumps to the AImana for Mac section.
+                // Debug aid for screenshots: `-settings-scroll-relay` jumps to the relay section.
                 if ProcessInfo.processInfo.arguments.contains("-settings-scroll-relay") {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { proxy.scrollTo("relay", anchor: .top) }
                 }
@@ -154,7 +154,7 @@ struct SettingsView: View {
                         try BookmarkRelaySource.connect(to: url)
                         connectedFile = BookmarkRelaySource.connectedFileName
                         errorMessage = nil
-                        sources = []   // a different Mac may report different sources; shown again next time
+                        sources = []   // a different computer may report different sources; shown again next time
                         onChanged()
                     } catch {
                         errorMessage = AppStrings.text("Could not access that file.")
