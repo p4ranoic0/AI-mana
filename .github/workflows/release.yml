@@ -1,0 +1,123 @@
+name: Release usage-relay
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  macos:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+      - name: Build universal binary
+        run: swift build -c release --package-path AImana/Relay --arch arm64 --arch x86_64
+      - name: Verify and package
+        shell: bash
+        run: |
+          set -euo pipefail
+          binary="$(swift build -c release --package-path AImana/Relay --arch arm64 --arch x86_64 --show-bin-path)/usage-relay"
+          lipo -verify_arch arm64 x86_64 "$binary"
+          actual="$("$binary" --version)"
+          [[ "$actual" =~ ^usage-relay\ [0-9]+\.[0-9]+\.[0-9]+$ ]]
+          version="${actual#usage-relay }"
+          if [[ "$GITHUB_EVENT_NAME" == push ]]; then
+            [[ "$version" == "${GITHUB_REF_NAME#v}" ]]
+          fi
+          mkdir -p package dist
+          cp "$binary" package/usage-relay
+          cp LICENSE package/LICENSE
+          printf '%s\n' \
+            'Run: ./usage-relay run --output /path/to/synced/usage-relay.json' \
+            'Choose that file in AI·mana on iPhone or iPad.' \
+            'This macOS binary is not notarized. If Gatekeeper blocks it, run:' \
+            '  xattr -d com.apple.quarantine usage-relay' \
+            'You can also build from source.' > package/README.txt
+          tar -czf "dist/usage-relay-${version}-macos-universal.tar.gz" -C package usage-relay LICENSE README.txt
+      - uses: actions/upload-artifact@v5
+        with:
+          name: usage-relay-macos-universal
+          path: dist/*.tar.gz
+          if-no-files-found: error
+
+  linux:
+    strategy:
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            arch: x86_64
+          - runner: ubuntu-24.04-arm
+            arch: aarch64
+    runs-on: ${{ matrix.runner }}
+    container: swift:6.1
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build static Swift binary
+        run: swift build -c release --package-path AImana/Relay --static-swift-stdlib
+      - name: Verify and package
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$(uname -m)" == "${{ matrix.arch }}" ]]
+          binary="$(swift build -c release --package-path AImana/Relay --static-swift-stdlib --show-bin-path)/usage-relay"
+          actual="$("$binary" --version)"
+          [[ "$actual" =~ ^usage-relay\ [0-9]+\.[0-9]+\.[0-9]+$ ]]
+          version="${actual#usage-relay }"
+          if [[ "$GITHUB_EVENT_NAME" == push ]]; then
+            [[ "$version" == "${GITHUB_REF_NAME#v}" ]]
+          fi
+          mkdir -p package dist
+          cp "$binary" package/usage-relay
+          cp LICENSE package/LICENSE
+          printf '%s\n' \
+            'Run: ./usage-relay run --output /path/to/synced/usage-relay.json' \
+            'Choose that file in AI·mana on iPhone or iPad.' \
+            'Linux requires the system libcurl library (for Ubuntu: apt install libcurl4).' \
+            'You can also build from source.' > package/README.txt
+          tar -czf "dist/usage-relay-${version}-linux-${{ matrix.arch }}.tar.gz" -C package usage-relay LICENSE README.txt
+      - uses: actions/upload-artifact@v5
+        with:
+          name: usage-relay-linux-${{ matrix.arch }}
+          path: dist/*.tar.gz
+          if-no-files-found: error
+
+  release:
+    if: github.event_name == 'push'
+    needs: [macos, linux]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: usage-relay-*
+          path: dist
+          merge-multiple: true
+      - name: Create release with checksums and changelog notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="$GITHUB_REF_NAME"
+          version="${tag#v}"
+          cd dist
+          test "$(find . -maxdepth 1 -name '*.tar.gz' | wc -l | tr -d ' ')" -eq 3
+          sha256sum ./*.tar.gz > SHA256SUMS.txt
+          cd ..
+          awk -v version="$version" '
+            $0 ~ "^## \\[" version "\\] - " { in_section=1 }
+            in_section && /^## / && $0 !~ "^## \\[" version "\\] - " { exit }
+            in_section { print }
+          ' CHANGELOG.md > release-notes.md
+          test -s release-notes.md
+          gh release create "$tag" dist/*.tar.gz dist/SHA256SUMS.txt \
+            --title "AI·mana $tag" --notes-file release-notes.md

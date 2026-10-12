@@ -66,7 +66,7 @@ that provider. AI·mana runs no server and has no analytics. See [PRIVACY.md](PR
 
 ## Build and install
 
-There are no prebuilt binaries yet, so you build it yourself:
+To install the apps, build them from source:
 
 ```bash
 git clone https://github.com/p4ranoic0/AI-mana.git AImana
@@ -84,9 +84,12 @@ cd AImana && xcodegen generate && open AImana.xcodeproj
 
 Run the tests with `swift test` in `AImana/AImanaCore` and in `AImana/Relay`.
 
-### Linux relay CLI
+### Relay CLI for macOS and Linux
 
-Build with `swift build -c release --package-path AImana/Relay`, then run
+Download a prebuilt `usage-relay` binary for macOS or Linux from the
+[Releases page](https://github.com/p4ranoic0/AI-mana/releases), or build from source.
+On Linux, the binary also needs the system `libcurl` library (for Ubuntu: `apt install libcurl4`).
+To build it from source, run `swift build -c release --package-path AImana/Relay`, then
 `AImana/Relay/.build/release/usage-relay run --output /path/to/synced/usage-relay.json`.
 Choose that file
 on the iPhone with **Choose relay file…**. Without `--output`, Linux writes to

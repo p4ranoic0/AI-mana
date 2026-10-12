@@ -23,6 +23,10 @@ func printCosts(_ publisher: RelayPublisher) async {
 }
 
 let args = Array(CommandLine.arguments.dropFirst())
+if args == ["--version"] || args == ["version"] {
+    print("usage-relay \(RelayVersion.current)")
+    exit(0)
+}
 func value(_ flag: String) -> String? {
     guard let i = args.firstIndex(of: flag), args.indices.contains(i + 1) else { return nil }
     return args[i + 1]
@@ -90,8 +94,8 @@ if args.first == "costs" {
     exit(0)
 }
 #if os(Linux)
-print("usage-relay run [--output FILE] [--no-costs] [--state-dir DIR] [--cache-dir DIR]\nusage-relay check FILE\nusage-relay costs\nPass --output with a path inside a synced folder to share usage-relay.json with your iPhone.")
+print("usage-relay --version\nusage-relay run [--output FILE] [--no-costs] [--state-dir DIR] [--cache-dir DIR]\nusage-relay check FILE\nusage-relay costs\nPass --output with a path inside a synced folder to share usage-relay.json with your iPhone.")
 #else
-print("usage-relay run [--output FILE] [--no-costs] [--state-dir DIR]\nusage-relay check FILE\nusage-relay costs\nusage-relay statusline install|uninstall|status")
+print("usage-relay --version\nusage-relay run [--output FILE] [--no-costs] [--state-dir DIR]\nusage-relay check FILE\nusage-relay costs\nusage-relay statusline install|uninstall|status")
 #endif
 exit(args.isEmpty ? 0 : 2)

@@ -72,7 +72,7 @@ a ese proveedor. AI·mana no tiene servidor ni analítica. Ver [PRIVACY.md](PRIV
 
 ## Compilar e instalar
 
-Todavía no hay binarios publicados, así que se compila desde el código:
+Para instalar las apps, compílalas desde el código:
 
 ```bash
 git clone https://github.com/p4ranoic0/AI-mana.git AImana
@@ -90,9 +90,12 @@ cd AImana && xcodegen generate && open AImana.xcodeproj
 
 Para correr los tests: `swift test` en `AImana/AImanaCore` y en `AImana/Relay`.
 
-### Relay en Linux
+### Relay para macOS y Linux
 
-Compila con `swift build -c release --package-path AImana/Relay` y ejecuta
+Descarga un binario precompilado de `usage-relay` para macOS o Linux en la
+[página de Releases](https://github.com/p4ranoic0/AI-mana/releases), o compílalo desde el código.
+En Linux, el binario también necesita la biblioteca `libcurl` del sistema (en Ubuntu: `apt install libcurl4`).
+Para compilarlo desde el código, ejecuta `swift build -c release --package-path AImana/Relay` y luego
 `AImana/Relay/.build/release/usage-relay run --output /ruta/sincronizada/usage-relay.json`.
 En el iPhone, abre ese archivo con **Elegir archivo del relay…**. Sin `--output`, Linux escribe en
 `~/AImana/usage-relay.json`. Los datos y el estado usan `${XDG_DATA_HOME:-~/.local/share}/aimana`;
