@@ -133,6 +133,9 @@ está aislado y cubierto por tests con datos de ejemplo. Si ves números raros, 
 AI·mana es gratis. Si te ahorra quedarte sin cuota a mitad de una tarea, puedes apoyar su desarrollo:
 
 - [Ko-fi](https://ko-fi.com/post/AImana-your-AI-coding-quotas-on-iPhone-Watch-an-S1D028MW28): única o mensual, con tarjeta o PayPal. Escribe "AI·mana" en tu mensaje.
+- Yape (desde Perú): escanea este código QR con la app de Yape.
+
+<img src="docs/donate/yape.png" alt="Código QR de Yape para apoyar AI·mana" width="180">
 
 También ayudan las estrellas, los reportes de errores y las traducciones.
 

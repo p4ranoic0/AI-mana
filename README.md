@@ -129,6 +129,9 @@ AI·mana is free. If it saves you from running out of quota halfway through a ta
 development:
 
 - [Ko-fi](https://ko-fi.com/post/AImana-your-AI-coding-quotas-on-iPhone-Watch-an-S1D028MW28): one-time or monthly, by card or PayPal. Write "AI·mana" in your message.
+- Yape (from Peru): scan the QR code below with the Yape app.
+
+<img src="docs/donate/yape.png" alt="Yape QR code to support AI·mana" width="180">
 
 Stars, bug reports and translations help too.
 
