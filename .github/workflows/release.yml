@@ -43,12 +43,22 @@ jobs:
           Run .\usage-relay.exe setup from PowerShell. Then choose the published file in AI·mana on iPhone.
           Keep usage-relay.exe and usage-relay-task.exe together. The scheduled task runs without a visible console window.
           '@ | Set-Content package/README.txt
-          $swiftBin = Split-Path (Get-Command swift.exe).Source
-          Get-ChildItem $swiftBin -Filter '*.dll' -File | ForEach-Object { Copy-Item $_.FullName package/ }
+          # The Swift runtime DLLs live in the Runtimes folder on PATH, not next to swift.exe.
+          $runtimeDirs = $env:PATH -split ';' | Where-Object { $_ -match '\\Swift\\Runtimes\\' -and (Test-Path $_) }
+          if (-not $runtimeDirs) { throw 'Swift runtime folder not found on PATH' }
+          foreach ($dir in $runtimeDirs) {
+            Get-ChildItem $dir -Filter '*.dll' -File | ForEach-Object { Copy-Item $_.FullName package/ -Force }
+          }
+          # App-local Visual C++ runtime, so a Windows without the VC++ redistributable can run it.
+          foreach ($dll in 'vcruntime140.dll', 'vcruntime140_1.dll', 'msvcp140.dll') {
+            $src = Join-Path "$env:SystemRoot\System32" $dll
+            if (Test-Path $src) { Copy-Item $src package/ -Force }
+          }
+          Get-ChildItem package -Filter '*.dll' | ForEach-Object { $_.Name } | Sort-Object | Write-Output
           $savedPath = $env:PATH
           try {
             $env:PATH = "$env:SystemRoot\System32;$env:SystemRoot"
-            $isolated = (& (Resolve-Path package/usage-relay.exe) --version).Trim()
+            $isolated = "$(& (Resolve-Path package/usage-relay.exe) --version)".Trim()
             if ($LASTEXITCODE -ne 0 -or $isolated -ne $actual) { throw 'Packaged executable cannot run without the Swift toolchain on PATH' }
             $taskCheck = Start-Process -FilePath (Resolve-Path package/usage-relay-task.exe) -ArgumentList '--self-check' -Wait -PassThru
             if ($taskCheck.ExitCode -ne 0) { throw 'Packaged task executable cannot run without the Swift toolchain on PATH' }
