@@ -108,6 +108,8 @@ public struct RelaySetup: Sendable {
             try statusline.install()
             lines.append("Claude statusline capture installed")
         }
+        // The scheduler can start immediately; its configuration must already exist.
+        try writeRecord(output: output, interval: options.interval, statuslineInstalled: claude, scheduled: false)
         var scheduled = false
         switch paths.platform {
         case .windows:
@@ -121,8 +123,8 @@ public struct RelaySetup: Sendable {
         case .linux:
             if executor.run("/usr/bin/systemctl", ["--user", "show-environment"]) == 0 {
                 try FileManager.default.createDirectory(at: serviceFile.deletingLastPathComponent(), withIntermediateDirectories: true)
-                try Data(Self.systemdService(executable: executable, output: output,
-                                             environment: paths.environment).utf8).write(to: serviceFile, options: .atomic)
+                try Data(Self.systemdService(executable: executable, configuration: recordFile).utf8)
+                    .write(to: serviceFile, options: .atomic)
                 try Data(Self.systemdTimer(interval: options.interval).utf8).write(to: timerFile, options: .atomic)
                 guard executor.run("/usr/bin/systemctl", ["--user", "daemon-reload"]) == 0,
                       executor.run("/usr/bin/systemctl", ["--user", "enable", "--now", "aimana-relay.timer"]) == 0 else {
@@ -134,19 +136,25 @@ public struct RelaySetup: Sendable {
                 lines.append("systemd user manager unavailable. Add this crontab line:")
                 let cadence = options.interval <= 59 ? "*/\(options.interval) * * * *"
                     : "* * * * * [ $(( $(date +\\%s) / 60 \\% \(options.interval) )) -eq 0 ] &&"
-                lines.append("\(cadence) \(Self.shellQuote(executable.path)) run --output \(Self.shellQuote(output.path))")
+                let command = Self.linuxRunCommand(executable: executable, configuration: recordFile,
+                                                   quote: Self.shellQuote)
+                lines.append("\(cadence) \(command)")
             }
         case .macOS: break
         }
-        let record = SetupRecord(output: output, interval: options.interval, statuslineInstalled: claude,
+        try writeRecord(output: output, interval: options.interval, statuslineInstalled: claude, scheduled: scheduled)
+        lines.append("On iPhone: AI·mana › Settings › Choose relay file… Select this file in iCloud Drive or OneDrive.")
+        return lines
+    }
+
+    private func writeRecord(output: URL, interval: Int, statuslineInstalled: Bool, scheduled: Bool) throws {
+        let record = SetupRecord(output: output, interval: interval, statuslineInstalled: statuslineInstalled,
                                  schedulerInstalled: scheduled, executable: executable,
                                  taskExecutable: paths.platform == .windows ? taskExecutable : nil,
                                  taskName: paths.platform == .windows ? configuredTaskName : nil,
-                                 taskConfiguration: paths.platform == .windows ? RelayTaskConfiguration(paths: paths) : nil)
+                                 taskConfiguration: paths.platform == .macOS ? nil : RelayTaskConfiguration(paths: paths))
         try FileManager.default.createDirectory(at: paths.supportDirectory, withIntermediateDirectories: true)
         try JSONEncoder().encode(record).write(to: recordFile, options: .atomic)
-        lines.append("On iPhone: AI·mana › Settings › Choose relay file… Select this file in iCloud Drive or OneDrive.")
-        return lines
     }
 
     public func doctor() -> (lines: [String], healthy: Bool) {
@@ -255,15 +263,14 @@ public struct RelaySetup: Sendable {
          "/TR", "\"\(executable.path)\" --config \"\(configuration.path)\"", "/F"]
     }
 
-    public static func systemdService(executable: URL, output: URL, environment: [String: String]) -> String {
-        var lines = ["[Unit]", "Description=AI·mana usage relay", "", "[Service]", "Type=oneshot"]
-        for key in ["CLAUDE_CONFIG_DIR", "CODEX_HOME", "XDG_DATA_HOME", "XDG_CACHE_HOME"] {
-            if let value = environment[key], !value.isEmpty {
-                lines.append("Environment=\"\(key)=\(systemdEscape(value))\"")
-            }
-        }
-        lines.append("ExecStart=\(systemdQuote(executable.path)) run --output \(systemdQuote(output.path))")
-        return lines.joined(separator: "\n") + "\n"
+    public static func linuxRunCommand(executable: URL, configuration: URL,
+                                       quote: (String) -> String) -> String {
+        "\(quote(executable.path)) run --config \(quote(configuration.path))"
+    }
+
+    public static func systemdService(executable: URL, configuration: URL) -> String {
+        let command = linuxRunCommand(executable: executable, configuration: configuration, quote: systemdQuote)
+        return "[Unit]\nDescription=AI·mana usage relay\n\n[Service]\nType=oneshot\nExecStart=\(command)\n"
     }
 
     public static func systemdTimer(interval: Int) -> String {

@@ -1,6 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+assert_equal() {
+  local check="$1" expected="$2" actual="$3"
+  printf 'CHECK %s | expected: %s | actual: %s\n' "$check" "$expected" "$actual"
+  if [[ "$actual" != "$expected" ]]; then exit 1; fi
+}
+assert_contains() {
+  local check="$1" expected="$2" actual="$3"
+  printf 'CHECK %s | expected: %s | actual: %s\n' "$check" "$expected" "$actual"
+  if [[ "$actual" != *"$expected"* ]]; then exit 1; fi
+}
+assert_file() {
+  local actual=missing
+  if [[ -f "$2" ]]; then actual=present; fi
+  assert_equal "$1 ($2)" present "$actual"
+}
+assert_usage() {
+  assert_contains "$1 Claude usage" 'claude: source=statusline error=- session=23' "$2"
+  assert_contains "$1 Codex usage" 'codex: source=logs error=- session=15' "$2"
+}
+
 if [[ -n "${AIMANA_RELAY_BIN:-}" ]]; then
   relay="$AIMANA_RELAY_BIN"
 else
@@ -15,6 +35,7 @@ export XDG_CACHE_HOME="$root/cache"
 settings="$CLAUDE_CONFIG_DIR/settings.json"
 output="$root/out/usage-relay.json"
 capture="$XDG_DATA_HOME/aimana/claude-statusline.json"
+config="$XDG_DATA_HOME/aimana/setup.json"
 mkdir -p "$CLAUDE_CONFIG_DIR/projects" "$CODEX_HOME/sessions/2026/10/12"
 cp AImana/Relay/Tests/Fixtures/codex-session.jsonl "$CODEX_HOME/sessions/2026/10/12/session.jsonl"
 printf '%s' '{"theme":"dark"}' > "$settings"
@@ -23,16 +44,27 @@ trap cleanup EXIT
 
 setup_output="$("$relay" setup --output "$output" --interval 1)"
 printf '%s\n' "$setup_output"
-test -f "$output"
-"$relay" check "$output"
-command="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["statusLine"]["command"])' "$settings")"
-test -n "$command"
-sh -c "$command" < AImana/Relay/Tests/Fixtures/statusline.json
-test -f "$capture"
-python3 -c 'import json,sys; assert json.load(open(sys.argv[1]))["capturedAt"]' "$capture"
+assert_file 'initial output' "$output"
+assert_file 'saved setup configuration' "$config"
+initial_check="$("$relay" check "$output")"
+assert_contains 'initial output decodes' 'version ' "$initial_check"
+command="$(perl -MJSON::PP -0777 -ne 'print decode_json($_)->{statusLine}{command}' "$settings")"
+assert_contains 'configured statusline command' 'statusline.sh' "$command"
+status_text="$(sh -c "$command" < AImana/Relay/Tests/Fixtures/statusline.json)"
+assert_equal 'configured statusline text' 'CI Opus' "$status_text"
+assert_file 'statusline capture file' "$capture"
+captured_at="$(perl -MJSON::PP -0777 -ne 'print decode_json($_)->{capturedAt} // ""' "$capture")"
+assert_equal 'statusline capture timestamp present' true "$([[ -n "$captured_at" ]] && echo true || echo false)"
 
-if printf '%s' "$setup_output" | grep -q 'systemd user timer installed'; then
-  systemctl --user is-enabled aimana-relay.timer
+"$relay" run --output "$output" --no-costs
+captured_check="$("$relay" check "$output")"
+assert_usage 'published after capture' "$captured_check"
+
+if [[ "$setup_output" == *'systemd user timer installed'* ]]; then
+  enabled="$(systemctl --user is-enabled aimana-relay.timer)"
+  assert_equal 'systemd timer enabled' enabled "$enabled"
+  service="$(cat "$HOME/.config/systemd/user/aimana-relay.service")"
+  assert_contains 'systemd run configuration' "run --config \"$config\"" "$service"
   before="$(stat -c %Y "$output")"
   sleep 2
   systemctl --user start aimana-relay.service
@@ -41,22 +73,32 @@ if printf '%s' "$setup_output" | grep -q 'systemd user timer installed'; then
     if (( $(stat -c %Y "$output") > before )); then changed=true; break; fi
     sleep 1
   done
-  test "$changed" = true
-  "$relay" doctor | grep -q '(recent)'
+  assert_equal 'scheduled output modification' true "$changed"
+  scheduled_check="$("$relay" check "$output")"
+  assert_usage 'scheduled' "$scheduled_check"
+  doctor_output="$("$relay" doctor)"
+  assert_contains 'doctor recent capture' '(recent)' "$doctor_output"
 else
-  printf '%s\n' "$setup_output" | grep -q 'systemd user manager unavailable'
-  printf '%s\n' "$setup_output" | grep -qF '*/1 * * * *'
-  doctor_output="$("$relay" doctor)" && doctor_ok=true || doctor_ok=false
-  printf '%s\n' "$doctor_output" | grep -q '(recent)'
-  if test "$doctor_ok" = true; then
-    echo 'doctor unexpectedly accepted a missing scheduler' >&2
-    exit 1
-  fi
+  assert_contains 'systemd unavailable' 'systemd user manager unavailable' "$setup_output"
+  assert_contains 'cron cadence' '*/1 * * * *' "$setup_output"
+  assert_contains 'cron run configuration' "run --config '$config'" "$setup_output"
+  cron_line="$(printf '%s\n' "$setup_output" | grep '^\*/1 \* \* \* \* ')"
+  cron_command="${cron_line#\*/1 \* \* \* \* }"
+  env -u CLAUDE_CONFIG_DIR -u CODEX_HOME -u XDG_DATA_HOME -u XDG_CACHE_HOME sh -c "$cron_command"
+  cron_check="$("$relay" check "$output")"
+  assert_usage 'cron fallback' "$cron_check"
+  doctor_ok=false
+  doctor_output="$("$relay" doctor)" && doctor_ok=true || true
+  assert_contains 'doctor recent capture' '(recent)' "$doctor_output"
+  assert_equal 'doctor detects missing scheduler' false "$doctor_ok"
 fi
 "$relay" uninstall
 trap - EXIT
-test "$(cat "$settings")" = '{"theme":"dark"}'
+restored_settings="$(cat "$settings")"
+assert_equal 'settings restored' '{"theme":"dark"}' "$restored_settings"
 if command -v systemctl >/dev/null && systemctl --user show-environment >/dev/null 2>&1; then
-  ! systemctl --user is-enabled aimana-relay.timer >/dev/null 2>&1
+  enabled=false
+  systemctl --user is-enabled aimana-relay.timer >/dev/null 2>&1 && enabled=true || true
+  assert_equal 'timer removed' false "$enabled"
 fi
 rm -rf "$root"

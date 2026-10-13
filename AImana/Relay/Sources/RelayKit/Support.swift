@@ -6,7 +6,7 @@ import FoundationNetworking
 
 /// Every location the relay reads or writes. Tests and debug runs point these at temporary directories.
 public struct RelayPaths: Sendable, Equatable {
-    public enum Platform: Sendable { case macOS, linux, windows }
+    public enum Platform: String, Codable, Sendable { case macOS, linux, windows }
     public static var currentPlatform: Platform {
         #if os(Windows)
         .windows

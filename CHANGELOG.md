@@ -4,9 +4,15 @@ All notable changes to AI·mana are documented here. This project follows [Keep 
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-13
+
 ### Changed
 
 - The iPhone, iPad, widgets and Watch now say "your computer" instead of "your Mac" for the relay, which can run on a Mac, Windows or Linux. The Settings section is now called "Your computer".
+
+### Fixed
+
+- The Linux systemd timer and printed cron command now keep the custom Claude, Codex, data and cache folders used during setup.
 
 ## [1.1.0] - 2026-10-12
 

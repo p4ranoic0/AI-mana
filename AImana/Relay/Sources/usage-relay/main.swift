@@ -75,9 +75,11 @@ if args.first == "statusline-capture" {
     } catch { fail("statusline capture failed: \(error)") }
 }
 if args.first == "run" {
-    let options = RelayOptions(output: value("--output").map(path) ?? value("--out").map(path) ?? paths.defaultOutput,
-                               includeCosts: !args.contains("--no-costs"))
-    do { _ = try await RelayRun.publish(paths: paths, options: options); exit(0) }
+    do {
+        let (runPaths, options) = try RelayRun.resolve(arguments: Array(args.dropFirst()), defaultPaths: paths)
+        _ = try await RelayRun.publish(paths: runPaths, options: options)
+        exit(0)
+    }
     catch {
         #if canImport(Darwin)
         fputs("publish failed: \(error)\n", stderr)
@@ -126,5 +128,5 @@ if args.first == "costs" {
     await printCosts(publisher)
     exit(0)
 }
-print("usage-relay --version\nusage-relay run [--output FILE] [--no-costs] [--state-dir DIR] [--cache-dir DIR]\nusage-relay setup [--output FILE] [--interval MINUTES]\nusage-relay doctor\nusage-relay uninstall\nusage-relay check FILE\nusage-relay costs\nusage-relay statusline install|uninstall|status")
+print("usage-relay --version\nusage-relay run [--output FILE | --config SETUP_JSON] [--no-costs] [--state-dir DIR] [--cache-dir DIR]\nusage-relay setup [--output FILE] [--interval MINUTES]\nusage-relay doctor\nusage-relay uninstall\nusage-relay check FILE\nusage-relay costs\nusage-relay statusline install|uninstall|status")
 exit(args.isEmpty ? 0 : 2)
