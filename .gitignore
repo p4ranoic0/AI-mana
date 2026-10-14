@@ -18,3 +18,12 @@ Builds/
 
 # Local signing identity
 AImana/Config/Local.xcconfig
+
+# Android local build files
+Android/.gradle/
+Android/.idea/
+Android/**/build/
+Android/local.properties
+Android/**/*.jks
+Android/**/*.keystore
+Android/captures/

@@ -1,3 +1,5 @@
+Install: https://p4ranoic0.github.io/AI-mana/
+
 # AI·mana
 
 **Tus cuotas y tu gasto en herramientas de IA para programar, nativo en iPhone, iPad, Apple Watch y Mac.**
@@ -70,7 +72,7 @@ dispositivo a ese proveedor. AI·mana no tiene servidor ni analítica. Ver [PRIV
 
 ## Primeros pasos
 
-La configuración tiene tres pasos. Síguelos en orden.
+La configuración tiene tres pasos. Síguelos en orden. Android puede usar el mismo archivo del relay.
 
 ### Qué necesitas
 
@@ -109,27 +111,17 @@ Hazlo en la computadora donde usas Claude Code o Codex. Elige tu sistema:
 
 **Mac**
 
-1. En el mismo proyecto de Xcode, elige el esquema `AImanaMac` y **My Mac**, y pulsa Run. La app aparece en la
-   barra de menús.
-2. En sus ajustes, instala la integración del statusline de Claude Code y comprueba que iCloud Drive esté
-   disponible.
+1. Descarga [AImana.dmg](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana.dmg), ábrelo y arrastra AI·mana a Aplicaciones. Iníciala desde Aplicaciones; aparecerá en la barra de menús.
+2. Esta descarga no está notarizada. En macOS 15 o posterior, tras el primer bloqueo ve una vez a **Configuración del Sistema › Privacidad y seguridad › Abrir de todos modos**. En versiones anteriores, haz clic derecho en la app y elige **Abrir**.
+3. En sus ajustes, instala la integración del statusline de Claude Code y comprueba que iCloud Drive esté disponible.
 
 La app publica sola `iCloud Drive/AImana/usage-relay.json`.
 
 **Windows**
 
-1. Instala [Scoop](https://scoop.sh/) si no lo tienes y luego, en PowerShell:
-
-   ```powershell
-   scoop bucket add aimana https://github.com/p4ranoic0/scoop-bucket
-   scoop install usage-relay
-   usage-relay setup
-   ```
-
-2. `setup` muestra la ruta del archivo publicado. Tenla a mano para el paso 3.
-
-Sin Scoop: descarga el ZIP de Windows desde [Releases](https://github.com/p4ranoic0/AI-mana/releases), extrae todos
-los archivos en una misma carpeta y ejecuta `.\usage-relay.exe setup` desde ella.
+1. Descarga [AImana-Setup.exe](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana-Setup.exe) y haz doble clic. El asistente pide la carpeta sincronizada y publica el archivo del relay.
+2. El instalador no está firmado. Si aparece SmartScreen, elige **Más información → Ejecutar de todas formas**.
+3. Guarda la carpeta que muestra la pantalla final para el paso 3. Si hace falta, usa **AI·mana — check setup** en Inicio.
 
 **Linux**
 
@@ -160,6 +152,10 @@ usuario en Linux).
 3. Tus cuotas de Claude Code y Codex aparecen en el panel. Añade los widgets, la app del Watch o la Live Activity si
    quieres.
 
+### Android: instala la app
+
+Descarga [AImana.apk](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana.apk) en tu teléfono Android y ábrelo para instalarlo. Android puede pedir permiso para instalar desde el navegador o Archivos. En AI·mana, elige el mismo `usage-relay.json` con el selector de archivos de Android. Puedes revocar ese permiso después.
+
 ### Si algo no aparece
 
 - En Windows o Linux: ejecuta `usage-relay doctor`. Revisa cada parte y te dice cómo arreglar lo que falte.
@@ -170,9 +166,16 @@ usuario en Linux).
 
 ## Más detalles
 
+### Para usuarios de terminal
+
+- Si macOS aún bloquea la app copiada después de aprobarla en Privacidad y seguridad, quita el atributo de cuarentena con `xattr -dr com.apple.quarantine /Applications/AImana.app` y ábrela otra vez.
+- Windows: instala con [Scoop](https://scoop.sh/) usando `scoop bucket add aimana https://github.com/p4ranoic0/scoop-bucket`, luego `scoop install usage-relay` y `usage-relay setup`.
+- Mac o Linux: usa [Homebrew](https://github.com/p4ranoic0/homebrew-tap) con `brew install p4ranoic0/tap/usage-relay`.
+- El ZIP de Windows y los archivos del relay para Mac y Linux siguen en [Releases](https://github.com/p4ranoic0/AI-mana/releases). WSL puede usar el relay de Linux como se explica abajo.
+
 ### Actualizar
 
-- App del iPhone y del Mac: `git pull` y vuelve a ejecutar los esquemas desde Xcode.
+- iPhone: `git pull` y vuelve a ejecutar el esquema desde Xcode. Mac: descarga el DMG más reciente y reemplaza la app en Aplicaciones.
 - Windows: `scoop update usage-relay`. Linux: `brew upgrade usage-relay`. La tarea en segundo plano sigue funcionando.
 
 ### Referencia del relay

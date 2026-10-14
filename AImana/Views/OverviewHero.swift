@@ -70,10 +70,11 @@ struct OverviewHero: View {
             Text("\(shortName(summary.highlighted.providerID, fallback: summary.highlighted.providerName)) \(kindName(summary.highlighted.window.kind))")
                 .softText(.headline)
                 .fixedSize(horizontal: false, vertical: true)
-            if let reset = UsageFormatter.resetText(for: summary.highlighted.window.resetsAt, now: .now) {
+            if let reset = UsageFormatter.resetText(for: summary.highlighted.window.resetsAt, now: DemoProviders.displayNow()) {
                 Text(reset).softText(.caption).foregroundStyle(.secondary)
             }
-            if let budget = DailyBudget(window: summary.highlighted.window), budget.status == .spread {
+            if let budget = DailyBudget(window: summary.highlighted.window, now: DemoProviders.displayNow(),
+                                        calendar: DemoProviders.displayCalendar), budget.status == .spread {
                 Text(AppStrings.format("Daily budget %@", budget.compactText()))
                     .softText(.caption).monospacedDigit().foregroundStyle(.secondary)
             }

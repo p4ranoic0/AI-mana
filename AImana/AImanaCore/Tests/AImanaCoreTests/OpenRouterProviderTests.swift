@@ -228,7 +228,7 @@ import Testing
         let store = InMemoryCredentialStore()
         let t = MockTransport([.init(status: 200, body: Self.docsKeyBody), .init(status: 403, body: "")])
         let service = UsageService(providers: [OpenRouterProvider(store: store, transport: t, clock: { now })],
-                                   store: snapshot)
+                                   store: snapshot, saveLock: testSaveLock())
         #expect(await service.refresh().isEmpty)
         #expect(await service.cached().isEmpty)
         #expect(t.requests.isEmpty)

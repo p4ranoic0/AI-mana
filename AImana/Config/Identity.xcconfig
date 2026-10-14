@@ -1,4 +1,4 @@
 // Public defaults. Copy Local.xcconfig.example to Local.xcconfig to use your identity.
 AIMANA_TEAM_ID =
-AIMANA_BUNDLE_PREFIX = com.example
+AIMANA_BUNDLE_PREFIX = com.henrrygarcia
 #include? "Local.xcconfig"

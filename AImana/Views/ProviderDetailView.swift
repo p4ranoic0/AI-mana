@@ -23,12 +23,12 @@ struct ProviderDetailView: View {
                             VStack(alignment: .leading, spacing: SoftTheme.Space.xl) {
                                 overview
                                 liveActivityButton
-                                DailyBudgetSection(usage: usage)
+                                DailyBudgetSection(usage: usage).id("budget")
                                 LimitsAndBalancesSection(usage: usage, mode: mode)
                             }
                             .frame(maxWidth: .infinity, alignment: .topLeading)
                             VStack(alignment: .leading, spacing: SoftTheme.Space.xl) {
-                                burndownSection
+                                burndownSection.id("burndown")
                                 PatternsSection(usage: usage).id("patterns")
                                 costSection.id("cost")
                             }
@@ -44,8 +44,8 @@ struct ProviderDetailView: View {
                                 // Balance-only providers: no lanes to burn down, no history patterns, no local costs.
                                 LimitsAndBalancesSection(usage: usage, mode: mode)
                             } else {
-                                DailyBudgetSection(usage: usage)
-                                burndownSection
+                                DailyBudgetSection(usage: usage).id("budget")
+                                burndownSection.id("burndown")
                                 LimitsAndBalancesSection(usage: usage, mode: mode)
                                 PatternsSection(usage: usage).id("patterns")
                                 costSection.id("cost")
@@ -66,6 +66,10 @@ struct ProviderDetailView: View {
                 let args = ProcessInfo.processInfo.arguments
                 if args.contains("-detail-scroll-cost") {
                     DispatchQueue.main.async { proxy.scrollTo("cost", anchor: .top) }
+                } else if args.contains("-detail-scroll-budget") {
+                    DispatchQueue.main.async { proxy.scrollTo("budget", anchor: .top) }
+                } else if args.contains("-detail-scroll-burndown") {
+                    DispatchQueue.main.async { proxy.scrollTo("burndown", anchor: .top) }
                 } else if args.contains("-detail-scroll-patterns") {
                     DispatchQueue.main.async { proxy.scrollTo("patterns", anchor: .top) }
                 }
@@ -172,7 +176,7 @@ struct ProviderDetailView: View {
                                          ? SoftTheme.statusTextColor(.critical, scheme: scheme) : .secondary)
                 }
             }
-            Text(AppStrings.updated(usage.lastUpdated))
+            Text(AppStrings.updated(usage.lastUpdated, relativeTo: DemoProviders.displayNow()))
                 .softText(.caption).foregroundStyle(.secondary)
             if let source = usage.source {
                 Text(source.caption)
@@ -320,7 +324,7 @@ struct CostReportView: View {
     @Environment(\.colorScheme) private var scheme
     let report: CostReport
 
-    private var summary: CostOverview { CostOverview(report: report, now: Date()) }
+    private var summary: CostOverview { CostOverview(report: report, now: DemoProviders.displayNow()) }
 
     var body: some View {
         let data = summary
@@ -475,7 +479,8 @@ private struct DailyBudgetSection: View {
         TimelineView(.periodic(from: .now, by: 60)) { context in
             let rows = usage.windows.compactMap { window in
                 DailyBudget(window: window, history: usage.history, providerID: usage.providerID,
-                            now: context.date).map { (window, $0) }
+                            now: DemoProviders.displayNow(context.date),
+                            calendar: DemoProviders.displayCalendar).map { (window, $0) }
             }
             if !rows.isEmpty {
                 VStack(alignment: .leading, spacing: SoftTheme.Space.lg) {
@@ -483,7 +488,7 @@ private struct DailyBudgetSection: View {
                     VStack(alignment: .leading, spacing: SoftTheme.Space.lg) {
                         ForEach(Array(rows.enumerated()), id: \.offset) { index, row in
                             if index > 0 { Divider() }
-                            DailyBudgetRow(window: row.0, budget: row.1, now: context.date)
+                            DailyBudgetRow(window: row.0, budget: row.1, now: DemoProviders.displayNow(context.date))
                         }
                         Text("Spend about this much per day and you reach 100% right as the limit resets.")
                             .softText(.caption).foregroundStyle(.secondary)
@@ -565,8 +570,8 @@ private struct LimitsAndBalancesSection: View {
                                     Text("\(UsageFormatter.percentText(mode.percent(for: window))) \(mode.caption)")
                                         .softText(.body).fontWeight(.semibold).monospacedDigit()
                                 }
-                                UsageBar(window: window, mode: mode, pace: UsagePace(window: window, now: context.date))
-                                if let reset = UsageFormatter.resetText(for: window.resetsAt, now: context.date) {
+                                UsageBar(window: window, mode: mode, pace: UsagePace(window: window, now: DemoProviders.displayNow(context.date)))
+                                if let reset = UsageFormatter.resetText(for: window.resetsAt, now: DemoProviders.displayNow(context.date)) {
                                     Text(reset).softText(.caption).foregroundStyle(.secondary)
                                 }
                             }
@@ -574,7 +579,7 @@ private struct LimitsAndBalancesSection: View {
                         }
                         if !extraLanes.isEmpty && !usage.details.isEmpty { Divider() }
                         ForEach(usage.details) { detail in
-                            DetailRow(detail: detail, now: context.date)
+                            DetailRow(detail: detail, now: DemoProviders.displayNow(context.date))
                         }
                     }
                     .padding(SoftTheme.cardPadding)

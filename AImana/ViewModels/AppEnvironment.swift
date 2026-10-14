@@ -50,7 +50,15 @@ final class AppEnvironment {
             let macOnly = MacOptionalProviders.make(source: source)
             providers = [claude, codex] + macOnly + [openRouter, copilot] + balances
         }
-        service = UsageService(providers: providers, store: AppGroup.snapshotStore(),
-                               history: AppGroup.historyStore())
+        if args.contains("-demo") {
+            // Keep screenshot data isolated from real snapshots and phone history.
+            let store = SnapshotStore(fileURL: FileManager.default.temporaryDirectory
+                .appendingPathComponent("aimana-demo-snapshot.json"))
+            service = UsageService(providers: providers, store: store,
+                                   clock: { DemoProviders.referenceDate }, saveLock: nil)
+        } else {
+            service = UsageService(providers: providers, store: AppGroup.snapshotStore(),
+                                   history: AppGroup.historyStore())
+        }
     }
 }

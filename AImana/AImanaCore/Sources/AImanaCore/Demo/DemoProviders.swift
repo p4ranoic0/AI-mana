@@ -2,6 +2,19 @@ import Foundation
 
 /// Fixed sample data for `-demo` launches (simulator screenshots, UI work without a relay file).
 public enum DemoProviders {
+    /// Stable screenshot clock shared with Android. 13 Oct 2026, 13:00 in Lima.
+    public static let referenceDate = Date(timeIntervalSince1970: 1791914400)
+
+    public static var isActive: Bool { ProcessInfo.processInfo.arguments.contains("-demo") }
+    public static func displayNow(_ live: Date = Date()) -> Date { isActive ? referenceDate : live }
+    public static var calendar: Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/Lima")!
+        return calendar
+    }
+
+    public static var displayCalendar: Calendar { isActive ? calendar : .current }
+
     struct Demo: UsageProvider {
         let id: String
         let displayName: String
@@ -12,7 +25,7 @@ public enum DemoProviders {
         var sessionGain = 6.0
 
         func fetchUsage() async throws -> UsageInfo {
-            usage(now: Date())
+            usage(now: DemoProviders.referenceDate)
         }
 
         func usage(now: Date) -> UsageInfo {
@@ -20,6 +33,7 @@ public enum DemoProviders {
                                                   windowMinutes: $0.3, resetsAt: now.addingTimeInterval($0.2)) }
             return UsageInfo(providerID: id, providerName: displayName, windows: lanes, plan: plan,
                              lastUpdated: now, details: details,
+                             cost: ["claude", "codex"].contains(id) ? DemoProviders.costReport(id, now: now) : nil,
                              history: DemoProviders.history(providerID: id, lanes: lanes, sessionGain: sessionGain, now: now),
                              source: id == "claude" ? .statusline : id == "codex" ? .logs : nil)
         }
@@ -77,7 +91,9 @@ public enum DemoProviders {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
         formatter.dateFormat = "yyyy-MM-dd"
-        let calendar = Calendar.current
+        formatter.timeZone = TimeZone(identifier: "America/Lima")!
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/Lima")!
         let days = (0..<30).reversed().compactMap { offset -> DailyCost? in
             guard let date = calendar.date(byAdding: .day, value: -offset, to: now) else { return nil }
             let recent = offset == 0
@@ -101,14 +117,15 @@ public enum DemoProviders {
         guard let weekly = lanes.first(where: { $0.kind == .weekly }), let weeklyReset = weekly.resetsAt,
               let minutes = weekly.windowMinutes else { return [] }
         let start = max(weeklyReset.addingTimeInterval(-TimeInterval(minutes) * 60), now.addingTimeInterval(-7 * 86400))
-        let calendar = Calendar.current
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/Lima")!
         let step: TimeInterval = 20 * 60
         var times: [Date] = []
         var t = start
         while t < now { times.append(t); t += step }
         func activity(_ date: Date) -> Double {
             let hour = calendar.component(.hour, from: date)
-            let day = calendar.ordinality(of: .day, in: .era, for: date) ?? 0
+            let day = calendar.ordinality(of: .day, in: .era, for: calendar.startOfDay(for: date)) ?? 0
             switch hour {
             case 10...12: return 1.0 + Double(day % 3) * 0.2
             case 14...17: return 1.6 + Double(day % 2) * 0.5

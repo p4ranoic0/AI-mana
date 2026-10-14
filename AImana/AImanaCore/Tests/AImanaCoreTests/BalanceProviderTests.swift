@@ -252,7 +252,7 @@ import Testing
         let t = MockTransport([.init(status: 200, body: Self.deepSeekDocs)])
         let service = UsageService(providers: BalanceDescriptor.all.map {
             BalanceProvider(descriptor: $0, store: store, transport: t, clock: { now })
-        }, store: snapshot)
+        }, store: snapshot, saveLock: testSaveLock())
         #expect(await service.refresh().isEmpty)
         #expect(t.requests.isEmpty)
         try store.write("sk-abc", for: CredentialKey.deepSeekAPIKey)

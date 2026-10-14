@@ -23,14 +23,15 @@ struct UsageCard: View {
                                let session = usage.window(.session),
                                let weekly = usage.window(.weekly) {
                                 ConcentricCardContent(usage: usage, session: session, weekly: weekly,
-                                                      mode: mode, now: context.date)
+                                                      mode: mode, now: DemoProviders.displayNow(context.date))
                             } else {
                                 ForEach(Array(usage.windows.enumerated()), id: \.offset) { index, window in
                                     if index > 0 { Divider() }
                                     WindowRow(window: window, mode: mode, style: style,
-                                              now: context.date, isHeadline: window == usage.primary,
+                                              now: DemoProviders.displayNow(context.date), isHeadline: window == usage.primary,
                                               budget: DailyBudget(window: window, history: usage.history,
-                                                                  providerID: usage.providerID, now: context.date))
+                                                                  providerID: usage.providerID, now: DemoProviders.displayNow(context.date),
+                                                                  calendar: DemoProviders.displayCalendar))
                                 }
                             }
                             if !usage.details.isEmpty {
@@ -39,14 +40,14 @@ struct UsageCard: View {
                             }
                         }
                         if let cost = usage.cost {
-                            let today = UsageFormatter.localDayString(for: context.date)
+                            let today = UsageFormatter.localDayString(for: DemoProviders.displayNow(context.date))
                             let todayUSD = UsageFormatter.usdText(cost.total(lastDays: 1, endingOn: today).usd)
                             let monthUSD = UsageFormatter.usdText(cost.total(lastDays: 30, endingOn: today).usd)
                             Text(AppStrings.format("Today %@ · 30d %@ est.", todayUSD, monthUSD))
                                 .softText(.caption).foregroundStyle(.secondary)
                                 .accessibilityLabel(AppStrings.format("Estimated cost today %@, last 30 days %@", todayUSD, monthUSD))
                         }
-                        SnapshotStatus(usage: usage, now: context.date)
+                        SnapshotStatus(usage: usage, now: DemoProviders.displayNow(context.date))
                     }
                 }
             }
@@ -118,7 +119,8 @@ private struct ConcentricCardContent: View {
                 Divider()
                 WindowSummary(window: window, mode: mode, now: now,
                               budget: DailyBudget(window: window, history: usage.history,
-                                                  providerID: usage.providerID, now: now))
+                                                  providerID: usage.providerID, now: now,
+                                                  calendar: DemoProviders.displayCalendar))
             }
         }
     }

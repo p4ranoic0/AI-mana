@@ -49,6 +49,19 @@ jobs:
           relay_bin="$(find AImana/Relay/.build -type f -path '*/release/usage-relay' -print -quit)"
           test -x "$relay_bin"
           AIMANA_RELAY_BIN="$PWD/$relay_bin" bash .github/scripts/relay-e2e-linux.sh
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Accept Android SDK licenses
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+      - name: Test, lint and assemble
+        working-directory: Android
+        run: ./gradlew test lint assembleDebug
   build:
     runs-on: macos-26
     steps:

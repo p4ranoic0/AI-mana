@@ -27,10 +27,45 @@ public final class FileLock: ProcessLock, @unchecked Sendable {
     private let timeout: TimeInterval
     private let pollInterval: TimeInterval
 
+    #if DEBUG
+    static var isRunningTests: Bool {
+        let process = ProcessInfo.processInfo
+        return process.processName.contains("PackageTests") || process.processName == "xctest"
+            || process.processName == "swiftpm-testing-helper"
+            || process.environment["XCTestConfigurationFilePath"] != nil
+    }
+    private static let pathLogLock = NSLock()
+    #endif
+
     public init(url: URL, timeout: TimeInterval = 15, pollInterval: TimeInterval = 0.05) {
+        #if DEBUG
+        // SwiftPM test binaries must never ask macOS to open the user's real App Group.
+        if Self.isRunningTests {
+            precondition(!Self.isUserGroupContainer(url), "Tests must inject a temporary FileLock")
+            if let log = ProcessInfo.processInfo.environment["AIMANA_TEST_FILELOCK_LOG"] {
+                Self.pathLogLock.withLock {
+                    if !FileManager.default.fileExists(atPath: log) {
+                        _ = FileManager.default.createFile(atPath: log, contents: nil)
+                    }
+                    if let handle = try? FileHandle(forWritingTo: URL(fileURLWithPath: log)) {
+                        defer { try? handle.close() }
+                        try? handle.seekToEnd()
+                        try? handle.write(contentsOf: Data((url.standardizedFileURL.path + "\n").utf8))
+                    }
+                }
+            }
+        }
+        #endif
         self.url = url
         self.timeout = timeout
         self.pollInterval = pollInterval
+    }
+
+    static func isUserGroupContainer(_ url: URL) -> Bool {
+        let root = URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
+            .appendingPathComponent("Library/Group Containers", isDirectory: true).standardizedFileURL.path
+        let path = url.standardizedFileURL.path
+        return path == root || path.hasPrefix(root + "/")
     }
 
     public func withLock<T>(_ body: () async throws -> T) async throws -> T {

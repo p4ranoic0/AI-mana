@@ -3,7 +3,7 @@ import Foundation
 public enum AppGroup {
     private static var bundlePrefix: String {
         guard let prefix = Bundle.main.object(forInfoDictionaryKey: "AImanaBundlePrefix") as? String,
-              !prefix.isEmpty, !prefix.contains("$") else { return "com.example" }
+              !prefix.isEmpty, !prefix.contains("$") else { return "com.henrrygarcia" }
         return prefix
     }
     public static var identifier: String { "group.\(bundlePrefix).aimana" }
@@ -52,6 +52,10 @@ public enum AppGroup {
 
     /// A lock file shared by every process in the App Group (same fallback as the snapshot).
     public static func lock(_ name: String, timeout: TimeInterval = 15) -> FileLock {
+        #if DEBUG
+        // Resolve no real App Group URL in tests: macOS can block containerURL behind a permission prompt.
+        precondition(!FileLock.isRunningTests, "Tests must inject a temporary lock instead of AppGroup.lock")
+        #endif
         #if !canImport(Darwin)
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
         #else

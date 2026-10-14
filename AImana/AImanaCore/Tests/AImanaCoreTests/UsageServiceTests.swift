@@ -43,7 +43,7 @@ private func info(_ id: String, used: Double, at date: Date = Date(timeIntervalS
                 StubProvider(id: "claude", displayName: "Claude", result: .success(info("claude", used: 18))),
                 StubProvider(id: "codex", displayName: "Codex", result: .success(info("codex", used: 33))),
             ],
-            store: makeStore())
+            store: makeStore(), saveLock: testSaveLock())
         let state = await service.refresh()
         #expect(state.map(\.providerID) == ["claude", "codex"])
         #expect(state[0].usage?.primary?.remainingPercent == 82)
@@ -56,7 +56,7 @@ private func info(_ id: String, used: Double, at date: Date = Date(timeIntervalS
                 StubProvider(id: "claude", displayName: "Claude", result: .failure(.unauthenticated)),
                 StubProvider(id: "codex", displayName: "Codex", result: .success(info("codex", used: 33))),
             ],
-            store: makeStore())
+            store: makeStore(), saveLock: testSaveLock())
         let state = await service.refresh()
         #expect(state[0].usage == nil)
         #expect(state[0].error == .unauthenticated)
@@ -70,7 +70,7 @@ private func info(_ id: String, used: Double, at date: Date = Date(timeIntervalS
         try store.save([first])
         let service = UsageService(
             providers: [StubProvider(id: "claude", displayName: "Claude", result: .failure(.network))],
-            store: store)
+            store: store, saveLock: testSaveLock())
         let state = await service.refresh()
         #expect(state[0].usage == first)          // stale value, original timestamp kept
         #expect(state[0].error == .network)
@@ -81,7 +81,7 @@ private func info(_ id: String, used: Double, at date: Date = Date(timeIntervalS
         try store.save([info("claude", used: 18)])
         let service = UsageService(
             providers: [StubProvider(id: "claude", displayName: "Claude", result: .failure(.unauthenticated))],
-            store: store)
+            store: store, saveLock: testSaveLock())
         let state = await service.refresh()
         #expect(state[0].usage == nil)
     }
@@ -90,14 +90,15 @@ private func info(_ id: String, used: Double, at date: Date = Date(timeIntervalS
         let store = makeStore()
         let service = UsageService(
             providers: [StubProvider(id: "claude", displayName: "Claude", result: .success(info("claude", used: 18)))],
-            store: store)
+            store: store, saveLock: testSaveLock())
         _ = await service.refresh()
         #expect(store.load().map(\.providerID) == ["claude"])
     }
 
     @Test func concurrentRefreshesShareOneFetch() async {
         let counter = CallCounter()
-        let service = UsageService(providers: [SlowProvider(counter: counter)], store: makeStore())
+        let service = UsageService(providers: [SlowProvider(counter: counter)], store: makeStore(),
+                                   saveLock: testSaveLock())
         async let a = service.refresh()
         async let b = service.refresh()
         _ = await (a, b)

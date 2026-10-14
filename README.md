@@ -1,3 +1,5 @@
+Install: https://p4ranoic0.github.io/AI-mana/
+
 # AI·mana
 
 **Your AI coding quotas and spend, native on iPhone, iPad, Apple Watch and Mac.**
@@ -65,7 +67,7 @@ to that provider. AI·mana runs no server and has no analytics. See [PRIVACY.md]
 
 ## Get started
 
-Setup has three steps. Follow them in order.
+Setup has three steps. Follow them in order. Android can use the same relay file.
 
 ### What you need
 
@@ -104,26 +106,17 @@ Do this on the computer where you use Claude Code or Codex. Pick your system:
 
 **Mac**
 
-1. In the same Xcode project, choose the `AImanaMac` scheme and **My Mac**, and press Run. The app appears in the
-   menu bar.
-2. In its settings, install the Claude Code statusline integration and check that iCloud Drive is available.
+1. Download [AImana.dmg](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana.dmg), open it and drag AI·mana to Applications. Launch it from Applications; it appears in the menu bar.
+2. This direct download is not notarized. On macOS 15 or later, after the first block open **System Settings › Privacy & Security › Open Anyway** once. On older macOS, right-click the app and choose **Open**.
+3. In its settings, install the Claude Code statusline integration and check that iCloud Drive is available.
 
 The app publishes `iCloud Drive/AImana/usage-relay.json` by itself.
 
 **Windows**
 
-1. Install [Scoop](https://scoop.sh/) if you do not have it, then in PowerShell:
-
-   ```powershell
-   scoop bucket add aimana https://github.com/p4ranoic0/scoop-bucket
-   scoop install usage-relay
-   usage-relay setup
-   ```
-
-2. `setup` prints the path of the published file. Keep it for step 3.
-
-Without Scoop: download the Windows ZIP from [Releases](https://github.com/p4ranoic0/AI-mana/releases), extract
-all files into one folder, and run `.\usage-relay.exe setup` from that folder.
+1. Download [AImana-Setup.exe](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana-Setup.exe) and double-click it. The wizard asks for the synced folder and publishes the relay file.
+2. The installer is unsigned. If SmartScreen appears, choose **More info → Run anyway**.
+3. Keep the folder shown on the finish page for step 3. Use **AI·mana — check setup** in the Start menu if needed.
 
 **Linux**
 
@@ -153,6 +146,10 @@ a publish every five minutes in the background (a hidden scheduled task on Windo
 3. Your Claude Code and Codex quotas appear on the dashboard. Add the widgets, the Watch app or the Live Activity if
    you like.
 
+### Android: install the app
+
+Download [AImana.apk](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana.apk) on your Android phone and open it to install. Android may ask you to allow installs from your browser or Files app. In AI·mana, choose the same `usage-relay.json` through Android's file picker. You can revoke the install permission afterward.
+
 ### If something does not show up
 
 - Windows or Linux: run `usage-relay doctor`. It checks each part and prints how to fix what is missing.
@@ -162,9 +159,16 @@ a publish every five minutes in the background (a hidden scheduled task on Windo
 
 ## More details
 
+### For terminal users
+
+- If macOS still blocks the copied app after you approve it in Privacy & Security, clear its quarantine attribute with `xattr -dr com.apple.quarantine /Applications/AImana.app` and launch it again.
+- Windows: install with [Scoop](https://scoop.sh/) using `scoop bucket add aimana https://github.com/p4ranoic0/scoop-bucket`, then `scoop install usage-relay` and `usage-relay setup`.
+- Mac or Linux: use [Homebrew](https://github.com/p4ranoic0/homebrew-tap) with `brew install p4ranoic0/tap/usage-relay`.
+- The Windows ZIP and Mac/Linux relay archives remain on [Releases](https://github.com/p4ranoic0/AI-mana/releases). WSL users can use the Linux relay as described below.
+
 ### Updating
 
-- iPhone and Mac app: `git pull`, then run the schemes again from Xcode.
+- iPhone: `git pull`, then run the Xcode scheme again. Mac: download the latest DMG and replace the app in Applications.
 - Windows: `scoop update usage-relay`. Linux: `brew upgrade usage-relay`. The background task keeps working.
 
 ### Relay CLI reference

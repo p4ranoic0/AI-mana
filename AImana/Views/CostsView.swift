@@ -43,9 +43,14 @@ struct CostsView: View {
             .background(SoftTheme.canvas(scheme))
             .fontDesign(.rounded)
             .task {
-                guard ProcessInfo.processInfo.arguments.contains("-scroll-bottom") else { return }
+                let args = ProcessInfo.processInfo.arguments
+                guard args.contains("-scroll-bottom") || args.contains("-scroll-codex") else { return }
                 await Task.yield()
-                scroll.scrollTo("costs-content", anchor: .bottom)
+                if args.contains("-scroll-codex") {
+                    scroll.scrollTo("cost-codex", anchor: .top)
+                } else {
+                    scroll.scrollTo("costs-content", anchor: .bottom)
+                }
             }
         }
     }
@@ -76,5 +81,6 @@ struct CostsView: View {
                     .softSurface(tint: SoftTheme.providerTint(usage.providerID))
             }
         }
+        .id("cost-\(usage.providerID)")
     }
 }

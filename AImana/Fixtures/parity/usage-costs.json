@@ -1,0 +1,359 @@
+{
+  "now": "2026-10-13T18:00:00Z",
+  "zone": "America/Lima",
+  "dashboard": {
+    "lanePercents": [
+      18,
+      42,
+      33,
+      61
+    ],
+    "highlightedProvider": "codex",
+    "highlightedKind": "weekly"
+  },
+  "providers": [
+    {
+      "id": "claude",
+      "name": "Claude Code",
+      "windows": [
+        {
+          "kind": "session",
+          "usedPercent": 18,
+          "windowMinutes": 300,
+          "resetsAt": "2026-10-13T21:15:00Z"
+        },
+        {
+          "kind": "weekly",
+          "usedPercent": 42,
+          "windowMinutes": 10080,
+          "resetsAt": "2026-10-17T19:00:00Z"
+        },
+        {
+          "kind": "model:Sonnet",
+          "usedPercent": 7.5,
+          "windowMinutes": 10080,
+          "resetsAt": "2026-10-17T19:00:00Z"
+        }
+      ],
+      "history": [
+        {
+          "providerID": "claude",
+          "kind": "weekly",
+          "points": [
+            {
+              "t": "2026-10-13T05:00:00Z",
+              "used": 30,
+              "resetsAt": "2026-10-17T19:00:00Z"
+            },
+            {
+              "t": "2026-10-13T12:00:00Z",
+              "used": 36.0,
+              "resetsAt": "2026-10-17T19:00:00Z"
+            },
+            {
+              "t": "2026-10-13T17:00:00Z",
+              "used": 42,
+              "resetsAt": "2026-10-17T19:00:00Z"
+            }
+          ]
+        }
+      ],
+      "cost": {
+        "providerID": "claude",
+        "generatedAt": "2026-10-13T18:00:00Z",
+        "days": [
+          {
+            "day": "2026-10-01",
+            "tokens": {
+              "input": 10000,
+              "output": 2000,
+              "cacheRead": 3000,
+              "cacheWrite": 0
+            },
+            "usd": 2.9375,
+            "unpricedTokens": 0,
+            "models": [
+              {
+                "model": "primary",
+                "tokens": {
+                  "input": 10000,
+                  "output": 2000,
+                  "cacheRead": 3000,
+                  "cacheWrite": 0
+                },
+                "usd": 2.9375
+              }
+            ]
+          },
+          {
+            "day": "2026-10-12",
+            "tokens": {
+              "input": 10000,
+              "output": 2000,
+              "cacheRead": 3000,
+              "cacheWrite": 0
+            },
+            "usd": 1.7625000000000002,
+            "unpricedTokens": 0,
+            "models": [
+              {
+                "model": "primary",
+                "tokens": {
+                  "input": 10000,
+                  "output": 2000,
+                  "cacheRead": 3000,
+                  "cacheWrite": 0
+                },
+                "usd": 1.7625000000000002
+              }
+            ]
+          },
+          {
+            "day": "2026-10-13",
+            "tokens": {
+              "input": 10000,
+              "output": 2000,
+              "cacheRead": 3000,
+              "cacheWrite": 0
+            },
+            "usd": 2.35,
+            "unpricedTokens": 0,
+            "models": [
+              {
+                "model": "primary",
+                "tokens": {
+                  "input": 10000,
+                  "output": 2000,
+                  "cacheRead": 3000,
+                  "cacheWrite": 0
+                },
+                "usd": 2.35
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "weeklyPerDay": 14.350515463917525,
+        "weeklyUsedToday": 12,
+        "weeklyTodayAllowance": 15.272727272727273,
+        "weeklyPace": "comfortable",
+        "weeklyProjection": 99.38028169014086,
+        "weeklyActualPercents": [
+          30,
+          36.0,
+          42,
+          42
+        ],
+        "costTodayUSD": 2.35,
+        "costWeekUSD": 4.112500000000001,
+        "costMonthUSD": 7.050000000000001,
+        "costTodayTokens": 15000,
+        "costWeekTokens": 30000,
+        "costMonthTokens": 45000,
+        "weeklyActualTimes": [
+          "2026-10-13T05:00:00Z",
+          "2026-10-13T12:00:00Z",
+          "2026-10-13T17:00:00Z",
+          "2026-10-13T18:00:00Z"
+        ],
+        "weeklyProjectionTimes": [
+          "2026-10-13T18:00:00Z",
+          "2026-10-17T19:00:00Z"
+        ],
+        "weeklyGuidePercents": [
+          0,
+          100
+        ]
+      }
+    },
+    {
+      "id": "codex",
+      "name": "OpenAI Codex",
+      "windows": [
+        {
+          "kind": "session",
+          "usedPercent": 33,
+          "windowMinutes": 300,
+          "resetsAt": "2026-10-13T23:22:00Z"
+        },
+        {
+          "kind": "weekly",
+          "usedPercent": 61,
+          "windowMinutes": 10080,
+          "resetsAt": "2026-10-15T20:00:00Z"
+        }
+      ],
+      "history": [
+        {
+          "providerID": "codex",
+          "kind": "weekly",
+          "points": [
+            {
+              "t": "2026-10-13T05:00:00Z",
+              "used": 50,
+              "resetsAt": "2026-10-15T20:00:00Z"
+            },
+            {
+              "t": "2026-10-13T12:00:00Z",
+              "used": 55.5,
+              "resetsAt": "2026-10-15T20:00:00Z"
+            },
+            {
+              "t": "2026-10-13T17:00:00Z",
+              "used": 61,
+              "resetsAt": "2026-10-15T20:00:00Z"
+            }
+          ]
+        }
+      ],
+      "cost": {
+        "providerID": "codex",
+        "generatedAt": "2026-10-13T18:00:00Z",
+        "days": [
+          {
+            "day": "2026-10-01",
+            "tokens": {
+              "input": 10000,
+              "output": 2000,
+              "cacheRead": 3000,
+              "cacheWrite": 0
+            },
+            "usd": 2.15,
+            "unpricedTokens": 0,
+            "models": [
+              {
+                "model": "primary",
+                "tokens": {
+                  "input": 10000,
+                  "output": 2000,
+                  "cacheRead": 3000,
+                  "cacheWrite": 0
+                },
+                "usd": 2.15
+              }
+            ]
+          },
+          {
+            "day": "2026-10-12",
+            "tokens": {
+              "input": 10000,
+              "output": 2000,
+              "cacheRead": 3000,
+              "cacheWrite": 0
+            },
+            "usd": 1.29,
+            "unpricedTokens": 0,
+            "models": [
+              {
+                "model": "primary",
+                "tokens": {
+                  "input": 10000,
+                  "output": 2000,
+                  "cacheRead": 3000,
+                  "cacheWrite": 0
+                },
+                "usd": 1.29
+              }
+            ]
+          },
+          {
+            "day": "2026-10-13",
+            "tokens": {
+              "input": 10000,
+              "output": 2000,
+              "cacheRead": 3000,
+              "cacheWrite": 0
+            },
+            "usd": 1.72,
+            "unpricedTokens": 0,
+            "models": [
+              {
+                "model": "primary",
+                "tokens": {
+                  "input": 10000,
+                  "output": 2000,
+                  "cacheRead": 3000,
+                  "cacheWrite": 0
+                },
+                "usd": 1.72
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "weeklyPerDay": 18.72,
+        "weeklyUsedToday": 11,
+        "weeklyTodayAllowance": 19.047619047619047,
+        "weeklyPace": "comfortable",
+        "weeklyProjection": 86.84745762711864,
+        "weeklyActualPercents": [
+          50,
+          55.5,
+          61,
+          61
+        ],
+        "costTodayUSD": 1.72,
+        "costWeekUSD": 3.01,
+        "costMonthUSD": 5.16,
+        "costTodayTokens": 15000,
+        "costWeekTokens": 30000,
+        "costMonthTokens": 45000,
+        "weeklyActualTimes": [
+          "2026-10-13T05:00:00Z",
+          "2026-10-13T12:00:00Z",
+          "2026-10-13T17:00:00Z",
+          "2026-10-13T18:00:00Z"
+        ],
+        "weeklyProjectionTimes": [
+          "2026-10-13T18:00:00Z",
+          "2026-10-15T20:00:00Z"
+        ],
+        "weeklyGuidePercents": [
+          0,
+          100
+        ]
+      }
+    }
+  ],
+  "demo": {
+    "claudeWeeklyUsedToday": 3.559322033898326,
+    "claudeWeeklyTodayAllowance": 13.431124807396,
+    "claudeWeeklyHistoryPoints": 213,
+    "claudeWeeklyFirstUsed": 0.8305084745762712,
+    "costClaudeTodayUSD": 2.35,
+    "costClaudeWeekUSD": 12.502,
+    "costClaudeMonthUSD": 53.345,
+    "claudeWeeklyPerDay": 14.350515463917525,
+    "claudeModelPerDay": 22.886597938144327,
+    "claudeSessionProjection": 51.42857142857143,
+    "codexWeeklyPerDay": 18.72,
+    "codexWeeklyUsedToday": 3.2275132275131497,
+    "codexWeeklyTodayAllowance": 16.086671705719294,
+    "codexModelPerDay": 35.04,
+    "costCodexTodayUSD": 1.72,
+    "costCodexWeekUSD": 9.1504,
+    "costCodexMonthUSD": 39.044
+  },
+  "fractional": {
+    "now": "2026-10-13T18:00:00.250Z",
+    "window": {
+      "kind": "weekly",
+      "usedPercent": 90,
+      "windowMinutes": 10080,
+      "resetsAt": "2026-10-17T19:00:00.750Z"
+    },
+    "expected": {
+      "perDay": 2.4742232614214466,
+      "projectedUsedAtReset": 212.9581630636993,
+      "exhaustSecondsFromNow": 28399.944444444445,
+      "pace": "fast",
+      "projectionPercents": [
+        90,
+        100,
+        100
+      ]
+    }
+  }
+}

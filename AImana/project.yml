@@ -132,7 +132,7 @@ targets:
         CFBundleDisplayName: "AI·mana"
         AImanaBundlePrefix: $(AIMANA_BUNDLE_PREFIX)
         AImanaExtraProviderIDs: $(AIMANA_EXTRA_PROVIDER_IDS)
-        CFBundleShortVersionString: "1.0"
+        CFBundleShortVersionString: "1.2.0"
         CFBundleVersion: "1"
         LSUIElement: true
         LSApplicationCategoryType: public.app-category.developer-tools

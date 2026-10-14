@@ -4,6 +4,18 @@ All notable changes to AI·mana are documented here. This project follows [Keep 
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-14
+
+### Added
+
+- Android app preview (Kotlin, Jetpack Compose) that reads the same relay file, with the same numbers as the iPhone app.
+- Windows installer, Mac app download and a signed Android APK in every release.
+- Install website with step-by-step guides for every device: https://p4ranoic0.github.io/AI-mana/
+
+### Fixed
+
+- iPhone demo mode now shows sample costs.
+
 ## [1.1.1] - 2026-10-13
 
 ### Changed
