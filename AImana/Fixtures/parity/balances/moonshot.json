@@ -1,0 +1,26 @@
+{
+  "_source": "Documented example (platform.kimi.com/docs/api/balance), answered by the China host (CNY).",
+  "now": "2027-01-15T08:00:00Z",
+  "currency": "CNY",
+  "response": {
+    "code": 0,
+    "data": {
+      "available_balance": 49.58894,
+      "voucher_balance": 46.58893,
+      "cash_balance": 3.00001
+    },
+    "scode": "0x0",
+    "status": true
+  },
+  "expected": {
+    "plan": null,
+    "windows": [],
+    "details": [
+      {
+        "kind": "creditBalance",
+        "remaining": 49.58894,
+        "currency": "CNY"
+      }
+    ]
+  }
+}

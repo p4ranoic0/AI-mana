@@ -29,8 +29,17 @@ try {
   Assert-Install 'task executable' (Test-Path (Join-Path $install 'usage-relay-task.exe'))
   Assert-Install 'runtime DLLs' (@(Get-ChildItem $install -Filter '*.dll').Count -gt 0)
   Assert-Install 'published file' (Test-Path $output)
-  schtasks /Query /TN $env:AIMANA_TASK_NAME | Out-Null
-  Assert-Install 'scheduled task' ($LASTEXITCODE -eq 0)
+  $trayApp = Join-Path $install 'app\AImana.exe'
+  $runKey = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
+  schtasks /Query /TN $env:AIMANA_TASK_NAME 2>$null | Out-Null
+  if (Test-Path $trayApp) {
+    # The tray app publishes while it runs: one scheduler only, so no scheduled task.
+    Assert-Install 'no scheduled task with the tray app' ($LASTEXITCODE -ne 0)
+    Assert-Install 'tray app opens at login' ((Get-ItemProperty $runKey -Name AImana -ErrorAction SilentlyContinue).AImana -like "*$trayApp*")
+    Get-Process AImana -ErrorAction SilentlyContinue | Stop-Process -Force   # launched by the installer's [Run] entry
+  } else {
+    Assert-Install 'scheduled task' ($LASTEXITCODE -eq 0)
+  }
   $userPath = [Environment]::GetEnvironmentVariable('Path', 'User')
   Assert-Install 'user PATH entry' (($userPath -split ';') -contains $install)
   $sample = Get-Content AImana/Relay/Tests/Fixtures/statusline.json -Raw
@@ -48,6 +57,7 @@ schtasks /Query /TN $env:AIMANA_TASK_NAME 2>$null | Out-Null
 Assert-Install 'scheduled task removed' ($LASTEXITCODE -ne 0)
 Assert-Install 'Claude settings restored' ([IO.File]::ReadAllText((Join-Path $claude 'settings.json')) -eq $originalSettings)
 Assert-Install 'user data retained' (Test-Path $output)
+Assert-Install 'login entry removed' (-not (Get-ItemProperty 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run' -Name AImana -ErrorAction SilentlyContinue))
 Assert-Install 'PATH entry removed' (-not (([Environment]::GetEnvironmentVariable('Path', 'User') -split ';') -contains $install))
 
 # The last check queries a task that must be gone, so its exit code is expected to be non-zero.

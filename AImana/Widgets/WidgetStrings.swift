@@ -1,3 +1,4 @@
+import AImanaCore
 import Foundation
 
 enum WidgetStrings {
@@ -17,9 +18,10 @@ enum WidgetStrings {
         return format("Updated %@", formatter.localizedString(for: date, relativeTo: now))
     }
 
-    /// Providers with credentials available directly to this widget.
+    /// Providers this phone signs in to directly: those the user turned direct access on for.
     static var phoneSignInProviderIDs: Set<String> {
-        []
+        let consent = DirectAccessConsent()
+        return Set(DirectProvider.allCases.filter(consent.isGranted).map(\.rawValue))
     }
 
     /// "Sign in again" for providers the phone signs in to, "Sign in again on your computer" when every

@@ -1,0 +1,29 @@
+{
+  "now": "2027-01-10T00:00:00Z",
+  "plan": "max",
+  "response": {
+    "five_hour": {"utilization": 18.0, "resets_at": "2027-01-10T03:00:00.123Z"},
+    "seven_day": {"utilization": 42, "resets_at": "2027-01-15T00:00:00Z"},
+    "seven_day_sonnet": {"utilization": 30, "resets_at": "2027-01-15T00:00:00Z"},
+    "seven_day_opus": null,
+    "limits": [
+      {"percent": 12.5, "resets_at": "2027-01-16T00:00:00Z", "scope": {"model": {"display_name": "Fable"}}},
+      {"percent": 99, "resets_at": "2027-01-16T00:00:00Z", "scope": {"model": {"display_name": "Sonnet"}}},
+      {"percent": 50}
+    ],
+    "iguana_necktie": {"limit_dollars": 50, "used_dollars": 20, "resets_at": "2027-02-01T00:00:00Z"},
+    "extra_usage": {"is_enabled": true, "monthly_limit": 10000, "used_credits": 2550, "currency": "usd"}
+  },
+  "expected": {
+    "windows": [
+      {"kind": "session", "usedPercent": 18, "windowMinutes": 300, "resetsAt": "2027-01-10T03:00:00.123Z"},
+      {"kind": "weekly", "usedPercent": 42, "windowMinutes": 10080, "resetsAt": "2027-01-15T00:00:00Z"},
+      {"kind": "model:Sonnet", "usedPercent": 30, "windowMinutes": 10080, "resetsAt": "2027-01-15T00:00:00Z"},
+      {"kind": "model:Fable", "usedPercent": 12.5, "windowMinutes": 10080, "resetsAt": "2027-01-16T00:00:00Z"}
+    ],
+    "details": [
+      {"kind": "cloudCredits", "remaining": 30, "limit": 50, "currency": "USD", "expiresAt": "2027-02-01T00:00:00Z"},
+      {"kind": "extraUsage", "remaining": 74.5, "limit": 100, "currency": "USD", "used": 25.5}
+    ]
+  }
+}

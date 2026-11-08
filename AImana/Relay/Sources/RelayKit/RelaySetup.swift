@@ -21,13 +21,21 @@ public struct SystemRelayCommandExecutor: RelayCommandExecutor {
 public struct SetupOptions: Equatable, Sendable {
     public let output: URL?
     public let interval: Int
+    /// False with `--no-schedule`: the desktop tray app runs usage-relay itself, so no OS task is installed.
+    public let schedule: Bool
 
     public init(arguments: [String]) throws {
         var output: URL?
         var interval = 5
+        var schedule = true
         var index = 0
         while index < arguments.count {
             let flag = arguments[index]
+            if flag == "--no-schedule" {
+                schedule = false
+                index += 1
+                continue
+            }
             guard ["--output", "--interval"].contains(flag), arguments.indices.contains(index + 1) else {
                 throw SetupError.invalidArguments
             }
@@ -43,6 +51,7 @@ public struct SetupOptions: Equatable, Sendable {
         }
         self.output = output
         self.interval = interval
+        self.schedule = schedule
     }
 }
 
@@ -60,6 +69,8 @@ public struct SetupRecord: Codable, Sendable {
     public let taskExecutable: URL?
     public let taskName: String?
     public let taskConfiguration: RelayTaskConfiguration?
+    /// Set up with `--no-schedule`: the AI·mana desktop app runs the publishes, not an OS task. Absent in older records.
+    public var appSchedules: Bool? = nil
 }
 
 public struct RelaySetup: Sendable {
@@ -95,8 +106,9 @@ public struct RelaySetup: Sendable {
     }
 
     public func setup(_ options: SetupOptions) async throws -> [String] {
+        let previous = loadRecord()   // read before this run rewrites it
         let output = options.output ?? paths.defaultOutput
-        if paths.platform == .windows && !FileManager.default.fileExists(atPath: taskExecutable.path) {
+        if options.schedule, paths.platform == .windows && !FileManager.default.fileExists(atPath: taskExecutable.path) {
             throw SetupError.schedulerFailed("missing usage-relay-task.exe next to usage-relay.exe")
         }
         let claude = hasClaude, codex = hasCodex
@@ -111,6 +123,14 @@ public struct RelaySetup: Sendable {
         // The scheduler can start immediately; its configuration must already exist.
         try writeRecord(output: output, interval: options.interval, statuslineInstalled: claude, scheduled: false)
         var scheduled = false
+        if !options.schedule {
+            // Coming from a relay-only setup: remove its task or timer, so there is one scheduler only.
+            if previous?.schedulerInstalled == true {
+                removeScheduler()
+                lines.append("Previous scheduled task removed")
+            }
+            lines.append("No scheduled task: the AI·mana app publishes while it runs")
+        } else {
         switch paths.platform {
         case .windows:
             let command = Self.windowsTaskArguments(interval: options.interval, executable: taskExecutable,
@@ -142,17 +162,21 @@ public struct RelaySetup: Sendable {
             }
         case .macOS: break
         }
-        try writeRecord(output: output, interval: options.interval, statuslineInstalled: claude, scheduled: scheduled)
+        }
+        try writeRecord(output: output, interval: options.interval, statuslineInstalled: claude, scheduled: scheduled,
+                        appSchedules: !options.schedule)
         lines.append("On iPhone: AI·mana › Settings › Choose relay file… Select this file in iCloud Drive or OneDrive.")
         return lines
     }
 
-    private func writeRecord(output: URL, interval: Int, statuslineInstalled: Bool, scheduled: Bool) throws {
-        let record = SetupRecord(output: output, interval: interval, statuslineInstalled: statuslineInstalled,
+    private func writeRecord(output: URL, interval: Int, statuslineInstalled: Bool, scheduled: Bool,
+                             appSchedules: Bool = false) throws {
+        var record = SetupRecord(output: output, interval: interval, statuslineInstalled: statuslineInstalled,
                                  schedulerInstalled: scheduled, executable: executable,
                                  taskExecutable: paths.platform == .windows ? taskExecutable : nil,
                                  taskName: paths.platform == .windows ? configuredTaskName : nil,
                                  taskConfiguration: paths.platform == .macOS ? nil : RelayTaskConfiguration(paths: paths))
+        record.appSchedules = appSchedules ? true : nil
         try FileManager.default.createDirectory(at: paths.supportDirectory, withIntermediateDirectories: true)
         try JSONEncoder().encode(record).write(to: recordFile, options: .atomic)
     }
@@ -207,6 +231,8 @@ public struct RelaySetup: Sendable {
             }
             lines.append("Schedule: \(exists ? "installed" : "missing")")
             if !exists { healthy = false; lines.append("Missing schedule. Fix: usage-relay setup") }
+        } else if record?.appSchedules == true {
+            lines.append("Schedule: the AI·mana app publishes while it runs")
         } else {
             lines.append("Schedule: not installed")
             if paths.platform != .macOS {
@@ -221,20 +247,28 @@ public struct RelaySetup: Sendable {
         return (lines, healthy)
     }
 
-    public func uninstall() throws -> [String] {
-        var lines: [String] = []
+    /// Removes the Windows task or the systemd timer that `setup` installed.
+    private func removeScheduler() {
         switch paths.platform {
         case .windows:
             _ = executor.run(Self.schtasksPath(environment: paths.environment),
                              ["/Delete", "/TN", loadRecord()?.taskName ?? configuredTaskName, "/F"])
             try? FileManager.default.removeItem(at: hiddenLauncher)
-            lines.append("Windows scheduled task removed")
         case .linux:
             _ = executor.run("/usr/bin/systemctl", ["--user", "disable", "--now", "aimana-relay.timer"])
             try? FileManager.default.removeItem(at: timerFile)
             try? FileManager.default.removeItem(at: serviceFile)
             _ = executor.run("/usr/bin/systemctl", ["--user", "daemon-reload"])
-            lines.append("systemd user timer removed")
+        case .macOS: break
+        }
+    }
+
+    public func uninstall() throws -> [String] {
+        var lines: [String] = []
+        removeScheduler()
+        switch paths.platform {
+        case .windows: lines.append("Windows scheduled task removed")
+        case .linux: lines.append("systemd user timer removed")
         case .macOS: break
         }
         switch statusline.status() {

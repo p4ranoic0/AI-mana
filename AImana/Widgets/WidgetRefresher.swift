@@ -44,7 +44,9 @@ enum WidgetRefresher {
 
     private static func refresh(isDue due: DueCheck) async {
         let transport = URLSessionTransport(requestTimeout: requestTimeout, resourceTimeout: resourceTimeout)
-        let claudeSignedIn = { false }   // public builds: Claude comes only from the Mac, through the app
+        let codex = AppGroup.codexTokens(transport: transport, lockTimeout: lockTimeout)
+        let claude = AppGroup.claudeTokens(transport: transport, lockTimeout: lockTimeout)
+        let consent = DirectAccessConsent()
         let store = AppGroup.snapshotStore()
         let openRouter = OpenRouterProvider(store: AppGroup.keychain(), transport: transport)
         let copilot = CopilotProvider(store: AppGroup.keychain(), transport: transport)
@@ -55,7 +57,9 @@ enum WidgetRefresher {
 
         // Reads the Keychain, which also answers "no" before the first unlock after a restart.
         func isDue() -> Bool {
-            var signedIn = claudeSignedIn() ? ["claude"] : []
+            // Sessions without the user's consent are never used, so they never make a fetch due.
+            var signedIn = PhoneDirectAccess.activeProviders(consent: consent, claudeSignedIn: claude.isSignedIn,
+                                                             codexSignedIn: codex.isSignedIn).map(\.rawValue).sorted()
             signedIn += (openRouter.isEnabled ? [OpenRouterProvider.providerID] : [])
                 + (copilot.isEnabled ? [CopilotProvider.providerID] : [])
                 + balances.filter(\.isEnabled).map(\.id)
@@ -67,11 +71,13 @@ enum WidgetRefresher {
             guard isDue() else { return }   // another widget fetched while this one waited
             RefreshPreferences.setLastAttempt(.now)
             let saved = store.load()
-            let claudeProvider: any UsageProvider = SnapshotProvider(id: "claude", displayName: "Claude Code",
-                                                                     items: saved)
-            let codexProvider: any UsageProvider = SnapshotProvider(id: "codex", displayName: "OpenAI Codex",
-                                                                    items: saved)
-            let delivery = NotificationDelivery(macRelayProviderIDs: ["claude", "codex"])
+            let claudeProvider = PhoneDirectAccess.claude(
+                tokens: claude, relay: SnapshotProvider(id: "claude", displayName: "Claude Code", items: saved),
+                consent: consent, transport: transport)
+            let codexProvider = PhoneDirectAccess.codex(
+                tokens: codex, relay: SnapshotProvider(id: "codex", displayName: "OpenAI Codex", items: saved),
+                consent: consent, transport: transport)
+            let delivery = PhoneDirectAccess.notificationDelivery(claude: claude, codex: codex, consent: consent)
             let service = UsageService(providers: [
                 claudeProvider,
                 codexProvider,

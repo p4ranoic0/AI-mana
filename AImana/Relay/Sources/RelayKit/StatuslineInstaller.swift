@@ -291,7 +291,7 @@ public struct StatuslineInstaller: Sendable {
         var newRest = new, oldRest = old
         newRest["statusLine"] = nil
         oldRest["statusLine"] = nil
-        guard NSDictionary(dictionary: newRest).isEqual(to: oldRest) else { throw InstallError.validationFailed }
+        guard Self.sameJSON(newRest, oldRest) else { throw InstallError.validationFailed }
         if expectRemoved {
             guard new["statusLine"] == nil else { throw InstallError.validationFailed }
         } else if let expectCommand {
@@ -299,6 +299,13 @@ public struct StatuslineInstaller: Sendable {
                 throw InstallError.validationFailed
             }
         }
+    }
+
+    /// Compares the canonical JSON: NSDictionary's isEqual rejects equal booleans on Windows and treats true as 1 on macOS.
+    static func sameJSON(_ a: [String: Any], _ b: [String: Any]) -> Bool {
+        guard let left = try? JSONSerialization.data(withJSONObject: a, options: .sortedKeys),
+              let right = try? JSONSerialization.data(withJSONObject: b, options: .sortedKeys) else { return false }
+        return left == right
     }
 
     private func commit(_ text: String, expecting originalData: Data?) throws {

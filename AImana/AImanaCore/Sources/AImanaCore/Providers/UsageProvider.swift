@@ -11,11 +11,13 @@ public enum UsageProviderError: Error, Sendable, Equatable {
     case server(status: Int)
     /// The Mac relay file is missing, unreadable, or has no entry for this provider.
     case relayUnavailable
+    /// The CLI keeps its sign-in somewhere AI·mana can't read (e.g. the system keyring). Not a sign-out.
+    case unsupportedCredentialStore
 
     /// Errors after which the last known snapshot is still meaningful.
     public var keepsStaleData: Bool {
         switch self {
-        case .unauthenticated: false
+        case .unauthenticated, .unsupportedCredentialStore: false
         case .rateLimited, .decoding, .network, .server, .relayUnavailable: true
         }
     }

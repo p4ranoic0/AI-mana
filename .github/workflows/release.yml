@@ -69,6 +69,27 @@ jobs:
           name: usage-relay-windows-x86_64
           path: dist/*.zip
           if-no-files-found: error
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Build tray app
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Push-Location Android
+          bash ./gradlew --no-daemon -PdesktopOnly=true :desktop:test :desktop:createReleaseDistributable
+          if ($LASTEXITCODE -ne 0) { throw 'Tray app build failed' }
+          Pop-Location
+          $app = 'Android/desktop/build/compose/binaries/main-release/app/AImana'
+          New-Item -ItemType Directory -Force package/app | Out-Null
+          Copy-Item "$app/*" package/app -Recurse -Force
+          $sample = Resolve-Path Android/desktop/src/test/resources/relay-sample.json
+          $p = Start-Process -FilePath (Resolve-Path package/app/AImana.exe) -ArgumentList '--check','--relay-file',"$sample" -Wait -PassThru -NoNewWindow -RedirectStandardOutput check.txt
+          if ($p.ExitCode -ne 0 -or -not ((Get-Content check.txt -Raw) -match 'Claude Code: 42%')) { throw 'Packaged tray app failed its --check smoke run' }
+          Remove-Item check.txt
+          $mb = [math]::Round(((Get-ChildItem package/app -Recurse -File | Measure-Object Length -Sum).Sum) / 1MB, 1)
+          Write-Output "Tray app installed size: $mb MB"
       - name: Build installer
         shell: pwsh
         run: |
@@ -236,9 +257,30 @@ jobs:
           path: dist/*.tar.gz
           if-no-files-found: error
 
+  linux-desktop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Build tray app package
+        working-directory: Android
+        run: |
+          set -euo pipefail
+          ./gradlew --no-daemon -PdesktopOnly=true :desktop:test :desktop:packageReleaseDeb
+          mkdir -p ../dist
+          cp desktop/build/compose/binaries/main-release/deb/*.deb ../dist/
+      - uses: actions/upload-artifact@v7
+        with:
+          name: aimana-linux-desktop
+          path: dist/*.deb
+          if-no-files-found: error
+
   release:
     if: github.event_name == 'push'
-    needs: [macos, linux, windows, mac-app, android]
+    needs: [macos, linux, linux-desktop, windows, mac-app, android]
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -260,7 +302,8 @@ jobs:
           cd dist
           test "$(find . -maxdepth 1 \( -name '*.tar.gz' -o -name '*.zip' \) | wc -l | tr -d ' ')" -eq 4
           test "$(find . -maxdepth 1 \( -name '*.exe' -o -name '*.dmg' -o -name '*.apk' \) | wc -l | tr -d ' ')" -eq 6
-          sha256sum ./*.tar.gz ./*.zip ./*.exe ./*.dmg ./*.apk > SHA256SUMS.txt
+          test "$(find . -maxdepth 1 -name '*.deb' | wc -l | tr -d ' ')" -eq 1   # the Linux tray app
+          sha256sum ./*.tar.gz ./*.zip ./*.exe ./*.dmg ./*.apk ./*.deb > SHA256SUMS.txt
           cd ..
           awk -v version="$version" '
             $0 ~ "^## \\[" version "\\] - " { in_section=1 }
@@ -271,5 +314,5 @@ jobs:
             awk '/^## \[Unreleased\]/{printing=1; next} printing && /^## /{exit} printing{print}' CHANGELOG.md > release-notes.md
           fi
           test -s release-notes.md
-          gh release create "$tag" dist/*.tar.gz dist/*.zip dist/*.exe dist/*.dmg dist/*.apk dist/SHA256SUMS.txt \
+          gh release create "$tag" dist/*.tar.gz dist/*.zip dist/*.exe dist/*.dmg dist/*.apk dist/*.deb dist/SHA256SUMS.txt \
             --title "AI·mana $tag" --notes-file release-notes.md

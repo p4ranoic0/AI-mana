@@ -15,7 +15,7 @@ struct MacSetupCard: View {
     ]
 
     private static var description: String {
-        "AImana reads Claude Code, Codex and costs from the relay on your computer."
+        "AImana reads Claude Code, Codex and costs from the relay on your computer. Claude and Codex can also sign in on this iPhone, in Settings."
     }
 
     var body: some View {

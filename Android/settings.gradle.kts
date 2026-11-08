@@ -4,4 +4,6 @@ dependencyResolutionManagement {
     repositories { google(); mavenCentral() }
 }
 rootProject.name = "AImanaAndroid"
-include(":core", ":app")
+include(":core", ":desktop")
+// The Android app needs the Android SDK; desktop-only machines (Windows/Linux builds) pass -PdesktopOnly=true.
+if (providers.gradleProperty("desktopOnly").orNull != "true") include(":app")

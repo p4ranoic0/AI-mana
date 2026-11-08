@@ -2,7 +2,7 @@ plugins { alias(libs.plugins.android.application); alias(libs.plugins.kotlin.ser
 android {
     namespace = "com.henrrygarcia.aimana"
     compileSdk = 37
-    defaultConfig { applicationId = "com.henrrygarcia.aimana"; minSdk = 26; targetSdk = 37; versionCode = 10200; versionName = "1.2.0" }
+    defaultConfig { applicationId = "com.henrrygarcia.aimana"; minSdk = 26; targetSdk = 37; versionCode = 10300; versionName = "1.3.0" }
     signingConfigs {
         create("release") {
             val keystore = System.getenv("ANDROID_KEYSTORE_PATH")
@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.datastore.preferences)
     implementation(libs.coroutines.android)
+    implementation(libs.browser)
     debugImplementation(libs.compose.ui.tooling)
     testImplementation(libs.junit)
 }

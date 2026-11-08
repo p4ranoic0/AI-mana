@@ -82,7 +82,11 @@ struct SettingsView: View {
                 } header: {
                     Text("Updates")
                 } footer: {
-                    Text("Widgets show what your computer published the last time AImana ran, with how old it is. iOS decides when AImana can refresh in the background.")
+                    if DirectProvider.allCases.contains(where: Services.consent.isGranted) {
+                        Text("Widgets on the Home Screen or Lock Screen refresh on this schedule with this iPhone's own sign-ins. iOS may delay updates, for example in Low Power Mode.")
+                    } else {
+                        Text("Widgets show what your computer published the last time AImana ran, with how old it is. iOS decides when AImana can refresh in the background.")
+                    }
                 }
                 .listRowBackground(SoftTheme.olive.opacity(scheme == .dark ? 0.14 : 0.18))
                 .onChange(of: refreshInterval) { _, interval in
@@ -90,6 +94,8 @@ struct SettingsView: View {
                     RefreshService.schedule()
                     RefreshService.reloadWidgets()   // their next reload follows the new interval
                 }
+                ClaudeSignInSection(onChanged: onChanged)
+                CodexSignInSection(onChanged: onChanged)
                 Section {
                     MoreProvidersLink(onChanged: onChanged)
                 } footer: {

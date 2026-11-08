@@ -97,10 +97,21 @@ public struct RelayPaths: Sendable, Equatable {
         return [home.appendingPathComponent(".claude/projects")]
     }
 
-    public var codexSessionRoots: [URL] {
-        let base = environment["CODEX_HOME"].flatMap { $0.isEmpty ? nil : URL(fileURLWithPath: $0) }
+    /// `CODEX_HOME`, or `~/.codex`.
+    public var codexHome: URL {
+        environment["CODEX_HOME"].flatMap { $0.isEmpty ? nil : URL(fileURLWithPath: $0) }
             ?? home.appendingPathComponent(".codex")
-        return [base.appendingPathComponent("sessions")]
+    }
+
+    public var codexSessionRoots: [URL] { [codexHome.appendingPathComponent("sessions")] }
+
+    /// Where Claude Code keeps its config and, outside the macOS Keychain, its sign-in: the first `CLAUDE_CONFIG_DIR`
+    /// entry, or `~/.claude`.
+    public var claudeConfigDirectory: URL {
+        if let custom = environment["CLAUDE_CONFIG_DIR"], let first = custom.split(separator: ",").first {
+            return URL(fileURLWithPath: String(first))
+        }
+        return home.appendingPathComponent(".claude")
     }
 
     public static func ensure(_ dir: URL) {

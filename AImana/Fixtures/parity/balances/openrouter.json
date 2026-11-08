@@ -1,0 +1,63 @@
+{
+  "_source": "Documented examples of GET /api/v1/key and GET /api/v1/credits (openrouter.ai/docs).",
+  "now": "2027-01-15T08:00:00Z",
+  "response": {
+    "data": {
+      "byok_usage": 17.38,
+      "expires_at": "2027-12-31T23:59:59Z",
+      "free_model_daily_requests": {
+        "limit": 50,
+        "remaining": 38,
+        "used": 12
+      },
+      "is_free_tier": false,
+      "is_management_key": false,
+      "label": "sk-or-v1-au7...890",
+      "limit": 100,
+      "limit_remaining": 74.5,
+      "limit_reset": "monthly",
+      "usage": 25.5,
+      "usage_daily": 25.5,
+      "usage_monthly": 25.5,
+      "usage_weekly": 25.5
+    }
+  },
+  "credits": {
+    "data": {
+      "total_credits": 100.5,
+      "total_usage": 25.75
+    }
+  },
+  "expected": {
+    "plan": null,
+    "windows": [
+      {
+        "kind": "spend-limit",
+        "usedPercent": 25.5,
+        "windowMinutes": 44640,
+        "resetsAt": "2027-02-01T00:00:00Z"
+      },
+      {
+        "kind": "free-requests",
+        "usedPercent": 24.0,
+        "windowMinutes": 1440,
+        "resetsAt": "2027-01-16T00:00:00Z"
+      }
+    ],
+    "details": [
+      {
+        "kind": "creditBalance",
+        "remaining": 74.75,
+        "limit": 100.5,
+        "currency": "USD",
+        "used": 25.75
+      },
+      {
+        "kind": "monthlySpend",
+        "remaining": 0,
+        "currency": "USD",
+        "used": 25.5
+      }
+    ]
+  }
+}

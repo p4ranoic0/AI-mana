@@ -15,6 +15,13 @@ private final class RecordingExecutor: RelayCommandExecutor, @unchecked Sendable
     }
 }
 
+private final class Counter: @unchecked Sendable {
+    private let lock = NSLock()
+    private var value = 0
+    var count: Int { lock.withLock { value } }
+    func hit() { lock.withLock { value += 1 } }
+}
+
 @Suite struct RelaySetupTests {
     @Test func platformPathsAndOutputPrecedence() throws {
         let home = try makeTempDir()
@@ -48,6 +55,52 @@ private final class RecordingExecutor: RelayCommandExecutor, @unchecked Sendable
         for args in [["--interval", "0"], ["--interval", "abc"], ["--output"], ["--unknown", "x"]] {
             #expect(throws: SetupError.invalidArguments) { try SetupOptions(arguments: args) }
         }
+    }
+
+    @Test func noScheduleSkipsTheScheduler() async throws {
+        // The desktop tray app runs usage-relay itself; its installer sets up without a scheduled task.
+        #expect(try SetupOptions(arguments: ["--no-schedule"]).schedule == false)
+        #expect(try SetupOptions(arguments: []).schedule == true)
+        let home = try makeTempDir()
+        let paths = RelayPaths(home: home, supportDirectory: home.appendingPathComponent("support"), platform: .windows)
+        let executor = RecordingExecutor()
+        let relay = home.appendingPathComponent("bin/usage-relay.exe")
+        let task = relay.deletingLastPathComponent().appendingPathComponent("usage-relay-task.exe")
+        try FileManager.default.createDirectory(at: task.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try Data().write(to: task)
+        let published = Counter()
+        let setup = RelaySetup(paths: paths, executable: relay, executor: executor, publish: { _ in published.hit() })
+        let lines = try await setup.setup(SetupOptions(arguments: ["--no-schedule"]))
+        #expect(published.count == 1)
+        #expect(executor.calls.isEmpty)
+        #expect(lines.contains { $0.contains("No scheduled task") })
+    }
+
+    @Test func noScheduleRemovesAnEarlierScheduledTask() async throws {
+        // Upgrading from a relay-only install: the old task must go, or there would be two schedulers.
+        let home = try makeTempDir()
+        let paths = RelayPaths(home: home, supportDirectory: home.appendingPathComponent("support"),
+                               environment: ["AIMANA_TASK_NAME": "AImanaUpgradeTest"], platform: .windows)
+        let executor = RecordingExecutor()
+        let relay = home.appendingPathComponent("bin/usage-relay.exe")
+        let task = relay.deletingLastPathComponent().appendingPathComponent("usage-relay-task.exe")
+        try FileManager.default.createDirectory(at: task.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try Data().write(to: task)
+        let setup = RelaySetup(paths: paths, executable: relay, executor: executor, publish: { _ in })
+        _ = try await setup.setup(SetupOptions(arguments: []))
+        _ = try await setup.setup(SetupOptions(arguments: ["--no-schedule"]))
+        #expect(executor.calls.last?.1 == ["/Delete", "/TN", "AImanaUpgradeTest", "/F"])
+    }
+
+    @Test func doctorAcceptsTheAppAsScheduler() async throws {
+        let home = try makeTempDir()
+        let paths = RelayPaths(home: home, supportDirectory: home.appendingPathComponent("support"), platform: .linux)
+        let setup = RelaySetup(paths: paths, executable: home.appendingPathComponent("usage-relay"),
+                               executor: RecordingExecutor(), publish: { _ in })
+        _ = try await setup.setup(SetupOptions(arguments: ["--no-schedule"]))
+        let lines = setup.doctor().lines
+        #expect(lines.contains("Schedule: the AI·mana app publishes while it runs"))
+        #expect(!lines.contains { $0.contains("Missing schedule") })
     }
 
     @Test func stablePackageManagerPaths() {

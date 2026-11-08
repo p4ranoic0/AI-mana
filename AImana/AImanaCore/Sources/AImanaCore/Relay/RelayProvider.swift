@@ -89,7 +89,7 @@ public struct RelayProvider: UsageProvider {
         if let usage = entry.usage {
             return usage.withExtras(cost: envelope.costs.first { $0.providerID == id },
                                     history: envelope.history.filter { $0.providerID == id })
-                .withSource(entry.source)
+                .withSource(entry.source, publishedAt: envelope.generatedAt)
         }
         throw (entry.error ?? .relayUnavailable).providerError
     }

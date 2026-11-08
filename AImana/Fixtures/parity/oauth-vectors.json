@@ -1,0 +1,39 @@
+{
+  "pkce": [
+    {
+      "verifier": "dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
+      "challenge": "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM"
+    },
+    {
+      "verifier": "AImana-parity-verifier-0123456789abcdefghijklmnop",
+      "challenge": "Kbbq-KwQaBUroGESUs5vCTq3s-VuRBsIj37NcZr7o2M"
+    }
+  ],
+  "pastedCode": [
+    {
+      "raw": "abc123#state-1",
+      "state": "state-1",
+      "code": "abc123"
+    },
+    {
+      "raw": "  abc123#state-1\n",
+      "state": "state-1",
+      "code": "abc123"
+    },
+    {
+      "raw": "abc123#other",
+      "state": "state-1",
+      "code": null
+    },
+    {
+      "raw": "abc123",
+      "state": "state-1",
+      "code": null
+    },
+    {
+      "raw": "#state-1",
+      "state": "state-1",
+      "code": null
+    }
+  ]
+}

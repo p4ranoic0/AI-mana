@@ -41,46 +41,6 @@
         }
       }
     },
-    "AImana reads Claude Code, Codex and costs from the relay on your computer.": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AI·mana liest die Nutzung von Claude Code und Codex sowie Kosten vom Relay auf deinem Computer."
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AI·mana reads Claude Code, Codex and costs from the relay on your computer."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AI·mana lee el uso de Claude Code, Codex y los costos desde el relay de tu computadora."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AI·mana lit l’utilisation de Claude Code et de Codex ainsi que les coûts depuis le relais de votre ordinateur."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "AI·mana legge l’utilizzo di Claude Code e Codex e i costi dal relay sul tuo computer."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O AI·mana lê o uso do Claude Code e do Codex e os custos do relay no seu computador."
-          }
-        }
-      }
-    },
     "; resets %@": {
       "extractionState": "stale",
       "localizations": {
@@ -943,6 +903,86 @@
         }
       }
     },
+    "A separate session from your computer's Codex login, stored in the iOS Keychain.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine von deiner Codex-Anmeldung am Computer getrennte Sitzung, im iOS-Schlüsselbund gespeichert."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A separate session from your computer's Codex login, stored in the iOS Keychain."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una sesión aparte de la de Codex en tu computadora, guardada en el llavero de iOS."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une session distincte de la connexion Codex de votre ordinateur, stockée dans le trousseau iOS."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una sessione separata dall’accesso a Codex sul tuo computer, salvata nel portachiavi di iOS."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma sessão separada do login do Codex no seu computador, guardada nas Chaves do iOS."
+          }
+        }
+      }
+    },
+    "A separate session from your computer's that can only read usage. It is stored in the iOS Keychain.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine von der Anmeldung auf deinem Computer getrennte Sitzung, die nur die Nutzung lesen kann. Sie wird im iOS-Schlüsselbund gespeichert."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A separate session from your computer's that can only read usage. It is stored in the iOS Keychain."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una sesión aparte de la de tu computadora que solo puede leer el uso. Se guarda en el llavero de iOS."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Une session distincte de celle de votre ordinateur, qui ne peut que lire l’utilisation. Elle est stockée dans le trousseau iOS."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una sessione separata da quella del tuo computer che può solo leggere l’utilizzo. È salvata nel portachiavi di iOS."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma sessão separada da do seu computador que só pode ler o uso. Fica guardada nas Chaves do iOS."
+          }
+        }
+      }
+    },
     "Accent color": {
       "extractionState": "stale",
       "localizations": {
@@ -1062,6 +1102,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adicionar limite"
+          }
+        }
+      }
+    },
+    "After you approve, Safari shows a page that cannot be reached. Copy that page's full address and paste it here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nach der Bestätigung zeigt Safari eine Seite, die nicht erreichbar ist. Kopiere die vollständige Adresse dieser Seite und füge sie hier ein."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "After you approve, Safari shows a page that cannot be reached. Copy that page's full address and paste it here."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Después de aprobar, Safari muestra una página que no se puede abrir. Copia la dirección completa de esa página y pégala aquí."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Après votre approbation, Safari affiche une page inaccessible. Copiez l'adresse complète de cette page et collez-la ici."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dopo l'approvazione, Safari mostra una pagina non raggiungibile. Copia l'indirizzo completo di quella pagina e incollalo qui."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Depois de aprovar, o Safari mostra uma página que não pode ser acessada. Copie o endereço completo dessa página e cole aqui."
           }
         }
       }
@@ -1389,6 +1469,46 @@
         }
       }
     },
+    "Approve access, copy the code the page shows, close the page, then tap Paste.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erlaube den Zugriff, kopiere den angezeigten Code, schließe die Seite und tippe auf Einsetzen."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approve access, copy the code the page shows, close the page, then tap Paste."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aprueba el acceso, copia el código que muestra la página, ciérrala y toca Pegar."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autorisez l'accès, copiez le code affiché, fermez la page, puis touchez Coller."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approva l'accesso, copia il codice mostrato, chiudi la pagina e tocca Incolla."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aprove o acesso, copie o código que a página mostra, feche-a e toque em Colar."
+          }
+        }
+      }
+    },
     "Balances": {
       "extractionState": "stale",
       "localizations": {
@@ -1588,6 +1708,87 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mais uso: %@"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abbrechen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuler"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annulla"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        }
+      }
+    },
+    "ChatGPT on this iPhone": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT auf diesem iPhone"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT on this iPhone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT en este iPhone"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT sur cet iPhone"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT su questo iPhone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT neste iPhone"
           }
         }
       }
@@ -1837,6 +2038,46 @@
         }
       }
     },
+    "Claude on this iPhone": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude auf diesem iPhone"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude on this iPhone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude en este iPhone"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude sur cet iPhone"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude su questo iPhone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude neste iPhone"
+          }
+        }
+      }
+    },
     "Codex": {
       "extractionState": "stale",
       "localizations": {
@@ -1954,6 +2195,47 @@
           "stringUnit": {
             "state": "translated",
             "value": "As cores e os avisos de cota baixa sempre seguem o restante."
+          }
+        }
+      }
+    },
+    "Connect": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verbinden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connect"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecter"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connetti"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectar"
           }
         }
       }
@@ -2444,6 +2726,88 @@
           "stringUnit": {
             "state": "translated",
             "value": "Não foi possível salvar a chave nas Chaves."
+          }
+        }
+      }
+    },
+    "Could not save the sign-in to the Keychain.": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Anmeldung konnte nicht im Schlüsselbund gespeichert werden."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not save the sign-in to the Keychain."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo guardar el inicio de sesión en el llavero."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d'enregistrer la connexion dans le trousseau."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile salvare l'accesso nel portachiavi."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível salvar o login nas Chaves."
+          }
+        }
+      }
+    },
+    "Could not sign in to ChatGPT. Check your connection and try again.": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anmeldung bei ChatGPT fehlgeschlagen. Prüfe deine Verbindung und versuche es erneut."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not sign in to ChatGPT. Check your connection and try again."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo iniciar sesión en ChatGPT. Comprueba tu conexión e inténtalo de nuevo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de se connecter à ChatGPT. Vérifiez votre connexion et réessayez."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile accedere a ChatGPT. Controlla la connessione e riprova."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível entrar no ChatGPT. Verifique sua conexão e tente novamente."
           }
         }
       }
@@ -2979,6 +3343,47 @@
         }
       }
     },
+    "Device code sign-in is not available for this account. Turn on device code authorization in ChatGPT's security settings, or use the browser sign-in.": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Anmeldung per Gerätecode ist für dieses Konto nicht verfügbar. Aktiviere die Gerätecode-Autorisierung in den Sicherheitseinstellungen von ChatGPT oder verwende die Anmeldung im Browser."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Device code sign-in is not available for this account. Turn on device code authorization in ChatGPT's security settings, or use the browser sign-in."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El inicio de sesión con código de dispositivo no está disponible para esta cuenta. Activa la autorización con código de dispositivo en los ajustes de seguridad de ChatGPT o usa el inicio de sesión del navegador."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La connexion par code d'appareil n'est pas disponible pour ce compte. Activez l'autorisation par code d'appareil dans les paramètres de sécurité de ChatGPT, ou utilisez la connexion par navigateur."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'accesso con codice dispositivo non è disponibile per questo account. Attiva l'autorizzazione con codice dispositivo nelle impostazioni di sicurezza di ChatGPT o usa l'accesso dal browser."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O login com código de dispositivo não está disponível para esta conta. Ative a autorização por código de dispositivo nas configurações de segurança do ChatGPT ou use o login pelo navegador."
+          }
+        }
+      }
+    },
     "Disconnect": {
       "extractionState": "stale",
       "localizations": {
@@ -3504,6 +3909,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ritmo acelerado"
+          }
+        }
+      }
+    },
+    "Fast pace alerts once per window when the projection says the quota runs out before it resets. Quota available again follows windows that ran out or passed your highest threshold. Sign-in alerts cover the sign-ins on this iPhone.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hohes Tempo warnt einmal pro Zeitfenster, wenn die Prognose zeigt, dass das Kontingent vor dem Zurücksetzen aufgebraucht ist. Kontingent wieder verfügbar gilt für Zeitfenster, die aufgebraucht waren oder deine höchste Schwelle überschritten haben. Anmeldehinweise betreffen die Anmeldungen auf diesem iPhone."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fast pace alerts once per window when the projection says the quota runs out before it resets. Quota available again follows windows that ran out or passed your highest threshold. Sign-in alerts cover the sign-ins on this iPhone."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ritmo acelerado avisa una vez por ventana cuando la proyección indica que la cuota se agota antes del reinicio. Cuota disponible otra vez sigue las ventanas que se agotaron o pasaron tu umbral más alto. Las alertas de sesión cubren los inicios de sesión de este iPhone."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rythme rapide prévient une fois par fenêtre quand la projection indique que le quota sera épuisé avant la réinitialisation. Quota de nouveau disponible suit les fenêtres épuisées ou au-delà de votre seuil le plus haut. Les alertes de connexion concernent les connexions de cet iPhone."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ritmo elevato avvisa una volta per finestra quando la proiezione indica che la quota finisce prima del ripristino. Quota di nuovo disponibile segue le finestre esaurite o oltre la tua soglia più alta. Gli avvisi di accesso riguardano gli accessi su questo iPhone."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ritmo acelerado avisa uma vez por janela quando a projeção indica que a cota acaba antes de renovar. Cota disponível de novo acompanha janelas que se esgotaram ou passaram do seu limite mais alto. Os alertas de login valem para os logins deste iPhone."
           }
         }
       }
@@ -5303,6 +5748,88 @@
         }
       }
     },
+    "Open the ChatGPT page again": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ChatGPT-Seite erneut öffnen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the ChatGPT page again"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir de nuevo la página de ChatGPT"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rouvrir la page ChatGPT"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riapri la pagina di ChatGPT"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir a página do ChatGPT novamente"
+          }
+        }
+      }
+    },
+    "Open the sign-in page again": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anmeldeseite erneut öffnen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open the sign-in page again"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir de nuevo la página de inicio de sesión"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rouvrir la page de connexion"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Riapri la pagina di accesso"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abrir a página de login novamente"
+          }
+        }
+      }
+    },
     "OpenAI Codex": {
       "extractionState": "stale",
       "localizations": {
@@ -5584,6 +6111,47 @@
           "stringUnit": {
             "state": "translated",
             "value": "Uso pago além do seu plano, até o seu limite mensal."
+          }
+        }
+      }
+    },
+    "Paste the address from Safari": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adresse aus Safari einfügen"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paste the address from Safari"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pega la dirección de Safari"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Collez l'adresse de Safari"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Incolla l'indirizzo da Safari"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cole o endereço do Safari"
           }
         }
       }
@@ -7178,6 +7746,129 @@
         }
       }
     },
+    "Sign in with ChatGPT": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mit ChatGPT anmelden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in with ChatGPT"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar sesión con ChatGPT"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se connecter avec ChatGPT"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accedi con ChatGPT"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrar com o ChatGPT"
+          }
+        }
+      }
+    },
+    "Sign in with Claude": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mit Claude anmelden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in with Claude"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Iniciar sesión con Claude"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se connecter avec Claude"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accedi con Claude"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrar com Claude"
+          }
+        }
+      }
+    },
+    "Sign out": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abmelden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign out"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cerrar sesión"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se déconnecter"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esci"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sair"
+          }
+        }
+      }
+    },
     "Sign-in expired": {
       "extractionState": "stale",
       "localizations": {
@@ -7215,6 +7906,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "Login expirado"
+          }
+        }
+      }
+    },
+    "Signed in on this iPhone": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auf diesem iPhone angemeldet"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signed in on this iPhone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sesión iniciada en este iPhone"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Connecté sur cet iPhone"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accesso effettuato su questo iPhone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectado neste iPhone"
           }
         }
       }
@@ -7295,6 +8026,169 @@
           "stringUnit": {
             "state": "translated",
             "value": "Use mais ou menos isso por dia e você chega a 100% bem quando o limite é redefinido."
+          }
+        }
+      }
+    },
+    "That address did not work. Open the sign-in page again and paste the new address.": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Adresse hat nicht funktioniert. Öffne die Anmeldeseite erneut und füge die neue Adresse ein."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That address did not work. Open the sign-in page again and paste the new address."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esa dirección no funcionó. Abre de nuevo la página de inicio de sesión y pega la nueva dirección."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette adresse n'a pas fonctionné. Rouvrez la page de connexion et collez la nouvelle adresse."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questo indirizzo non ha funzionato. Riapri la pagina di accesso e incolla il nuovo indirizzo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esse endereço não funcionou. Abra a página de login novamente e cole o novo endereço."
+          }
+        }
+      }
+    },
+    "That code did not work. Open the sign-in page again and paste the new code.": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dieser Code hat nicht funktioniert. Öffne die Anmeldeseite erneut und füge den neuen Code ein."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That code did not work. Open the sign-in page again and paste the new code."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ese código no funcionó. Abre la página de inicio de sesión otra vez y pega el código nuevo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce code n'a pas fonctionné. Rouvrez la page de connexion et collez le nouveau code."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il codice non ha funzionato. Riapri la pagina di accesso e incolla il nuovo codice."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esse código não funcionou. Abra a página de login novamente e cole o novo código."
+          }
+        }
+      }
+    },
+    "The code expired before it was approved. Start the sign-in again.": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Code ist abgelaufen, bevor er bestätigt wurde. Starte die Anmeldung erneut."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The code expired before it was approved. Start the sign-in again."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El código caducó antes de ser aprobado. Vuelve a iniciar sesión."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le code a expiré avant d'être approuvé. Recommencez la connexion."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il codice è scaduto prima di essere approvato. Ripeti l'accesso."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O código expirou antes de ser aprovado. Comece o login novamente."
+          }
+        }
+      }
+    },
+    "The code is already copied. Paste it on the ChatGPT page and approve; this page closes by itself.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Der Code ist bereits kopiert. Füge ihn auf der ChatGPT-Seite ein und bestätige; die Seite schließt sich von selbst."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The code is already copied. Paste it on the ChatGPT page and approve; this page closes by itself."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El código ya está copiado. Pégalo en la página de ChatGPT y aprueba; la página se cierra sola."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le code est déjà copié. Collez-le sur la page ChatGPT et autorisez ; la page se ferme toute seule."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il codice è già copiato. Incollalo nella pagina di ChatGPT e approva; la pagina si chiude da sola."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O código já foi copiado. Cole-o na página do ChatGPT e aprove; a página fecha sozinha."
           }
         }
       }
@@ -7910,6 +8804,47 @@
         }
       }
     },
+    "Use browser sign-in instead": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stattdessen Anmeldung im Browser verwenden"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use browser sign-in instead"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar el inicio de sesión del navegador"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Utiliser plutôt la connexion par navigateur"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usa invece l'accesso dal browser"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar o login pelo navegador"
+          }
+        }
+      }
+    },
     "Visual Style": {
       "extractionState": "stale",
       "localizations": {
@@ -7951,6 +8886,47 @@
         }
       }
     },
+    "Waiting for approval…": {
+      "extractionState": "stale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warte auf Bestätigung…"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting for approval…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esperando la aprobación…"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En attente d'approbation…"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In attesa di approvazione…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aguardando aprovação…"
+          }
+        }
+      }
+    },
     "weekly": {
       "extractionState": "stale",
       "localizations": {
@@ -7988,6 +8964,46 @@
           "stringUnit": {
             "state": "translated",
             "value": "semanal"
+          }
+        }
+      }
+    },
+    "Widgets on the Home Screen or Lock Screen refresh on this schedule with this iPhone's own sign-ins. iOS may delay updates, for example in Low Power Mode.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets auf dem Home- oder Sperrbildschirm werden in diesem Intervall mit den Anmeldungen dieses iPhone aktualisiert. iOS kann Aktualisierungen verzögern, zum Beispiel im Stromsparmodus."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Widgets on the Home Screen or Lock Screen refresh on this schedule with this iPhone's own sign-ins. iOS may delay updates, for example in Low Power Mode."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los widgets de la pantalla de inicio o de bloqueo se actualizan con esta frecuencia usando las sesiones iniciadas en este iPhone. iOS puede retrasar las actualizaciones, por ejemplo, en modo de bajo consumo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les widgets de l'écran d'accueil ou de l'écran verrouillé s'actualisent à cette fréquence avec les connexions de cet iPhone. iOS peut retarder les mises à jour, par exemple en mode Économie d'énergie."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "I widget nella schermata Home o di blocco si aggiornano con questa frequenza usando gli accessi di questo iPhone. iOS può ritardare gli aggiornamenti, ad esempio in modalità Risparmio energetico."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Os widgets na Tela de Início ou na Tela Bloqueada são atualizados nesse intervalo com os logins deste iPhone. O iOS pode atrasar as atualizações, por exemplo, no Modo de Pouca Energia."
           }
         }
       }
@@ -8111,6 +9127,566 @@
           "stringUnit": {
             "state": "translated",
             "value": "A xAI mostra o saldo pré-pago só para uma chave de gerenciamento, não para uma chave de API comum. Crie uma no console da xAI, em Settings → Management Keys, com acesso ao faturamento. O AI·mana lê apenas o saldo. A chave fica nas Chaves do iOS neste iPhone."
+          }
+        }
+      }
+    },
+    "This CLI keeps its sign-in in the system keyring, which AI·mana can't read yet. Use the relay instead.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This CLI keeps its sign-in in the system keyring, which AI·mana can't read yet. Use the relay instead."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este CLI guarda su sesión en el llavero del sistema, que AI·mana aún no puede leer. Usa el relay."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este CLI guarda o login no chaveiro do sistema, que o AI·mana ainda não consegue ler. Use o relay."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce CLI garde sa session dans le trousseau du système, qu’AI·mana ne peut pas encore lire. Utilisez le relais."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese CLI speichert ihre Anmeldung im Systemschlüsselbund, den AI·mana noch nicht lesen kann. Nutze das Relay."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questa CLI salva l’accesso nel portachiavi di sistema, che AI·mana non può ancora leggere. Usa il relay."
+          }
+        }
+      }
+    },
+    "Couldn't remove the sign-in from this device. Try again.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn't remove the sign-in from this device. Try again."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo borrar la sesión de este dispositivo. Inténtalo de nuevo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível remover o login deste dispositivo. Tente de novo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de supprimer la session de cet appareil. Réessayez."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Anmeldung konnte nicht von diesem Gerät entfernt werden. Versuch es noch einmal."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile rimuovere l’accesso da questo dispositivo. Riprova."
+          }
+        }
+      }
+    },
+    "Read Claude usage directly?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read Claude usage directly?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Leer el uso de Claude directamente?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ler o uso do Claude diretamente?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire l’utilisation de Claude directement ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude-Nutzung direkt lesen?"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leggere direttamente l’utilizzo di Claude?"
+          }
+        }
+      }
+    },
+    "Read Codex usage directly?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read Codex usage directly?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Leer el uso de Codex directamente?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ler o uso do Codex diretamente?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire l’utilisation de Codex directement ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex-Nutzung direkt lesen?"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leggere direttamente l’utilizzo di Codex?"
+          }
+        }
+      }
+    },
+    "Accept and continue": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accept and continue"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aceptar y continuar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aceitar e continuar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accepter et continuer"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Akzeptieren und fortfahren"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accetta e continua"
+          }
+        }
+      }
+    },
+    "Unofficial": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unofficial"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No oficial"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não oficial"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non officiel"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inoffiziell"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non ufficiale"
+          }
+        }
+      }
+    },
+    "Turn on direct access": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn on direct access"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activar acceso directo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ativar acesso direto"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activer l’accès direct"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direktzugriff aktivieren"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Attiva accesso diretto"
+          }
+        }
+      }
+    },
+    "Sign in again in Settings.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sign in again in Settings."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vuelve a iniciar sesión en Ajustes."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Faça login de novo em Ajustes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reconnectez-vous dans Réglages."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Melde dich in den Einstellungen erneut an."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accedi di nuovo in Impostazioni."
+          }
+        }
+      }
+    },
+    "Showing relay data. Direct access: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Showing relay data. Direct access: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrando datos del relay. Acceso directo: %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrando dados do relay. Acesso direto: %@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Données du relais affichées. Accès direct : %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relay-Daten werden angezeigt. Direktzugriff: %@"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dati del relay mostrati. Accesso diretto: %@"
+          }
+        }
+      }
+    },
+    "AImana reads Claude Code, Codex and costs from the relay on your computer. Claude and Codex can also sign in on this iPhone, in Settings.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AImana reads Claude Code, Codex and costs from the relay on your computer. Claude and Codex can also sign in on this iPhone, in Settings."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AImana lee Claude Code, Codex y los costos desde el relay de tu computadora. Claude y Codex también pueden iniciar sesión en este iPhone, en Ajustes."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O AImana lê Claude Code, Codex e custos do relay no seu computador. Claude e Codex também podem fazer login neste iPhone, em Ajustes."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AImana lit Claude Code, Codex et les coûts depuis le relais de votre ordinateur. Claude et Codex peuvent aussi se connecter sur cet iPhone, dans Réglages."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AImana liest Claude Code, Codex und Kosten aus dem Relay auf deinem Computer. Claude und Codex können sich auch auf diesem iPhone anmelden, in den Einstellungen."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AImana legge Claude Code, Codex e i costi dal relay del tuo computer. Claude e Codex possono anche accedere su questo iPhone, in Impostazioni."
+          }
+        }
+      }
+    },
+    "Off by default. When on, AI·mana reads your Claude usage from an endpoint that is not a public API. Anthropic's Claude Code terms prohibit third-party apps from offering Claude.ai sign-in or storing its tokens. Turning this on is your decision; the provider has not authorized it, and it could limit or suspend your account. The endpoint can change or stop working at any time; AI·mana then falls back to the relay. You will sign in with your own account on this device. The session is stored in this device's Keychain, shared with nobody, and signing out deletes it.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off by default. When on, AI·mana reads your Claude usage from an endpoint that is not a public API. Anthropic's Claude Code terms prohibit third-party apps from offering Claude.ai sign-in or storing its tokens. Turning this on is your decision; the provider has not authorized it, and it could limit or suspend your account. The endpoint can change or stop working at any time; AI·mana then falls back to the relay. You will sign in with your own account on this device. The session is stored in this device's Keychain, shared with nobody, and signing out deletes it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado por defecto. Al activarlo, AI·mana lee tu uso de Claude desde un endpoint que no es una API pública. Los términos de Claude Code de Anthropic prohíben que apps de terceros ofrezcan el inicio de sesión de Claude.ai o guarden sus tokens. Activarlo es tu decisión; el proveedor no lo ha autorizado y podría limitar o suspender tu cuenta. El endpoint puede cambiar o dejar de funcionar en cualquier momento; entonces AI·mana vuelve al relay. Iniciarás sesión con tu propia cuenta en este dispositivo. La sesión se guarda en el Llavero de este dispositivo, no se comparte con nadie y al cerrar sesión se borra."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desativado por padrão. Ao ativar, o AI·mana lê seu uso de Claude em um endpoint que não é uma API pública. Os termos do Claude Code da Anthropic proíbem que apps de terceiros ofereçam login do Claude.ai ou armazenem seus tokens. Ativar é decisão sua; o provedor não autorizou isso e pode limitar ou suspender sua conta. O endpoint pode mudar ou parar de funcionar a qualquer momento; então o AI·mana volta ao relay. Você fará login com a sua própria conta neste dispositivo. A sessão fica nas Chaves deste dispositivo, não é compartilhada com ninguém, e sair a apaga."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désactivé par défaut. Une fois activé, AI·mana lit votre utilisation de Claude depuis un point d’accès qui n’est pas une API publique. Les conditions de Claude Code d’Anthropic interdisent aux apps tierces de proposer la connexion Claude.ai ou de stocker ses jetons. L’activer est votre décision ; le fournisseur ne l’a pas autorisé et pourrait limiter ou suspendre votre compte. Le point d’accès peut changer ou cesser de fonctionner à tout moment ; AI·mana revient alors au relais. Vous vous connecterez avec votre propre compte sur cet appareil. La session est stockée dans le trousseau de cet appareil, n’est partagée avec personne, et la déconnexion la supprime."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standardmäßig aus. Wenn aktiviert, liest AI·mana deine Claude-Nutzung über einen Endpunkt, der keine öffentliche API ist. Die Claude-Code-Bedingungen von Anthropic verbieten Drittanbieter-Apps, die Claude.ai-Anmeldung anzubieten oder deren Tokens zu speichern. Die Aktivierung ist deine Entscheidung; der Anbieter hat sie nicht genehmigt und könnte dein Konto einschränken oder sperren. Der Endpunkt kann sich jederzeit ändern oder nicht mehr funktionieren; AI·mana greift dann auf das Relay zurück. Du meldest dich auf diesem Gerät mit deinem eigenen Konto an. Die Sitzung liegt im Schlüsselbund dieses Geräts, wird mit niemandem geteilt, und Abmelden löscht sie."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disattivato per impostazione predefinita. Se attivo, AI·mana legge il tuo utilizzo di Claude da un endpoint che non è un’API pubblica. I termini di Claude Code di Anthropic vietano alle app di terze parti di offrire l’accesso a Claude.ai o di salvarne i token. Attivarlo è una tua decisione; il fornitore non l’ha autorizzato e potrebbe limitare o sospendere il tuo account. L’endpoint può cambiare o smettere di funzionare in qualsiasi momento; AI·mana torna allora al relay. Accederai con il tuo account su questo dispositivo. La sessione è salvata nel Portachiavi di questo dispositivo, non è condivisa con nessuno e uscire la elimina."
+          }
+        }
+      }
+    },
+    "Off by default. When on, AI·mana reads your ChatGPT usage from an endpoint that is not a public API. OpenAI's terms restrict programmatic access to its services. Turning this on is your decision; the provider has not authorized it, and it could limit or suspend your account. The endpoint can change or stop working at any time; AI·mana then falls back to the relay. You will sign in with your own account on this device. The session is stored in this device's Keychain, shared with nobody, and signing out deletes it.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off by default. When on, AI·mana reads your ChatGPT usage from an endpoint that is not a public API. OpenAI's terms restrict programmatic access to its services. Turning this on is your decision; the provider has not authorized it, and it could limit or suspend your account. The endpoint can change or stop working at any time; AI·mana then falls back to the relay. You will sign in with your own account on this device. The session is stored in this device's Keychain, shared with nobody, and signing out deletes it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado por defecto. Al activarlo, AI·mana lee tu uso de ChatGPT desde un endpoint que no es una API pública. Los términos de OpenAI restringen el acceso programático a sus servicios. Activarlo es tu decisión; el proveedor no lo ha autorizado y podría limitar o suspender tu cuenta. El endpoint puede cambiar o dejar de funcionar en cualquier momento; entonces AI·mana vuelve al relay. Iniciarás sesión con tu propia cuenta en este dispositivo. La sesión se guarda en el Llavero de este dispositivo, no se comparte con nadie y al cerrar sesión se borra."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desativado por padrão. Ao ativar, o AI·mana lê seu uso de ChatGPT em um endpoint que não é uma API pública. Os termos da OpenAI restringem o acesso programático aos seus serviços. Ativar é decisão sua; o provedor não autorizou isso e pode limitar ou suspender sua conta. O endpoint pode mudar ou parar de funcionar a qualquer momento; então o AI·mana volta ao relay. Você fará login com a sua própria conta neste dispositivo. A sessão fica nas Chaves deste dispositivo, não é compartilhada com ninguém, e sair a apaga."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désactivé par défaut. Une fois activé, AI·mana lit votre utilisation de ChatGPT depuis un point d’accès qui n’est pas une API publique. Les conditions d’OpenAI restreignent l’accès programmatique à leurs services. L’activer est votre décision ; le fournisseur ne l’a pas autorisé et pourrait limiter ou suspendre votre compte. Le point d’accès peut changer ou cesser de fonctionner à tout moment ; AI·mana revient alors au relais. Vous vous connecterez avec votre propre compte sur cet appareil. La session est stockée dans le trousseau de cet appareil, n’est partagée avec personne, et la déconnexion la supprime."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standardmäßig aus. Wenn aktiviert, liest AI·mana deine ChatGPT-Nutzung über einen Endpunkt, der keine öffentliche API ist. Die Bedingungen von OpenAI beschränken den programmatischen Zugriff auf ihre Dienste. Die Aktivierung ist deine Entscheidung; der Anbieter hat sie nicht genehmigt und könnte dein Konto einschränken oder sperren. Der Endpunkt kann sich jederzeit ändern oder nicht mehr funktionieren; AI·mana greift dann auf das Relay zurück. Du meldest dich auf diesem Gerät mit deinem eigenen Konto an. Die Sitzung liegt im Schlüsselbund dieses Geräts, wird mit niemandem geteilt, und Abmelden löscht sie."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disattivato per impostazione predefinita. Se attivo, AI·mana legge il tuo utilizzo di ChatGPT da un endpoint che non è un’API pubblica. I termini di OpenAI limitano l’accesso programmatico ai loro servizi. Attivarlo è una tua decisione; il fornitore non l’ha autorizzato e potrebbe limitare o sospendere il tuo account. L’endpoint può cambiare o smettere di funzionare in qualsiasi momento; AI·mana torna allora al relay. Accederai con il tuo account su questo dispositivo. La sessione è salvata nel Portachiavi di questo dispositivo, non è condivisa con nessuno e uscire la elimina."
+          }
+        }
+      }
+    },
+    "Your computer last published %@. Check that it's on and AI·mana is running there.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Computer hat zuletzt %@ veröffentlicht. Prüfe, ob er eingeschaltet ist und AI·mana dort läuft."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your computer last published %@. Check that it's on and AI·mana is running there."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu ordenador publicó por última vez %@. Comprueba que esté encendido y con AI·mana en marcha."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre ordinateur a publié pour la dernière fois %@. Vérifiez qu’il est allumé et qu’AI·mana y tourne."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Il computer ha pubblicato l’ultima volta %@. Controlla che sia acceso e che AI·mana sia in esecuzione."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu computador publicou pela última vez %@. Verifique se ele está ligado e com o AI·mana em execução."
+          }
+        }
+      }
+    },
+    "No recent use on your computer: this updates the next time you use it.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine aktuelle Nutzung auf dem Computer: Das aktualisiert sich bei der nächsten Nutzung."
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No recent use on your computer: this updates the next time you use it."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin uso reciente en el ordenador: se actualiza la próxima vez que lo uses."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucune utilisation récente sur l’ordinateur : la valeur se mettra à jour à la prochaine utilisation."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nessun uso recente sul computer: si aggiorna al prossimo utilizzo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem uso recente no computador: atualiza na próxima vez que você usar."
           }
         }
       }

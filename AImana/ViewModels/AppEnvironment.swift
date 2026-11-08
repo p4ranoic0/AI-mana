@@ -36,9 +36,15 @@ final class AppEnvironment {
             } else {
                 source = BookmarkRelaySource()
             }
-            let codex: any UsageProvider = RelayProvider(id: "codex", displayName: "OpenAI Codex", source: source)
-            // Use the Mac relay when device credentials are unavailable.
-            let claude: any UsageProvider = RelayProvider(id: "claude", displayName: "Claude Code", source: source)
+            // Direct data from this device's own sign-in, only with the user's consent; otherwise the relay.
+            let codex = PhoneDirectAccess.codex(
+                tokens: Services.codexTokens,
+                relay: RelayProvider(id: "codex", displayName: "OpenAI Codex", source: source),
+                consent: Services.consent)
+            let claude = PhoneDirectAccess.claude(
+                tokens: Services.claudeTokens,
+                relay: RelayProvider(id: "claude", displayName: "Claude Code", source: source),
+                consent: Services.consent)
             // OpenRouter: the user's own API key, official API; hidden until a key is saved in Settings.
             let openRouter = OpenRouterProvider(store: AppGroup.keychain())
             // GitHub Copilot: the user's own token, GitHub's official billing API; hidden until a token is saved.

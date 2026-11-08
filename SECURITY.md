@@ -1,6 +1,7 @@
 # Security policy
 
-AI·mana handles API keys that users enter and reads local usage files. Please report security problems
+AI·mana handles API keys that users enter, its own optional OAuth sessions on the phone, the CLI sessions it reads
+(never writes) on the Mac when direct access is on, and local usage files. Please report security problems
 privately. Do not open a public issue for them.
 
 ## Reporting
@@ -15,7 +16,9 @@ You should get a reply within 7 days. Please allow time for a fix before you dis
 ## Scope
 
 In scope:
-- leaking API keys, for example in logs, the relay file, crash output or screenshots;
+- leaking API keys or session tokens, for example in logs, the relay file, crash output or screenshots (top
+  priority);
+- reading or using a CLI session without the user's consent, or modifying it;
 - writing credentials or prompt text to the iCloud relay file;
 - the Mac app modifying user files beyond its documented statusline integration;
 - anything that sends user data to a party the user did not choose.

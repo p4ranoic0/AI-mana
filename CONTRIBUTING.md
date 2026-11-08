@@ -4,15 +4,14 @@ Thanks for helping. Issues and pull requests are welcome in English or Spanish.
 
 ## Ground rules
 
-- **Official data sources only.** AI·mana reads documented outputs (such as Claude Code's statusline JSON), local
-  files that the user's own tools write, and providers' public APIs with the user's own key. Pull requests are
-  declined if they:
-  - log in to a provider's consumer account from AI·mana;
-  - reuse another app's sign-in client or session tokens;
-  - scrape browser cookies;
-  - call undocumented internal endpoints.
+- **Official data sources by default.** AI·mana reads documented outputs (such as Claude Code's statusline JSON),
+  local files that the user's own tools write, and providers' public APIs with the user's own key.
+- **Direct access is the only exception, and only for Claude and Codex for now.** It must be:
+  - opt-in, off by default, behind the standard notice and the user's consent;
+  - read-only toward other programs: never write, copy or renew another app's credentials;
+  - documented, including how it fails, and covered by a parity fixture.
 
-  This keeps the project within the providers' terms and keeps users' accounts safe.
+  Pull requests that scrape browser cookies or add other undocumented endpoints are declined.
 - **No secrets in the repo**, in tests, fixtures or screenshots. Use fake values in fixtures.
 - **No analytics or tracking.**
 - UI text is English in code. Add translations for every language in the `.xcstrings` catalogs, or leave them for

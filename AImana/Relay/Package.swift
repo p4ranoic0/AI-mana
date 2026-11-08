@@ -8,6 +8,15 @@ var targets: [Target] = [
 ]
 var products: [Product] = [.library(name: "RelayKit", targets: ["RelayKit"]),
                            .executable(name: "usage-relay", targets: ["usage-relay"])]
+#if canImport(Darwin)
+// Direct access (CLI credential readers) is Darwin-only for now.
+targets.append(.target(name: "RelayDirect", dependencies: ["RelayKit", .product(name: "AImanaCore", package: "AImanaCore"),
+                                                        .product(name: "AImanaSignIn", package: "AImanaCore")]))
+targets.append(.testTarget(name: "RelayDirectTests", dependencies: ["RelayDirect", "RelayKit",
+                                                                .product(name: "AImanaCore", package: "AImanaCore"),
+                                                                .product(name: "AImanaSignIn", package: "AImanaCore")]))
+products.append(.library(name: "RelayDirect", targets: ["RelayDirect"]))
+#endif
 #if os(Windows)
 targets.append(.executableTarget(
     name: "usage-relay-task",

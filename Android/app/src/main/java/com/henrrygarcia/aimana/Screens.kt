@@ -129,7 +129,7 @@ private enum class AppIcon { GRID, CHART, GEAR }
 
 @Composable private fun ProviderBadge(id: String, size: Int = 38) {
     Box(Modifier.size(size.dp).clip(CircleShape).background(Color.White.copy(alpha = .55f)), contentAlignment = Alignment.Center) {
-        Text(if (id == "claude") "✦" else "</>", fontSize = if (id == "claude") 23.sp else 14.sp,
+        Text(when (id) { "claude" -> "✦"; "codex" -> "</>"; else -> apiName(id).take(1) }, fontSize = if (id == "claude") 23.sp else 14.sp,
             fontWeight = FontWeight.Bold, color = Ink)
     }
 }
@@ -176,9 +176,11 @@ private enum class AppIcon { GRID, CHART, GEAR }
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 20.dp, vertical = 18.dp),
         verticalArrangement = Arrangement.spacedBy(18.dp)) {
         BrandHeader()
+        state.update?.let { UpdateCard(it) }
         ModeToggle(state, changeMode)
-        if (state.uri == null && !state.demo) ConnectCard(choose, state.fileError)
-        else if (state.fileError) ConnectCard(choose, true)
+        // Without a relay file, direct readings from this phone's own sign-ins are enough to show the dashboard.
+        if (state.uri == null && !state.demo && state.relay == null && !state.loading) ConnectCard(choose, state.fileError)
+        else if (state.fileError && state.relay == null) ConnectCard(choose, true)
         else if (state.loading && state.relay == null) CircularProgressIndicator()
         else {
             val relay = state.relay
@@ -191,6 +193,26 @@ private enum class AppIcon { GRID, CHART, GEAR }
                     val usage = relay.provider(id).first
                     if (usage != null) ProviderCard(usage, state.mode, now, locale) { detail(id) }
                     else relay.provider(id).second?.let { error -> ErrorCard(id, error, choose) }
+                    state.notes[id]?.let { error ->
+                        Text(stringResource(R.string.fallback_note, providerShortName(id, id), stringResource(ProviderPresentation.errorText(error))),
+                             fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
+                }
+                // API balances (keys on this phone, or the relay's): name, lanes and balances, no detail screen.
+                relay.entries.filter { it.providerID != "claude" && it.providerID != "codex" }.forEach { entry ->
+                    val usage = entry.usage
+                    if (usage != null) ProviderCard(usage, state.mode, now, locale) {}
+                    else entry.error?.let { error ->
+                        SoftCard(Modifier.fillMaxWidth(), tint = Pink.copy(alpha = .3f)) {
+                            Text(apiName(entry.providerID), fontSize = 20.sp, fontWeight = FontWeight.SemiBold)
+                            Text(stringResource(ProviderPresentation.errorText(error)), color = statusInk(QuotaStatus.CRITICAL))
+                        }
+                    }
+                    // A failing key must not hide behind the relay's balance.
+                    state.notes[entry.providerID]?.let { error ->
+                        Text(stringResource(R.string.fallback_note, apiName(entry.providerID), stringResource(ProviderPresentation.errorText(error))),
+                             fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    }
                 }
             }
         }
@@ -206,6 +228,7 @@ private enum class AppIcon { GRID, CHART, GEAR }
         Text(stringResource(R.string.step_two_numbered, stringResource(R.string.step_two)), color = MaterialTheme.colorScheme.onSurface)
         if (error) Text(stringResource(R.string.file_access), color = statusInk(QuotaStatus.CRITICAL))
         Button(onClick = choose, colors = ButtonDefaults.buttonColors(containerColor = Coral)) { Text(stringResource(R.string.choose_file)) }
+        Text(stringResource(R.string.connect_direct_hint), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 
@@ -286,7 +309,7 @@ private enum class AppIcon { GRID, CHART, GEAR }
 
 @Composable private fun ProviderCard(usage: UsageInfo, mode: UsageDisplayMode, now: Instant, locale: Locale, onClick: () -> Unit) {
     val primary = usage.primary
-    val tint = if (usage.providerID == "claude") Peach.copy(alpha = .42f) else Sky.copy(alpha = .40f)
+    val tint = when (usage.providerID) { "claude" -> Peach.copy(alpha = .42f); "codex" -> Sky.copy(alpha = .40f); else -> Pink.copy(alpha = .3f) }
     SoftCard(Modifier.fillMaxWidth().clickable(onClick = onClick), tint = tint) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             ProviderBadge(usage.providerID)
@@ -315,13 +338,26 @@ private enum class AppIcon { GRID, CHART, GEAR }
                 HorizontalDivider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = .08f))
                 usage.details.forEach { Text(detailSummary(it, locale), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant) }
             }
-            val age = (now.epochSecond - usage.lastUpdated.epochSecond).coerceAtLeast(0)
-            Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
-                Text(if (age < 60) stringResource(R.string.updated_just_now) else stringResource(R.string.updated, relativeAge(age)),
-                    fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                if (age > 3600 || usage.windows.any { it.isOutdated(now) })
-                    Text(stringResource(R.string.status_outdated), fontSize = 12.sp, color = statusInk(QuotaStatus.LOW))
-            }
+        }
+        // Prepaid balances have no lanes: the balances are the reading.
+        if (primary == null) {
+            usage.details.forEach { Text(detailSummary(it, locale), fontSize = 17.sp, fontWeight = FontWeight.SemiBold) }
+        }
+        val age = (now.epochSecond - usage.lastUpdated.epochSecond).coerceAtLeast(0)
+        Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+            Text(if (age < 60) stringResource(R.string.updated_just_now) else stringResource(R.string.updated, relativeAge(age)),
+                fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (age > 3600 || usage.windows.any { it.isOutdated(now) })
+                Text(stringResource(R.string.status_outdated), fontSize = 12.sp, color = statusInk(QuotaStatus.LOW))
+        }
+        // Says why, when it can be told, so an old number is not mistaken for something broken on this phone.
+        when (staleReason(usage, now)) {
+            StaleReason.PUBLISHER_SILENT -> stringResource(R.string.stale_publisher,
+                relativeAge((now.epochSecond - usage.relayPublishedAt!!.epochSecond).coerceAtLeast(0)))
+            StaleReason.NO_RECENT_USE -> stringResource(R.string.stale_no_recent_use)
+            null -> null
+        }?.let { Text(it, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        if (usage.providerID == "claude" || usage.providerID == "codex") {
             Text(stringResource(if (usage.providerID == "claude") R.string.source_claude else R.string.source_codex),
                 fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
@@ -654,7 +690,7 @@ private enum class AppIcon { GRID, CHART, GEAR }
     }
 }
 
-@Composable internal fun SettingsScreen(state:AppState,choose:()->Unit,disconnect:()->Unit,changeMode:(UsageDisplayMode)->Unit,changeTheme:(String)->Unit) {
+@Composable internal fun SettingsScreen(state:AppState,choose:()->Unit,disconnect:()->Unit,changeMode:(UsageDisplayMode)->Unit,changeTheme:(String)->Unit,model:AppModel) {
     val context=LocalContext.current
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal=20.dp,vertical=18.dp),verticalArrangement=Arrangement.spacedBy(18.dp)) {
         Text(stringResource(R.string.settings),fontSize=30.sp,fontWeight=FontWeight.Bold)
@@ -666,6 +702,9 @@ private enum class AppIcon { GRID, CHART, GEAR }
             if(state.uri!=null) TextButton(onClick=disconnect){Text(stringResource(R.string.disconnect),color=Critical)}
             if(state.fileError) Text(stringResource(R.string.file_access),color=Critical)
         }
+        DirectSection(state, DirectProvider.CLAUDE, model)
+        DirectSection(state, DirectProvider.CODEX, model)
+        MoreProvidersSection(state, model)
         SectionTitle(stringResource(R.string.display_title))
         SoftCard(Modifier.fillMaxWidth(),tint=Peach.copy(alpha=.28f)) {
             ModeToggle(state,changeMode)
@@ -682,10 +721,174 @@ private enum class AppIcon { GRID, CHART, GEAR }
         }
         SectionTitle(stringResource(R.string.about))
         SoftCard(Modifier.fillMaxWidth()) {
-            Text(stringResource(R.string.version))
+            Text(stringResource(R.string.version, model.appVersion))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text(stringResource(R.string.update_checks), fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.update_checks_hint), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                Switch(checked = state.updateChecks, onCheckedChange = model::updateChecks)
+            }
             TextButton(onClick={context.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW,android.net.Uri.parse("https://github.com/p4ranoic0/AI-mana")))}){Text(stringResource(R.string.open_source))}
         }
         Spacer(Modifier.height(12.dp))
+    }
+}
+
+/// A newer release is out: an install that fell behind says so instead of breaking silently.
+@Composable private fun UpdateCard(update: AppUpdate) {
+    val context = LocalContext.current
+    SoftCard(Modifier.fillMaxWidth(), tint = Sky.copy(alpha = .32f)) {
+        Text(stringResource(R.string.update_available, update.version), fontWeight = FontWeight.SemiBold)
+        TextButton(onClick = { openInBrowser(context, update.pageUrl) }) { Text(stringResource(R.string.update_download)) }
+    }
+}
+
+private fun openInBrowser(context: android.content.Context, url: String) =
+    androidx.browser.customtabs.CustomTabsIntent.Builder().build().launchUrl(context, android.net.Uri.parse(url))
+
+/// Direct access for one provider: notice → own sign-in on this phone → readings without the relay.
+@Composable private fun DirectSection(state: AppState, provider: DirectProvider, model: AppModel) {
+    val context = LocalContext.current
+    val claude = provider == DirectProvider.CLAUDE
+    var notice by remember { mutableStateOf(false) }
+    // The notice leads to ChatGPT's browser fallback instead of the device code.
+    var viaBrowser by remember { mutableStateOf(false) }
+    var pasted by remember { mutableStateOf("") }
+    val signedIn = provider in state.signedIn
+    val consented = provider in state.consented
+    fun begin() {
+        when {
+            claude -> openInBrowser(context, model.claudeBegin())
+            viaBrowser -> openInBrowser(context, model.codexBrowserBegin())
+            else -> model.codexStart()
+        }
+    }
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(stringResource(if (claude) R.string.direct_claude else R.string.direct_codex), fontSize = 20.sp,
+             fontWeight = FontWeight.SemiBold, modifier = Modifier.weight(1f, fill = false).padding(top = 2.dp))
+        Text(stringResource(R.string.unofficial), fontSize = 11.sp, color = statusInk(QuotaStatus.LOW), maxLines = 1, softWrap = false,
+             modifier = Modifier.clip(RoundedCornerShape(6.dp)).background(statusInk(QuotaStatus.LOW).copy(alpha = .14f)).padding(horizontal = 6.dp, vertical = 2.dp))
+    }
+    SoftCard(Modifier.fillMaxWidth(), tint = (if (claude) Peach else Sky).copy(alpha = .28f)) {
+        when {
+            signedIn && consented -> Text(stringResource(R.string.signed_in_phone), fontWeight = FontWeight.SemiBold)
+            signedIn -> Button(onClick = { notice = true }, colors = ButtonDefaults.buttonColors(containerColor = Coral)) {
+                Text(stringResource(R.string.turn_on_direct)) }
+            claude && state.claudeLogin != null -> {
+                OutlinedTextField(pasted, { pasted = it }, label = { Text(stringResource(R.string.paste_code)) }, singleLine = true,
+                                  modifier = Modifier.fillMaxWidth())
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(onClick = { model.claudeConnect(pasted.trim()); pasted = "" }, enabled = pasted.isNotBlank(),
+                           colors = ButtonDefaults.buttonColors(containerColor = Coral)) { Text(stringResource(R.string.connect_code)) }
+                    TextButton(onClick = { openInBrowser(context, state.claudeLogin.url) }) { Text(stringResource(R.string.sign_in_claude)) }
+                }
+            }
+            !claude && state.codexDevice != null -> {
+                Text(stringResource(R.string.device_code_hint))
+                Text(state.codexDevice.userCode, fontSize = 26.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(onClick = { openInBrowser(context, state.codexDevice.verificationURL) },
+                           colors = ButtonDefaults.buttonColors(containerColor = Coral)) { Text(stringResource(R.string.open_chatgpt)) }
+                    TextButton(onClick = model::codexCancel) { Text(stringResource(R.string.cancel_action)) }
+                }
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    CircularProgressIndicator(Modifier.size(14.dp), strokeWidth = 2.dp)
+                    Text(stringResource(R.string.waiting_approval), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            !claude && state.codexBrowser != null -> {
+                Text(stringResource(R.string.browser_redirect_hint), fontSize = 13.sp)
+                OutlinedTextField(pasted, { pasted = it }, label = { Text(stringResource(R.string.paste_browser_address)) },
+                                  modifier = Modifier.fillMaxWidth())
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(onClick = { model.codexBrowserConnect(pasted.trim()); pasted = "" }, enabled = pasted.isNotBlank(),
+                           colors = ButtonDefaults.buttonColors(containerColor = Coral)) { Text(stringResource(R.string.connect_code)) }
+                    TextButton(onClick = model::codexCancel) { Text(stringResource(R.string.cancel_action)) }
+                }
+            }
+            else -> {
+                Button(onClick = { viaBrowser = false; if (consented) begin() else notice = true }, colors = ButtonDefaults.buttonColors(containerColor = Coral)) {
+                    Text(stringResource(if (claude) R.string.sign_in_claude else R.string.sign_in_chatgpt)) }
+                if (!claude) TextButton(onClick = { viaBrowser = true; if (consented) begin() else notice = true }) {
+                    Text(stringResource(R.string.use_browser_signin)) }
+            }
+        }
+        state.loginError?.takeIf { it.first == provider }?.let { Text(stringResource(it.second), color = statusInk(QuotaStatus.CRITICAL)) }
+        Text(stringResource(R.string.direct_session_note), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        if (signedIn) TextButton(onClick = { model.signOut(provider) }) { Text(stringResource(R.string.sign_out), color = statusInk(QuotaStatus.CRITICAL)) }
+    }
+    if (notice) AlertDialog(
+        onDismissRequest = { notice = false },
+        title = { Text(stringResource(if (claude) R.string.notice_claude_title else R.string.notice_codex_title)) },
+        // Scrolls: the whole notice must be readable before accepting, at any font size.
+        text = { Text(stringResource(if (claude) R.string.notice_claude else R.string.notice_codex),
+                      modifier = Modifier.verticalScroll(rememberScrollState())) },
+        confirmButton = { TextButton(onClick = {
+            notice = false
+            model.grantConsent(provider)
+            if (!signedIn) begin()
+        }) { Text(stringResource(R.string.accept_continue)) } },
+        dismissButton = { TextButton(onClick = { notice = false }) { Text(stringResource(R.string.cancel_action)) } })
+}
+
+/// Any currency the provider reports (CNY, USD…), never converted.
+private fun money(value: Double, currency: String?, locale: Locale): String = runCatching {
+    NumberFormat.getCurrencyInstance(locale).apply { this.currency = java.util.Currency.getInstance(currency ?: "USD"); maximumFractionDigits = 2 }
+        .format(if (value.isFinite()) value else 0.0)
+}.getOrElse { "${NumberFormat.getNumberInstance(locale).format(value)} ${currency.orEmpty()}" }
+
+private fun apiName(id: String) = when (id) {
+    "deepseek" -> "DeepSeek"; "moonshot" -> "Moonshot (Kimi)"; "xai" -> "xAI"; "openrouter" -> "OpenRouter"; "copilot" -> "GitHub Copilot"
+    else -> id
+}
+
+/// API keys for the official balance APIs: pasted, checked once, stored encrypted on this phone.
+@Composable private fun MoreProvidersSection(state: AppState, model: AppModel) {
+    SectionTitle(stringResource(R.string.more_providers))
+    SoftCard(Modifier.fillMaxWidth(), tint = Pink.copy(alpha = .22f)) {
+        Text(stringResource(R.string.api_keys_note), fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        model.apiProviders.forEachIndexed { index, api ->
+            if (index > 0) HorizontalDivider(color = MaterialTheme.colorScheme.onSurface.copy(alpha = .08f))
+            var key by remember(api.id) { mutableStateOf("") }
+            val saved = api.id in state.apiKeys
+            Text(api.name, fontWeight = FontWeight.SemiBold)
+            if (saved) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(stringResource(R.string.key_saved), modifier = Modifier.weight(1f), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    TextButton(onClick = { model.removeKey(api.id) }) { Text(stringResource(R.string.remove_key), color = statusInk(QuotaStatus.CRITICAL)) }
+                }
+            } else {
+                OutlinedTextField(key, { key = it }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+                    label = { Text(stringResource(when (api.id) { "xai" -> R.string.xai_key_hint; "copilot" -> R.string.copilot_key_hint; else -> R.string.api_key_hint })) },
+                    visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+                    keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Password, autoCorrectEnabled = false))
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Button(onClick = { model.saveKey(api.id, key); key = "" }, enabled = key.isNotBlank() && state.savingKey == null,
+                           colors = ButtonDefaults.buttonColors(containerColor = Coral)) { Text(stringResource(R.string.save_key)) }
+                    if (state.savingKey == api.id) CircularProgressIndicator(Modifier.size(16.dp), strokeWidth = 2.dp)
+                }
+            }
+            state.keyMessage?.takeIf { it.first == api.id && it.second != R.string.key_saved }?.let { Text(stringResource(it.second), color = statusInk(QuotaStatus.CRITICAL), fontSize = 13.sp) }
+            if (api.id == "copilot") CopilotPlanPicker(state.copilot, model::copilotAllowance)
+        }
+    }
+}
+
+@Composable private fun CopilotPlanPicker(allowance: com.henrrygarcia.aimana.core.providers.CopilotAllowance,
+                                          change: (com.henrrygarcia.aimana.core.providers.CopilotAllowance) -> Unit) {
+    Text(stringResource(R.string.copilot_plan), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+    FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+        com.henrrygarcia.aimana.core.providers.CopilotPlan.entries.forEach { plan ->
+            FilterChip(selected = allowance.plan == plan, onClick = { change(allowance.copy(plan = plan)) },
+                       label = { Text(plan.badge ?: stringResource(R.string.custom_amount)) })
+        }
+    }
+    if (allowance.plan == com.henrrygarcia.aimana.core.providers.CopilotPlan.CUSTOM) {
+        var amount by remember { mutableStateOf(allowance.customUSD?.toString().orEmpty()) }
+        OutlinedTextField(amount, { text -> amount = text; change(allowance.copy(customUSD = text.replace(',', '.').toDoubleOrNull())) },
+            singleLine = true, label = { Text(stringResource(R.string.custom_amount)) },
+            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Decimal))
     }
 }
 
@@ -747,7 +950,9 @@ private fun modelName(id:String):String {
 @Composable private fun detailSummary(detail:UsageDetail,locale:Locale):String {
     val amount=detail.remaining.let { NumberFormat.getNumberInstance(locale).format(it) }
     return when(detail.kind){
-        "extraUsage"->"${stringResource(R.string.extra_usage)} · ${UsageFormat.moneyDisplay(detail.remaining,locale)}"
+        "extraUsage"->"${stringResource(R.string.extra_usage)} · ${UsageFormat.moneyDisplay(detail.used ?: detail.remaining,locale)}"
+        "creditBalance"->"${stringResource(R.string.balance_label)} · ${money(detail.remaining,detail.currency,locale)}"
+        "monthlySpend"->"${stringResource(R.string.monthly_spend)} · ${money(detail.used ?: 0.0,detail.currency,locale)}"
         else->"${detail.kind} · $amount ${detail.currency.orEmpty()}"
     }
 }

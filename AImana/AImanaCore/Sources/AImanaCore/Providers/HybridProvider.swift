@@ -22,14 +22,34 @@ public struct HybridProvider: UsageProvider {
             if let fromRelay { return fromRelay }
             throw UsageProviderError.relayUnavailable
         }
+        let live: UsageInfo
         do {
-            let live = try await direct.fetchUsage()
-            return UsageInfo(providerID: live.providerID, providerName: live.providerName, windows: live.windows,
-                             plan: live.plan ?? fromRelay?.plan, lastUpdated: live.lastUpdated, details: live.details,
-                             cost: fromRelay?.cost, history: fromRelay?.history ?? [])
+            live = try await direct.fetchUsage()
         } catch {
-            if let fromRelay { return fromRelay }
+            let directError = (error as? UsageProviderError) ?? .network
+            // Show the relay's data, but never hide that direct access failed.
+            if let fromRelay { throw DirectFallback(usage: fromRelay, directError: directError) }
             throw error
         }
+        // Turned off while the request was in flight: the direct reading must not come back.
+        guard isDirectEnabled() else {
+            if let fromRelay { return fromRelay }
+            throw UsageProviderError.relayUnavailable
+        }
+        return UsageInfo(providerID: live.providerID, providerName: live.providerName, windows: live.windows,
+                         plan: live.plan ?? fromRelay?.plan, lastUpdated: live.lastUpdated, details: live.details,
+                         cost: fromRelay?.cost, history: fromRelay?.history ?? [])
+    }
+}
+
+/// Thrown by `HybridProvider` when direct access failed but the relay has data: `UsageService` shows that data
+/// together with the direct error, as a fallback.
+public struct DirectFallback: Error, Sendable {
+    public let usage: UsageInfo
+    public let directError: UsageProviderError
+
+    public init(usage: UsageInfo, directError: UsageProviderError) {
+        self.usage = usage
+        self.directError = directError
     }
 }

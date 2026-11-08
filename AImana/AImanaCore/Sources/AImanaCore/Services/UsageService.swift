@@ -6,7 +6,25 @@ public struct ProviderState: Sendable, Equatable, Identifiable {
     public let displayName: String
     public let usage: UsageInfo?
     public let error: UsageProviderError?
+    /// `usage` comes from the relay because direct access failed with `error`: fresh data, not a stale snapshot.
+    public let isFallback: Bool
     public var id: String { providerID }
+
+    public init(providerID: String, displayName: String, usage: UsageInfo?, error: UsageProviderError?,
+                isFallback: Bool = false) {
+        self.providerID = providerID
+        self.displayName = displayName
+        self.usage = usage
+        self.error = error
+        self.isFallback = isFallback
+    }
+}
+
+/// One provider's fetch: fresh data, a failure, or relay data shown because direct access failed.
+private enum FetchOutcome: Sendable {
+    case success(UsageInfo)
+    case failure(UsageProviderError)
+    case fallback(DirectFallback)
 }
 
 /// Fetches all providers concurrently, isolates failures, and persists the merged result. Each fresh reading is
@@ -57,10 +75,11 @@ public actor UsageService {
         let providers = self.providers.filter(\.isEnabled)
 
         // A nil result: an opt-in relay provider that the Mac does not publish (`RelayEntryAbsent`).
-        let results = await withTaskGroup(of: (Int, Result<UsageInfo, UsageProviderError>?).self) { group in
+        let results = await withTaskGroup(of: (Int, FetchOutcome?).self) { group in
             for (index, provider) in providers.enumerated() {
                 group.addTask {
                     do { return (index, .success(try await provider.fetchUsage())) }
+                    catch let fallback as DirectFallback { return (index, .fallback(fallback)) }
                     catch let error as UsageProviderError { return (index, .failure(error)) }
                     catch let absent as RelayEntryAbsent {
                         // Not published: hidden. Unreadable file: a relay outage, which keeps the last reading if
@@ -72,7 +91,7 @@ public actor UsageService {
                     catch { return (index, .failure(.network)) }
                 }
             }
-            var collected: [Int: Result<UsageInfo, UsageProviderError>?] = [:]
+            var collected: [Int: FetchOutcome?] = [:]
             for await (index, result) in group { collected[index] = result }
             return collected
         }
@@ -89,6 +108,9 @@ public actor UsageService {
                 let stale = error.keepsStaleData ? previous[provider.id] : nil
                 states.append(ProviderState(providerID: provider.id, displayName: provider.displayName,
                                             usage: stale, error: error))
+            case .fallback(let fallback):
+                states.append(ProviderState(providerID: provider.id, displayName: provider.displayName,
+                                            usage: fallback.usage, error: fallback.directError, isFallback: true))
             }
         }
         if let saveLock {
@@ -104,20 +126,22 @@ public actor UsageService {
     private nonisolated func persist(_ fetched: [ProviderState]) -> [ProviderState] {
         let onDisk = Dictionary(store.load().map { ($0.providerID, $0) }, uniquingKeysWith: { _, new in new })
         var states = fetched.map { state -> ProviderState in
-            guard let mine = state.usage, let theirs = onDisk[state.providerID],
+            // A fallback shows the relay's data on purpose: a newer saved reading may be a direct one.
+            guard !state.isFallback, let mine = state.usage, let theirs = onDisk[state.providerID],
                   theirs.lastUpdated > mine.lastUpdated else { return state }
             return ProviderState(providerID: state.providerID, displayName: state.displayName,
-                                 usage: theirs, error: state.error)
+                                 usage: theirs, error: state.error, isFallback: state.isFallback)
         }
         if let history {
-            let fresh = states.filter { $0.error == nil }.compactMap(\.usage)
+            let fresh = states.filter { $0.error == nil || $0.isFallback }.compactMap(\.usage)
             let local = history.record(fresh, now: clock())
             states = states.map { state in
                 guard let usage = state.usage else { return state }
                 let mine = local.filter { $0.providerID == usage.providerID }
                 let combined = HistoryRecorder.merged(usage.history, mine)
                 return ProviderState(providerID: state.providerID, displayName: state.displayName,
-                                     usage: usage.withExtras(cost: usage.cost, history: combined), error: state.error)
+                                     usage: usage.withExtras(cost: usage.cost, history: combined), error: state.error,
+                                     isFallback: state.isFallback)
             }
         }
         try? store.save(states.compactMap(\.usage))

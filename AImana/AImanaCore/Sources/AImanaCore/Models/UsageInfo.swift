@@ -17,11 +17,13 @@ public struct UsageInfo: Codable, Sendable, Equatable, Identifiable {
     /// Where the computer got this reading, when it came through the relay and included a source. Nil for phone readings,
     /// older relays and source values this build does not know.
     public let source: RelaySource?
+    /// When the computer published the relay this reading came from. Nil for readings taken on this device.
+    public let relayPublishedAt: Date?
 
     public var id: String { providerID }
 
     private enum CodingKeys: String, CodingKey {
-        case providerID, providerName, windows, plan, lastUpdated, details, cost, history, source
+        case providerID, providerName, windows, plan, lastUpdated, details, cost, history, source, relayPublishedAt
     }
 
     public init(from decoder: Decoder) throws {
@@ -37,11 +39,13 @@ public struct UsageInfo: Codable, Sendable, Equatable, Identifiable {
         cost = try c.decodeIfPresent(CostReport.self, forKey: .cost)
         history = try c.decodeIfPresent([HistorySeries].self, forKey: .history) ?? []
         source = (try? c.decodeIfPresent(String.self, forKey: .source)).flatMap { $0 }.flatMap(RelaySource.init(rawValue:))
+        relayPublishedAt = (try? c.decodeIfPresent(Date.self, forKey: .relayPublishedAt)).flatMap { $0 }
     }
 
     public init(providerID: String, providerName: String, windows: [UsageWindow],
                 plan: String?, lastUpdated: Date, details: [UsageDetail] = [],
-                cost: CostReport? = nil, history: [HistorySeries] = [], source: RelaySource? = nil) {
+                cost: CostReport? = nil, history: [HistorySeries] = [], source: RelaySource? = nil,
+                relayPublishedAt: Date? = nil) {
         self.providerID = providerID
         self.providerName = providerName
         self.windows = windows
@@ -51,6 +55,7 @@ public struct UsageInfo: Codable, Sendable, Equatable, Identifiable {
         self.cost = cost
         self.history = history
         self.source = source
+        self.relayPublishedAt = relayPublishedAt
     }
 
     /// Headline lane, chosen by meaning rather than position: session, else weekly, else first reported.
@@ -65,12 +70,14 @@ public struct UsageInfo: Codable, Sendable, Equatable, Identifiable {
     /// Same snapshot with the relay's cost report and history attached.
     public func withExtras(cost: CostReport?, history: [HistorySeries]) -> UsageInfo {
         UsageInfo(providerID: providerID, providerName: providerName, windows: windows, plan: plan,
-                  lastUpdated: lastUpdated, details: details, cost: cost, history: history, source: source)
+                  lastUpdated: lastUpdated, details: details, cost: cost, history: history, source: source,
+                  relayPublishedAt: relayPublishedAt)
     }
 
-    /// Same snapshot, tagged with where the computer got it.
-    public func withSource(_ source: RelaySource?) -> UsageInfo {
+    /// Same snapshot, tagged with where the computer got it and when it published it.
+    public func withSource(_ source: RelaySource?, publishedAt: Date? = nil) -> UsageInfo {
         UsageInfo(providerID: providerID, providerName: providerName, windows: windows, plan: plan,
-                  lastUpdated: lastUpdated, details: details, cost: cost, history: history, source: source)
+                  lastUpdated: lastUpdated, details: details, cost: cost, history: history, source: source,
+                  relayPublishedAt: publishedAt ?? relayPublishedAt)
     }
 }

@@ -61,9 +61,11 @@ data class CostTotal(val usd: Double, val tokens: TokenUsage, val unpricedTokens
 }
 @Serializable data class HistoryPoint(val t: Instant, val used: Double, val resetsAt: Instant? = null)
 @Serializable data class HistorySeries(val providerID: String, val kind: String, val points: List<HistoryPoint> = emptyList())
-@Serializable data class UsageDetail(val kind: String, val remaining: Double = 0.0, val limit: Double? = null, val currency: String? = null, val used: Double? = null, val usable: Double? = null)
+@Serializable data class UsageDetail(val kind: String, val remaining: Double = 0.0, val limit: Double? = null, val currency: String? = null, val used: Double? = null, val usable: Double? = null, val expiresAt: Instant? = null)
 data class UsageInfo(val providerID: String, val providerName: String, val windows: List<UsageWindow>, val plan: String?, val lastUpdated: Instant,
-                     val details: List<UsageDetail> = emptyList(), val cost: CostReport? = null, val history: List<HistorySeries> = emptyList(), val source: String? = null) {
+                     val details: List<UsageDetail> = emptyList(), val cost: CostReport? = null, val history: List<HistorySeries> = emptyList(), val source: String? = null,
+                     /// When the computer published the relay this reading came from; null for readings taken on this device.
+                     val relayPublishedAt: Instant? = null) {
     val primary get() = windows.firstOrNull { it.kind == "session" } ?: windows.firstOrNull { it.kind == "weekly" } ?: windows.firstOrNull()
     fun window(kind: String) = windows.firstOrNull { it.kind == kind }
 }
@@ -73,7 +75,8 @@ data class RelayEnvelope(val version: Int, val generatedAt: Instant, val entries
         val entry = entries.firstOrNull { it.providerID == id } ?: return null to "relayUnavailable"
         val usage = entry.usage ?: return null to (entry.error ?: "relayUnavailable")
         return usage.copy(cost = costs.firstOrNull { it.providerID == id } ?: usage.cost,
-            history = history.filter { it.providerID == id }.ifEmpty { usage.history }, source = entry.source ?: usage.source) to null
+            history = history.filter { it.providerID == id }.ifEmpty { usage.history }, source = entry.source ?: usage.source,
+            relayPublishedAt = generatedAt) to null
     }
 }
 @Serializable private data class WireEnvelope(val version: Int, val generatedAt: Instant, val entries: List<WireEntry>, val costs: List<CostReport> = emptyList(), val history: List<HistorySeries> = emptyList())

@@ -1,0 +1,35 @@
+{
+  "now": "2027-01-10T00:00:00Z",
+  "response": {
+    "plan_type": "pro",
+    "rate_limit": {
+      "primary_window": {"used_percent": 34, "reset_at": 1799899200, "limit_window_seconds": 604800},
+      "secondary_window": {"used_percent": 5, "reset_at": 1799560800, "limit_window_seconds": 18000}
+    },
+    "additional_rate_limits": [
+      {"limit_name": "GPT-5.5 Pro", "rate_limit": {
+        "primary_window": {"used_percent": 10, "reset_at": 1799563000, "limit_window_seconds": 18000},
+        "secondary_window": {"used_percent": 20, "reset_at": 0, "limit_window_seconds": 604800}}},
+      {"metered_feature": "codex_review", "rate_limit": {
+        "primary_window": {"used_percent": 50, "reset_at": 1799563000, "limit_window_seconds": 86400}}},
+      {"limit_name": "", "rate_limit": {"primary_window": {"used_percent": 1, "reset_at": 1, "limit_window_seconds": 60}}},
+      "not an object"
+    ],
+    "credits": {"has_credits": true, "unlimited": false, "balance": "12.5"},
+    "rate_limit_reset_credits": {"available_count": 2, "applicable_available_count": 1}
+  },
+  "expected": {
+    "plan": "pro",
+    "windows": [
+      {"kind": "session", "usedPercent": 5, "windowMinutes": 300, "resetsAt": "2027-01-10T06:00:00Z"},
+      {"kind": "weekly", "usedPercent": 34, "windowMinutes": 10080, "resetsAt": "2027-01-14T04:00:00Z"},
+      {"kind": "model-session:GPT-5.5 Pro", "usedPercent": 10, "windowMinutes": 300, "resetsAt": "2027-01-10T06:36:40Z"},
+      {"kind": "model:GPT-5.5 Pro", "usedPercent": 20, "windowMinutes": 10080},
+      {"kind": "model:codex_review", "usedPercent": 50, "windowMinutes": 1440, "resetsAt": "2027-01-10T06:36:40Z"}
+    ],
+    "details": [
+      {"kind": "resetCredits", "remaining": 2, "usable": 1},
+      {"kind": "creditBalance", "remaining": 12.5, "currency": "USD"}
+    ]
+  }
+}

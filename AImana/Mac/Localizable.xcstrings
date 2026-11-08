@@ -482,6 +482,166 @@
         }
       }
     },
+    "Endpoint": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpunkt"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint"
+          }
+        }
+      }
+    },
+    "Endpoint: network or server error.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: network or server error."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: error de red o del servidor."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: erro de rede ou do servidor."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint : erreur réseau ou serveur."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpunkt: Netzwerk- oder Serverfehler."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: errore di rete o del server."
+          }
+        }
+      }
+    },
+    "Endpoint: rate limited. Retrying later.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: rate limited. Retrying later."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: límite de solicitudes. Se reintentará más tarde."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: limite de solicitações. Nova tentativa mais tarde."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint : trop de requêtes. Nouvel essai plus tard."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpunkt: Anfragelimit erreicht. Neuer Versuch später."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: limite di richieste. Nuovo tentativo più tardi."
+          }
+        }
+      }
+    },
+    "Endpoint: sign in again with the CLI on this Mac.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: sign in again with the CLI on this Mac."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: vuelve a iniciar sesión con la CLI en esta Mac."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: entre novamente com a CLI neste Mac."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint : reconnectez-vous avec la CLI sur ce Mac."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpunkt: Melde dich mit der CLI auf diesem Mac erneut an."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Endpoint: accedi di nuovo con la CLI su questo Mac."
+          }
+        }
+      }
+    },
     "Forget": {
       "localizations": {
         "en": {
@@ -2678,6 +2838,526 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dati di esempio"
+          }
+        }
+      }
+    },
+    "Claude: read usage directly": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude: read usage directly"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude: leer el uso directamente"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude: ler o uso diretamente"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude : lire l’utilisation directement"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude: Nutzung direkt lesen"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude: leggi l’utilizzo direttamente"
+          }
+        }
+      }
+    },
+    "Codex: read usage directly": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex: read usage directly"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex: leer el uso directamente"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex: ler o uso diretamente"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex : lire l’utilisation directement"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex: Nutzung direkt lesen"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex: leggi l’utilizzo direttamente"
+          }
+        }
+      }
+    },
+    "Unofficial": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unofficial"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No oficial"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não oficial"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non officiel"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inoffiziell"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non ufficiale"
+          }
+        }
+      }
+    },
+    "Adds per-model limits and credits, and keeps the iPhone updated without the statusline. Off by default.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adds per-model limits and credits, and keeps the iPhone updated without the statusline. Off by default."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añade límites por modelo y créditos, y mantiene el iPhone al día sin el statusline. Desactivado por defecto."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adiciona limites por modelo e créditos, e mantém o iPhone atualizado sem a statusline. Desativado por padrão."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajoute les limites par modèle et les crédits, et garde l’iPhone à jour sans la statusline. Désactivé par défaut."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ergänzt Limits pro Modell und Guthaben und hält das iPhone ohne die Statusline aktuell. Standardmäßig aus."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiunge limiti per modello e crediti, e tiene aggiornato l’iPhone senza la statusline. Disattivato per impostazione predefinita."
+          }
+        }
+      }
+    },
+    "Direct access": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direct access"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acceso directo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Acesso direto"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accès direct"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Direktzugriff"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accesso diretto"
+          }
+        }
+      }
+    },
+    "Read Claude usage directly?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read Claude usage directly?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Leer el uso de Claude directamente?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ler o uso do Claude diretamente?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire l’utilisation de Claude directement ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Claude-Nutzung direkt lesen?"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leggere direttamente l’utilizzo di Claude?"
+          }
+        }
+      }
+    },
+    "Read Codex usage directly?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Read Codex usage directly?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Leer el uso de Codex directamente?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ler o uso do Codex diretamente?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lire l’utilisation de Codex directement ?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codex-Nutzung direkt lesen?"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leggere direttamente l’utilizzo di Codex?"
+          }
+        }
+      }
+    },
+    "Accept and continue": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accept and continue"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aceptar y continuar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aceitar e continuar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accepter et continuer"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Akzeptieren und fortfahren"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Accetta e continua"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancel"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cancelar"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annuler"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abbrechen"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Annulla"
+          }
+        }
+      }
+    },
+    "From the unofficial usage endpoint (opt-in).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From the unofficial usage endpoint (opt-in)."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Del endpoint de uso no oficial (opcional)."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Do endpoint de uso não oficial (opcional)."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Depuis le point d’accès d’utilisation non officiel (optionnel)."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vom inoffiziellen Nutzungsendpunkt (optional)."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dall’endpoint di utilizzo non ufficiale (facoltativo)."
+          }
+        }
+      }
+    },
+    "Off by default. When on, AI·mana reads the session that Claude Code keeps in your Keychain or ~/.claude on this Mac and calls a usage endpoint that is not a public API. Anthropic's Claude Code terms prohibit third-party apps from using Claude.ai credentials. Turning this on is your decision; the provider has not authorized it. AI·mana only reads the session; it never changes or renews it itself. If the endpoint fails, AI·mana uses the local data.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off by default. When on, AI·mana reads the session that Claude Code keeps in your Keychain or ~/.claude on this Mac and calls a usage endpoint that is not a public API. Anthropic's Claude Code terms prohibit third-party apps from using Claude.ai credentials. Turning this on is your decision; the provider has not authorized it. AI·mana only reads the session; it never changes or renews it itself. If the endpoint fails, AI·mana uses the local data."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado por defecto. Al activarlo, AI·mana lee la sesión que Claude Code guarda en tu Llavero o en ~/.claude en este Mac y llama a un endpoint de uso que no es una API pública. Los términos de Claude Code de Anthropic prohíben que apps de terceros usen credenciales de Claude.ai. Activarlo es tu decisión; el proveedor no lo ha autorizado. AI·mana solo lee la sesión; nunca la cambia ni la renueva por su cuenta. Si el endpoint falla, AI·mana usa los datos locales."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desativado por padrão. Ao ativar, o AI·mana lê a sessão que o Claude Code guarda nas suas Chaves ou em ~/.claude neste Mac e chama um endpoint de uso que não é uma API pública. Os termos do Claude Code da Anthropic proíbem que apps de terceiros usem credenciais do Claude.ai. Ativar é decisão sua; o provedor não autorizou isso. O AI·mana só lê a sessão; nunca a altera nem a renova por conta própria. Se o endpoint falhar, o AI·mana usa os dados locais."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désactivé par défaut. Une fois activé, AI·mana lit la session que Claude Code garde dans votre trousseau ou dans ~/.claude sur ce Mac et appelle un point d’accès d’utilisation qui n’est pas une API publique. Les conditions de Claude Code d’Anthropic interdisent aux apps tierces d’utiliser les identifiants Claude.ai. L’activer est votre décision ; le fournisseur ne l’a pas autorisé. AI·mana lit seulement la session ; il ne la modifie ni ne la renouvelle jamais lui-même. Si le point d’accès échoue, AI·mana utilise les données locales."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standardmäßig aus. Wenn aktiviert, liest AI·mana die Sitzung, die Claude Code in deinem Schlüsselbund oder in ~/.claude auf diesem Mac speichert, und ruft einen Nutzungsendpunkt auf, der keine öffentliche API ist. Die Claude-Code-Bedingungen von Anthropic verbieten Drittanbieter-Apps, Claude.ai-Zugangsdaten zu verwenden. Die Aktivierung ist deine Entscheidung; der Anbieter hat sie nicht genehmigt. AI·mana liest die Sitzung nur; es ändert oder erneuert sie nie selbst. Wenn der Endpunkt ausfällt, nutzt AI·mana die lokalen Daten."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disattivato per impostazione predefinita. Se attivo, AI·mana legge la sessione che Claude Code salva nel Portachiavi o in ~/.claude su questo Mac e chiama un endpoint di utilizzo che non è un’API pubblica. I termini di Claude Code di Anthropic vietano alle app di terze parti di usare le credenziali di Claude.ai. Attivarlo è una tua decisione; il fornitore non l’ha autorizzato. AI·mana legge solo la sessione; non la modifica né la rinnova mai da sé. Se l’endpoint non funziona, AI·mana usa i dati locali."
+          }
+        }
+      }
+    },
+    "Off by default. When on, AI·mana reads the session that Codex keeps in ~/.codex/auth.json on this Mac and calls a usage endpoint that is not a public API. OpenAI's terms restrict programmatic access to its services. Turning this on is your decision; the provider has not authorized it. AI·mana only reads the session; it never changes or renews it itself. If the endpoint fails, AI·mana uses the local data.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Off by default. When on, AI·mana reads the session that Codex keeps in ~/.codex/auth.json on this Mac and calls a usage endpoint that is not a public API. OpenAI's terms restrict programmatic access to its services. Turning this on is your decision; the provider has not authorized it. AI·mana only reads the session; it never changes or renews it itself. If the endpoint fails, AI·mana uses the local data."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado por defecto. Al activarlo, AI·mana lee la sesión que Codex guarda en ~/.codex/auth.json en este Mac y llama a un endpoint de uso que no es una API pública. Los términos de OpenAI restringen el acceso programático a sus servicios. Activarlo es tu decisión; el proveedor no lo ha autorizado. AI·mana solo lee la sesión; nunca la cambia ni la renueva por su cuenta. Si el endpoint falla, AI·mana usa los datos locales."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desativado por padrão. Ao ativar, o AI·mana lê a sessão que o Codex guarda em ~/.codex/auth.json neste Mac e chama um endpoint de uso que não é uma API pública. Os termos da OpenAI restringem o acesso programático aos seus serviços. Ativar é decisão sua; o provedor não autorizou isso. O AI·mana só lê a sessão; nunca a altera nem a renova por conta própria. Se o endpoint falhar, o AI·mana usa os dados locais."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Désactivé par défaut. Une fois activé, AI·mana lit la session que Codex garde dans ~/.codex/auth.json sur ce Mac et appelle un point d’accès d’utilisation qui n’est pas une API publique. Les conditions d’OpenAI restreignent l’accès programmatique à leurs services. L’activer est votre décision ; le fournisseur ne l’a pas autorisé. AI·mana lit seulement la session ; il ne la modifie ni ne la renouvelle jamais lui-même. Si le point d’accès échoue, AI·mana utilise les données locales."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Standardmäßig aus. Wenn aktiviert, liest AI·mana die Sitzung, die Codex in ~/.codex/auth.json auf diesem Mac speichert, und ruft einen Nutzungsendpunkt auf, der keine öffentliche API ist. Die Bedingungen von OpenAI beschränken den programmatischen Zugriff auf ihre Dienste. Die Aktivierung ist deine Entscheidung; der Anbieter hat sie nicht genehmigt. AI·mana liest die Sitzung nur; es ändert oder erneuert sie nie selbst. Wenn der Endpunkt ausfällt, nutzt AI·mana die lokalen Daten."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disattivato per impostazione predefinita. Se attivo, AI·mana legge la sessione che Codex salva in ~/.codex/auth.json su questo Mac e chiama un endpoint di utilizzo che non è un’API pubblica. I termini di OpenAI limitano l’accesso programmatico ai loro servizi. Attivarlo è una tua decisione; il fornitore non l’ha autorizzato. AI·mana legge solo la sessione; non la modifica né la rinnova mai da sé. Se l’endpoint non funziona, AI·mana usa i dati locali."
+          }
+        }
+      }
+    },
+    "This CLI keeps its sign-in in the system keyring, which AI·mana can't read yet. Use the relay instead.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This CLI keeps its sign-in in the system keyring, which AI·mana can't read yet. Use the relay instead."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este CLI guarda su sesión en el llavero del sistema, que AI·mana aún no puede leer. Usa el relay."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este CLI guarda o login no chaveiro do sistema, que o AI·mana ainda não consegue ler. Use o relay."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce CLI garde sa session dans le trousseau du système, qu’AI·mana ne peut pas encore lire. Utilisez le relais."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese CLI speichert ihre Anmeldung im Systemschlüsselbund, den AI·mana noch nicht lesen kann. Nutze das Relay."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questa CLI salva l’accesso nel portachiavi di sistema, che AI·mana non può ancora leggere. Usa il relay."
           }
         }
       }

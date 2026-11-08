@@ -245,7 +245,7 @@ private struct SourceBadge: View {
         switch source {
         case .statusline: "Statusline"
         case .logs: "Logs"
-        case .endpoint: ""
+        case .endpoint: "Endpoint"
         }
     }
 
@@ -253,7 +253,7 @@ private struct SourceBadge: View {
         switch source {
         case .statusline: "From Claude Code's own statusline data."
         case .logs: "From the CLI's local session logs."
-        case .endpoint: ""
+        case .endpoint: "From the unofficial usage endpoint (opt-in)."
         }
     }
 }
@@ -348,12 +348,16 @@ enum ErrorText {
             String(localized: "No statusline data yet. Install the statusline wrapper in Settings, then use Claude Code (Pro/Max).")
         case (.relayUnavailable, _):
             String(localized: "No rate-limit events in the Codex logs yet. Use Codex once.")
-        case (.unauthenticated, _), (.rateLimited, _):
-            String(localized: "The data could not be read.")
+        case (.unsupportedCredentialStore, _):
+            String(localized: "This CLI keeps its sign-in in the system keyring, which AI·mana can't read yet. Use the relay instead.")
+        case (.unauthenticated, _):
+            String(localized: "Endpoint: sign in again with the CLI on this Mac.")
+        case (.rateLimited, _):
+            String(localized: "Endpoint: rate limited. Retrying later.")
         case (.decoding, _):
             String(localized: "The data could not be read.")
         case (.network, _), (.server, _):
-            String(localized: "The data could not be read.")
+            String(localized: "Endpoint: network or server error.")
         }
     }
 }

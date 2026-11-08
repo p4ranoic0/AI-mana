@@ -1,0 +1,45 @@
+{
+  "_source": "Documented example (api-docs.deepseek.com/api/get-user-balance), plus a second currency at zero and malformed rows.",
+  "now": "2027-01-15T08:00:00Z",
+  "response": {
+    "is_available": true,
+    "balance_infos": [
+      {
+        "currency": "CNY",
+        "total_balance": "110.00",
+        "granted_balance": "10.00",
+        "topped_up_balance": "100.00"
+      },
+      {
+        "currency": "usd",
+        "total_balance": 0,
+        "granted_balance": "0",
+        "topped_up_balance": "0"
+      },
+      {
+        "currency": "CNY",
+        "total_balance": "lots"
+      },
+      {
+        "total_balance": "1.00"
+      }
+    ]
+  },
+  "expected": {
+    "plan": null,
+    "windows": [],
+    "details": [
+      {
+        "kind": "creditBalance",
+        "remaining": 110,
+        "currency": "CNY"
+      },
+      {
+        "kind": "creditBalance",
+        "remaining": 0,
+        "currency": "USD",
+        "usable": 0
+      }
+    ]
+  }
+}

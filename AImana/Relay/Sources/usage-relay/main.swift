@@ -62,7 +62,7 @@ if ["setup", "doctor", "uninstall"].contains(args.first ?? "") {
         }
         exit(0)
     } catch {
-        fail("\(args[0]) failed: \(error). Usage: usage-relay setup [--output FILE] [--interval MINUTES]", code: 2)
+        fail("\(args[0]) failed: \(error). Usage: usage-relay setup [--output FILE] [--interval MINUTES] [--no-schedule]", code: 2)
     }
     #endif
 }
@@ -128,5 +128,5 @@ if args.first == "costs" {
     await printCosts(publisher)
     exit(0)
 }
-print("usage-relay --version\nusage-relay run [--output FILE | --config SETUP_JSON] [--no-costs] [--state-dir DIR] [--cache-dir DIR]\nusage-relay setup [--output FILE] [--interval MINUTES]\nusage-relay doctor\nusage-relay uninstall\nusage-relay check FILE\nusage-relay costs\nusage-relay statusline install|uninstall|status")
+print("usage-relay --version\nusage-relay run [--output FILE | --config SETUP_JSON] [--no-costs] [--state-dir DIR] [--cache-dir DIR]\nusage-relay setup [--output FILE] [--interval MINUTES] [--no-schedule]\nusage-relay doctor\nusage-relay uninstall\nusage-relay check FILE\nusage-relay costs\nusage-relay statusline install|uninstall|status")
 exit(args.isEmpty ? 0 : 2)

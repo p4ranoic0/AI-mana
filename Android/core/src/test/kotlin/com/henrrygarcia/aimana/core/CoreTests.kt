@@ -9,6 +9,11 @@ import org.junit.Test
 class CoreTests {
     private val now = Instant.parse("2026-10-04T12:00:00Z")
     private fun session(used: Double, elapsed: Long) = UsageWindow("session", used, 300, now.plusSeconds(18000 - elapsed * 60))
+    @Test fun decodesDetailExpiry() {
+        val json = """{"version":1,"generatedAt":"2026-10-25T00:00:00Z","entries":[{"providerID":"claude","usage":{"providerID":"claude","providerName":"Claude Code","windows":[],"lastUpdated":"2026-10-25T00:00:00Z","details":[{"kind":"cloudCredits","remaining":5,"expiresAt":"2026-11-01T00:00:00Z"}]}}]}"""
+        val detail = RelayCodec.decode(json).entries.single().usage!!.details.single()
+        assertEquals(Instant.parse("2026-11-01T00:00:00Z"), detail.expiresAt)
+    }
     @Test fun paceComfortableMatchesSwift() {
         val pace = UsagePace.from(session(35.0, 150), now)!!
         assertEquals(UsagePace.Status.COMFORTABLE, pace.status)

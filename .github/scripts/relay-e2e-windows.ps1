@@ -22,7 +22,7 @@ $output = Join-Path $root 'out/usage-relay.json'
 $capture = Join-Path $env:LOCALAPPDATA 'AImana/claude-statusline.json'
 New-Item -ItemType Directory -Force (Join-Path $claude 'projects'), (Join-Path $codex 'sessions/2026/10/12') | Out-Null
 Copy-Item AImana/Relay/Tests/Fixtures/codex-session.jsonl (Join-Path $codex 'sessions/2026/10/12/session.jsonl')
-$originalSettings = '{"theme":"dark"}'
+$originalSettings = '{"theme":"dark","skipPrompt":true}'
 [IO.File]::WriteAllText($settings, $originalSettings)
 
 try {

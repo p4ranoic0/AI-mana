@@ -108,8 +108,12 @@ final class RelayController {
         }
     }
 
+    /// Runs after any publish already in progress, so a change (e.g. a source turned off) is never dropped.
     private func publishSoon() {
-        Task { await publishNow() }
+        Task { [weak self] in
+            while self?.isPublishing == true { try? await Task.sleep(for: .milliseconds(300)) }
+            await self?.publishNow()
+        }
     }
 
     func publishNow(refreshOptional: Bool = true) async {

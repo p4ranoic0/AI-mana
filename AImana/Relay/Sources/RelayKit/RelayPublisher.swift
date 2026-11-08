@@ -11,16 +11,19 @@ public struct RelayOptions: Sendable, Equatable {
     public var includeCosts: Bool
     /// Allow refreshing the public pricing cache while calculating local costs.
     public var allowPricingDownload: Bool
+    /// When Claude's direct endpoint is on: let an expiring CLI session be renewed by the Claude CLI itself.
+    public var renewClaude: Bool
 
     public init(output: URL = RelayPaths.defaultOutput, endpointProviderIDs: Set<String> = [],
                 optionalProviderIDs: [String] = [], refreshOptionalProviders: Bool = true,
-                includeCosts: Bool = true, allowPricingDownload: Bool = true) {
+                includeCosts: Bool = true, allowPricingDownload: Bool = true, renewClaude: Bool = false) {
         self.output = output
         self.endpointProviderIDs = endpointProviderIDs
         self.optionalProviderIDs = optionalProviderIDs
         self.refreshOptionalProviders = refreshOptionalProviders
         self.includeCosts = includeCosts
         self.allowPricingDownload = allowPricingDownload
+        self.renewClaude = renewClaude
     }
 }
 

@@ -1,46 +1,6 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "Check the relay on your computer": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Relay auf deinem Computer prüfen"
-          }
-        },
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Check the relay on your computer"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Revisa el relay en tu computadora"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vérifiez le relais sur votre ordinateur"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Controlla il relay sul tuo computer"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Verifique o relay no seu computador"
-          }
-        }
-      }
-    },
     "AI·mana": {
       "extractionState": "stale",
       "localizations": {
@@ -534,42 +494,82 @@
         }
       }
     },
-    "Check relay": {
+    "Check AI·mana on your iPhone": {
       "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Relay prüfen"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Check relay"
+            "value": "Check AI·mana on your iPhone"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Revisa el relay"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vérifiez le relais"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Controlla il relay"
+            "value": "Revisa AI·mana en tu iPhone"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verifique o relay"
+            "value": "Veja o AI·mana no seu iPhone"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vérifiez AI·mana sur votre iPhone"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prüfe AI·mana auf deinem iPhone"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Controlla AI·mana sul tuo iPhone"
+          }
+        }
+      }
+    },
+    "Check iPhone": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Check iPhone"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Revisa el iPhone"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veja o iPhone"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voir l’iPhone"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iPhone prüfen"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vedi iPhone"
           }
         }
       }

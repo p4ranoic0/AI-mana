@@ -7,8 +7,12 @@ import UserNotifications
 @MainActor
 enum NotificationService {
     private static var center: UNUserNotificationCenter { .current() }
-    /// In public builds, sign-in expiry means AImana for Mac lost access to its sources.
-    private static let delivery = NotificationDelivery(macRelayProviderIDs: ["claude", "codex"])
+    /// Consented providers get this iPhone's sign-in alerts; for the others, sign-in expiry means the computer lost
+    /// access to its sources. Rebuilt on each use, so a consent given or revoked applies at once.
+    private static var delivery: NotificationDelivery {
+        PhoneDirectAccess.notificationDelivery(claude: Services.claudeTokens, codex: Services.codexTokens,
+                                               consent: Services.consent)
+    }
 
     /// Call after every refresh, foreground or background.
     static func didRefresh(_ states: [ProviderState]) async {

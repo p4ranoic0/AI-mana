@@ -52,7 +52,8 @@ struct UsageCard: View {
                 }
             }
             if let error = state.error {
-                ErrorBanner(error: error, hasData: state.usage != nil, providerID: state.providerID)
+                ErrorBanner(error: error, hasData: state.usage != nil, providerID: state.providerID,
+                            isFallback: state.isFallback)
             }
         }
         .padding(SoftTheme.cardPadding)
@@ -227,12 +228,28 @@ private struct SnapshotStatus: View {
         now.timeIntervalSince(usage.lastUpdated) > 3600 || usage.windows.contains { $0.isOutdated(now: now) }
     }
 
+    /// Why the reading is old, when it can be told, so an old number is not mistaken for a broken app.
+    private var reason: String? {
+        switch StaleReason(info: usage, now: now) {
+        case .publisherSilent(let since):
+            let formatter = RelativeDateTimeFormatter()
+            formatter.unitsStyle = .abbreviated
+            return AppStrings.format("Your computer last published %@. Check that it's on and AI·mana is running there.",
+                                     formatter.localizedString(for: since, relativeTo: now))
+        case .noRecentUse: return AppStrings.text("No recent use on your computer: this updates the next time you use it.")
+        case nil: return nil
+        }
+    }
+
     var body: some View {
-        HStack(spacing: SoftTheme.Space.xs) {
-            Text(AppStrings.updated(usage.lastUpdated, relativeTo: now))
-            if outdated {
-                Text(AppStrings.text("· Outdated")).foregroundStyle(.orange)
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: SoftTheme.Space.xs) {
+                Text(AppStrings.updated(usage.lastUpdated, relativeTo: now))
+                if outdated {
+                    Text(AppStrings.text("· Outdated")).foregroundStyle(.orange)
+                }
             }
+            if let reason { Text(reason) }
         }
         .softText(.caption)
         .foregroundStyle(.secondary)
@@ -388,15 +405,23 @@ private struct ErrorBanner: View {
     let error: UsageProviderError
     let hasData: Bool
     let providerID: String
+    /// The data shown is the relay's because this phone's direct access failed.
+    var isFallback = false
 
     var body: some View {
-        Label(message, systemImage: "exclamationmark.triangle.fill")
+        Label(isFallback ? fallbackMessage : message, systemImage: "exclamationmark.triangle.fill")
             .softText(.caption)
             .foregroundStyle(.orange)
     }
 
-    private var message: String {
-        let stale = hasData ? " " + AppStrings.text("Showing last known data.") : ""
+    private var fallbackMessage: String {
+        let reason = error == .unauthenticated ? AppStrings.text("Sign in again in Settings.") : message(stale: "")
+        return AppStrings.format("Showing relay data. Direct access: %@", reason)
+    }
+
+    private var message: String { message(stale: hasData ? " " + AppStrings.text("Showing last known data.") : "") }
+
+    private func message(stale: String) -> String {
         switch error {
         case .unauthenticated:
             if APIKeyProvider.isAPIKeyProvider(providerID) {
@@ -404,6 +429,8 @@ private struct ErrorBanner: View {
             }
             return AppStrings.text("Sign in again to Claude Code / Codex on your computer, then refresh.")
         case .relayUnavailable: return AppStrings.text("Relay file not found. Open Settings to connect it.") + stale
+        case .unsupportedCredentialStore:
+            return AppStrings.text("This CLI keeps its sign-in in the system keyring, which AI·mana can't read yet. Use the relay instead.")
         case .rateLimited(let until):
             if let until { return AppStrings.format("Rate limited until %@.", until.formatted(date: .omitted, time: .shortened)) + stale }
             return AppStrings.text("Rate limited.") + stale

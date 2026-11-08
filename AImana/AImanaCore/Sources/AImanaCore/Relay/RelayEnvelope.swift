@@ -3,10 +3,14 @@ import Foundation
 /// Stable wire code for a provider failure, so the iPhone can show "sign in on the Mac" etc.
 public enum RelayErrorCode: String, Codable, Sendable, Equatable {
     case unauthenticated, rateLimited, decoding, network, server, relayUnavailable
+    /// Local only: the computer shows the precise reason, but the relay format stays version 1 and older phones
+    /// would reject an unknown code, so on the wire it is written as `unauthenticated`.
+    case unsupportedCredentialStore
 
     public init(_ error: UsageProviderError) {
         switch error {
         case .unauthenticated: self = .unauthenticated
+        case .unsupportedCredentialStore: self = .unsupportedCredentialStore
         case .rateLimited: self = .rateLimited
         case .decoding: self = .decoding
         case .network: self = .network
@@ -23,7 +27,13 @@ public enum RelayErrorCode: String, Codable, Sendable, Equatable {
         case .network: .network
         case .server: .server(status: 503)
         case .relayUnavailable: .relayUnavailable
+        case .unsupportedCredentialStore: .unsupportedCredentialStore
         }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(self == .unsupportedCredentialStore ? Self.unauthenticated.rawValue : rawValue)
     }
 }
 

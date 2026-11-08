@@ -33,7 +33,10 @@ switch ($Mode) {
     if (-not $OutputDir) { throw 'Missing output folder' }
     if ($TaskName) { $env:AIMANA_TASK_NAME = $TaskName }
     $output = Join-Path (Join-Path $OutputDir 'AImana') 'usage-relay.json'
-    $lines = & $relay setup --output $output 2>&1
+    # With the tray app installed, it publishes while it runs: no scheduled task (one scheduler only).
+    $setupArgs = @('setup', '--output', $output)
+    if (Test-Path (Join-Path $PSScriptRoot 'app\AImana.exe')) { $setupArgs += '--no-schedule' }
+    $lines = & $relay @setupArgs 2>&1
     $code = $LASTEXITCODE
     $body = @($lines | ForEach-Object { "$_" })
     if ($code -eq 0) {

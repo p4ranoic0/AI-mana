@@ -141,6 +141,27 @@ private struct Sandbox {
         #expect(try box.json().isEmpty)
     }
 
+    /// Top-level booleans made the validation fail on Windows, so `setup` never installed the scheduled task.
+    @Test func settingsWithTopLevelBooleansAreInstalled() throws {
+        let box = try Sandbox()
+        try box.write(#"{"skipPrompt": true, "other": false, "n": 1, "nested": {"on": true, "list": [true, 1, null]}}"#)
+        try box.installer.install()
+        #expect(try box.json()["skipPrompt"] as? Bool == true)
+        #expect(try box.json()["statusLine"] != nil)
+    }
+
+    @Test func validationComparesTheJSONValues() throws {
+        func parse(_ text: String) throws -> [String: Any] {
+            try JSONSerialization.jsonObject(with: Data(text.utf8)) as! [String: Any]
+        }
+        let same = try parse(#"{"a": true, "b": {"c": [1, null, "x"]}, "d": 1.5}"#)
+        #expect(StatuslineInstaller.sameJSON(same, try parse(#"{"d": 1.5, "b": {"c": [1, null, "x"]}, "a": true}"#)))
+        #expect(!StatuslineInstaller.sameJSON(try parse(#"{"a": true}"#), try parse(#"{"a": 1}"#)))
+        #expect(!StatuslineInstaller.sameJSON(try parse(#"{"a": true}"#), try parse(#"{"a": false}"#)))
+        #expect(!StatuslineInstaller.sameJSON(try parse(#"{"a": [1, 2]}"#), try parse(#"{"a": [2, 1]}"#)))
+        #expect(!StatuslineInstaller.sameJSON(try parse(#"{"a": 1}"#), try parse(#"{"a": 1, "b": 2}"#)))
+    }
+
     @Test func installingTwiceKeepsTheOriginalPrevious() throws {
         let box = try Sandbox()
         let original = #"{"statusLine": {"type": "command", "command": "echo hi"}}"#

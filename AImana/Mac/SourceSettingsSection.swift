@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SourceSettingsSection: View {
     let controller: RelayController
-    var body: some View { EmptyView() }
+    var body: some View { DirectSourcesSection(controller: controller) }
 }
 
 struct SourceSettingsNote: View {

@@ -1,0 +1,36 @@
+{
+  "_source": "Documented examples (docs.x.ai management auth + billing): validation gives the team, balance is USD cents, purchases negative.",
+  "now": "2027-01-15T08:00:00Z",
+  "validation": {
+    "apiKeyId": "b86ba29d-9f47-4b3a-a6ae-e69432d5f0dc",
+    "teamId": " 65c1e471-205f-4566-9c5a-07198badf4ce ",
+    "scope": "SCOPE_TEAM",
+    "name": "test key"
+  },
+  "expectedTeamId": "65c1e471-205f-4566-9c5a-07198badf4ce",
+  "response": {
+    "changes": [
+      {
+        "changeOrigin": "PURCHASE",
+        "topupStatus": "SUCCEEDED",
+        "amount": {
+          "val": "-1000"
+        }
+      }
+    ],
+    "total": {
+      "val": "-1000"
+    }
+  },
+  "expected": {
+    "plan": null,
+    "windows": [],
+    "details": [
+      {
+        "kind": "creditBalance",
+        "remaining": 10,
+        "currency": "USD"
+      }
+    ]
+  }
+}

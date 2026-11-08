@@ -26,7 +26,7 @@ const copy = {
       android: [
         ['Download AI·mana', 'Download the APK on your Android phone and open it.', 'AImana.apk', 'download'],
         ['Allow the install', 'If Android asks, tap “Settings” and turn on “Allow from this source”, then tap “Install”.', 'Allow from this source', 'security'],
-        ['Choose your relay file', 'On your phone: AI·mana › Settings › Your computer › Choose relay file…; pick usage-relay.json.', 'Your computer', 'phone']
+        ['Choose your relay file', 'On your phone: AI·mana › Settings › Your computer › Choose relay file…; pick usage-relay.json. No relay? Sign in or add API keys in Settings instead.', 'Your computer', 'phone']
       ],
       ios: [
         ['Get the iPhone app', 'On a Mac, follow the README guide to build AI·mana with Xcode.', 'Xcode on Mac', 'download'],
@@ -52,8 +52,8 @@ const copy = {
     trouble: 'Need a hand?', noNumbers: 'No numbers yet', noNumbersText: 'Claude usage appears after your next Claude Code message; its statusline runs then.',
     missing: 'File not found', missingText: 'Give iCloud Drive or OneDrive time to sync, then choose usage-relay.json again.',
     setup: 'Check or repeat setup', setupText: {windows: 'Open “AI·mana — check setup” in Start, or rerun AImana-Setup.exe.', mac: 'Open AI·mana in the menu bar and check its settings and iCloud Drive.', linux: 'Run usage-relay doctor; rerun usage-relay setup --output with your synced folder.', android: 'Reopen the APK to install again; choose the relay file in Settings.', ios: 'Run the app again from Xcode; choose the relay file in Settings.'},
-    privacy: 'No AI·mana server, analytics or cookies. Your relay file stays in your chosen cloud folder.', mit: 'MIT license', support: 'Support on Ko-fi',
-    needed: 'For coding quotas, your computer must also publish a relay file.', computerGuide: 'Set up your computer', phoneGuide: 'Set up your phone',
+    privacy: 'No AI·mana server, analytics or cookies. Your relay file stays in your chosen cloud folder. Direct access is optional and off by default.', mit: 'MIT license', support: 'Support on Ko-fi',
+    needed: 'For coding quotas, your computer publishes a relay file. On iPhone, Android, Mac, Windows and Linux you can turn on direct access instead (optional, off by default).', computerGuide: 'Set up your computer', phoneGuide: 'Set up your phone',
     deviceLabel: 'Device guides', copy: 'Copy command', copied: 'Copied',
     mockTitle: {windows:'SmartScreen prompt illustration', mac:'Privacy & Security prompt illustration', android:'Android install permission illustration', linux:'Terminal illustration', ios:'Xcode illustration'}
   },
@@ -74,7 +74,7 @@ const copy = {
       android: [
         ['Descarga AI·mana', 'Descarga el APK en tu Android y ábrelo.', 'AImana.apk', 'download'],
         ['Permite la instalación', 'Si Android lo pide, toca «Ajustes», activa «Permitir desde esta fuente» y toca «Instalar».', 'Permitir desde esta fuente', 'security'],
-        ['Elige el archivo relay', 'En tu teléfono: AI·mana › Ajustes › Tu computadora › Elegir archivo del relay…; selecciona usage-relay.json.', 'Tu computadora', 'phone']
+        ['Elige el archivo relay', 'En tu teléfono: AI·mana › Ajustes › Tu computadora › Elegir archivo del relay…; selecciona usage-relay.json. ¿Sin relay? Inicia sesión o añade claves de API en Ajustes.', 'Tu computadora', 'phone']
       ],
       ios: [
         ['Obtén la app para iPhone', 'En una Mac, sigue la guía del README para compilar AI·mana con Xcode.', 'Xcode en Mac', 'download'],
@@ -100,8 +100,8 @@ const copy = {
     trouble: '¿Necesitas ayuda?', noNumbers: 'Todavía no hay números', noNumbersText: 'El uso de Claude aparece después de tu siguiente mensaje en Claude Code, cuando se ejecuta su statusline.',
     missing: 'No se encuentra el archivo', missingText: 'Espera a que iCloud Drive o OneDrive termine de sincronizar y vuelve a elegir usage-relay.json.',
     setup: 'Revisa o repite la configuración', setupText: {windows: 'Abre «AI·mana — check setup» en Inicio, o vuelve a ejecutar AImana-Setup.exe.', mac: 'Abre AI·mana en la barra de menús y revisa sus ajustes e iCloud Drive.', linux: 'Ejecuta usage-relay doctor; repite usage-relay setup --output con tu carpeta sincronizada.', android: 'Abre de nuevo el APK; elige el archivo relay en Ajustes.', ios: 'Vuelve a ejecutar la app desde Xcode; elige el archivo relay en Ajustes.'},
-    privacy: 'Sin servidor de AI·mana, analítica ni cookies. El archivo relay queda en la carpeta en la nube que elegiste.', mit: 'Licencia MIT', support: 'Apoyar en Ko-fi',
-    needed: 'Para ver cuotas de programación, tu computadora también debe publicar un archivo relay.', computerGuide: 'Configurar mi computadora', phoneGuide: 'Configurar mi teléfono',
+    privacy: 'Sin servidor de AI·mana, analítica ni cookies. El archivo relay queda en la carpeta en la nube que elegiste. El acceso directo es opcional y viene desactivado.', mit: 'Licencia MIT', support: 'Apoyar en Ko-fi',
+    needed: 'Para ver cuotas de programación, tu computadora publica un archivo relay. En iPhone, Android, Mac, Windows y Linux puedes activar el acceso directo en su lugar (opcional, desactivado por defecto).', computerGuide: 'Configurar mi computadora', phoneGuide: 'Configurar mi teléfono',
     deviceLabel: 'Guías por dispositivo', copy: 'Copiar comando', copied: 'Copiado',
     mockTitle: {windows:'Ilustración del aviso SmartScreen', mac:'Ilustración de Privacidad y seguridad', android:'Ilustración del permiso de instalación', linux:'Ilustración de Terminal', ios:'Ilustración de Xcode'}
   }

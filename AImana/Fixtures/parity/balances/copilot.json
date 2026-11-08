@@ -1,0 +1,67 @@
+{
+  "_source": "AI-credit usage report shaped like GitHub's documented example; a month mostly covered by Copilot Pro's included credits.",
+  "now": "2027-01-15T08:00:00Z",
+  "allowancePlan": "pro",
+  "unit": "aiCredits",
+  "response": {
+    "timePeriod": {
+      "year": 2027,
+      "month": 1
+    },
+    "user": "octocat",
+    "usageItems": [
+      {
+        "product": "Copilot AI Credits",
+        "sku": "AI Credit",
+        "model": "Claude Sonnet 4.6",
+        "unitType": "ai-credits",
+        "pricePerUnit": 0.01,
+        "grossQuantity": 840,
+        "grossAmount": 8.4,
+        "discountQuantity": 840,
+        "discountAmount": 8.4,
+        "netQuantity": 0,
+        "netAmount": 0
+      },
+      {
+        "product": "Copilot AI Credits",
+        "sku": "AI Credit",
+        "model": "GPT-5",
+        "unitType": "ai-credits",
+        "pricePerUnit": 0.01,
+        "grossQuantity": 400,
+        "grossAmount": 4.0,
+        "discountQuantity": 175,
+        "discountAmount": 1.75,
+        "netQuantity": 225,
+        "netAmount": 2.25
+      },
+      "not an item"
+    ]
+  },
+  "expected": {
+    "plan": "Pro",
+    "windows": [
+      {
+        "kind": "spend-limit",
+        "usedPercent": 82.66666666666667,
+        "windowMinutes": 44640,
+        "resetsAt": "2027-02-01T00:00:00Z"
+      }
+    ],
+    "details": [
+      {
+        "kind": "monthlySpend",
+        "remaining": 0,
+        "currency": "USD",
+        "used": 12.4
+      },
+      {
+        "kind": "extraUsage",
+        "remaining": 0,
+        "currency": "USD",
+        "used": 2.25
+      }
+    ]
+  }
+}

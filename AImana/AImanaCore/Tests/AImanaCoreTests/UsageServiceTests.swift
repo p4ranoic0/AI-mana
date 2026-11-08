@@ -31,7 +31,43 @@ private func info(_ id: String, used: Double, at date: Date = Date(timeIntervalS
               plan: nil, lastUpdated: date)
 }
 
+private struct FallbackProvider: UsageProvider {
+    let id = "claude"
+    let displayName = "Claude"
+    let usage: UsageInfo
+    func fetchUsage() async throws -> UsageInfo {
+        throw DirectFallback(usage: usage, directError: .unauthenticated)
+    }
+}
+
 @Suite struct UsageServiceTests {
+    @Test func fallbackNeverShowsANewerDirectSnapshotAsRelay() async throws {
+        let store = makeStore()
+        // The widget saved a direct reading at 12:05; the relay only has 12:00.
+        let t = Date(timeIntervalSince1970: 1_800_000_000)
+        try store.save([info("claude", used: 90, at: t.addingTimeInterval(300))])
+        let hybrid = HybridProvider(direct: StubProvider(id: "claude", displayName: "Claude", result: .failure(.unauthenticated)),
+                                    relay: StubProvider(id: "claude", displayName: "Claude", result: .success(info("claude", used: 42, at: t))),
+                                    isDirectEnabled: { true })
+        let state = await UsageService(providers: [hybrid], store: store, saveLock: testSaveLock()).refresh()
+        #expect(state.first?.isFallback == true)
+        #expect(state.first?.usage?.primary?.usedPercent == 42)
+        #expect(store.load().first?.primary?.usedPercent == 42)
+    }
+
+    @Test func fallbackStateHasUsageAndError() async {
+        let dir = FileManager.default.temporaryDirectory.appendingPathComponent("fallback-\(UUID().uuidString)")
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        let history = UsageHistoryStore(fileURL: dir.appendingPathComponent("h.json"))
+        let service = UsageService(providers: [FallbackProvider(usage: info("claude", used: 42, at: Date()))],
+                                   store: makeStore(), history: history, saveLock: testSaveLock())
+        let state = await service.refresh()
+        #expect(state.first?.usage?.primary?.usedPercent == 42)
+        #expect(state.first?.error == .unauthenticated)
+        #expect(state.first?.isFallback == true)
+        #expect(history.load().contains { $0.providerID == "claude" && !$0.points.isEmpty })
+    }
+
     private func makeStore() -> SnapshotStore {
         SnapshotStore(fileURL: FileManager.default.temporaryDirectory
             .appendingPathComponent("snap-\(UUID().uuidString).json"))

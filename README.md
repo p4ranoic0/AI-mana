@@ -10,7 +10,8 @@ AI·mana shows how much of your Claude Code and Codex limits you have used, when
 pace will run out before the reset, and what that usage would cost at public API prices. It also tracks prepaid
 balances for API providers straight from your iPhone, without a Mac.
 
-It is free and open source (MIT). It has no account and no server, and it uses **official data sources only**.
+It is free and open source (MIT). It has no account and no server. By default it uses **official data sources
+only**; reading usage directly from Claude and ChatGPT is optional, off by default and explained below.
 
 > AI·mana is an independent project. It is not affiliated with, endorsed by or sponsored by Anthropic, OpenAI,
 > GitHub, OpenRouter, DeepSeek, Moonshot AI or xAI. Their names are used only to describe compatibility.
@@ -48,6 +49,8 @@ It is free and open source (MIT). It has no account and no server, and it uses *
 - Reads Codex's local session logs (`~/.codex/sessions`).
 - Estimates costs from local token counts and public model prices.
 - Publishes a small summary file to your iCloud Drive for the iPhone. It contains no credentials and no prompts.
+- Optional direct access: reads the session Claude Code or Codex already keeps on the Mac to add per-model limits
+  and credits (off by default, see [Direct access](#direct-access-optional)).
 
 **API providers, on the iPhone, no Mac needed** (with your own key)
 - OpenRouter, GitHub Copilot, DeepSeek, Moonshot (Kimi) and xAI. Keys stay in the iOS Keychain.
@@ -64,6 +67,29 @@ Your API keys ──────────────────────
 
 The iPhone reads the summary that your computer publishes. Requests to API providers go directly from your device
 to that provider. AI·mana runs no server and has no analytics. See [PRIVACY.md](PRIVACY.md).
+
+### Direct access (optional)
+
+You can skip the relay for Claude Code and Codex quotas:
+
+- **On the iPhone:** in **Settings**, sign in with Claude or ChatGPT on the phone itself. No computer needed.
+- **On Android:** in **Settings**, sign in with Claude or ChatGPT on the phone itself. The session is encrypted with
+  the Android Keystore. You can also paste API keys there for DeepSeek, Moonshot (Kimi), xAI, OpenRouter and Copilot.
+- **On the Mac:** in the menu bar app's settings, turn on **Claude** or **Codex: read usage directly**. AI·mana reads
+  the session the CLI already keeps on the Mac. It only reads it and never changes or renews it.
+- **On Windows and Linux:** the AI·mana tray app asks once per provider, then reads the session the CLI keeps on the
+  computer. It never writes it; when the Claude session is about to expire, it asks the Claude CLI to renew it.
+
+Direct access is **off by default** and asks you to accept a notice first, because it uses usage endpoints that are
+not public APIs:
+
+- Anthropic's Claude Code terms prohibit third-party apps from offering Claude.ai sign-in or using its credentials.
+- OpenAI's terms restrict programmatic access to its services.
+- Neither provider has authorized this. Turning it on is your decision, and it could limit or suspend your account.
+
+If an endpoint fails, AI·mana falls back to the relay and tells you so. Cost estimates still come from your
+computer's logs, so they need the relay. Signing out or turning direct access off deletes the phone's session and
+withdraws your consent.
 
 ## Get started
 
@@ -114,7 +140,7 @@ The app publishes `iCloud Drive/AImana/usage-relay.json` by itself.
 
 **Windows**
 
-1. Download [AImana-Setup.exe](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana-Setup.exe) and double-click it. The wizard asks for the synced folder and publishes the relay file.
+1. Download [AImana-Setup.exe](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana-Setup.exe) and double-click it. The wizard asks for the synced folder and publishes the relay file. It also installs the AI·mana tray app: click its icon to see your quotas on the computer.
 2. The installer is unsigned. If SmartScreen appears, choose **More info → Run anyway**.
 3. Keep the folder shown on the finish page for step 3. Use **AI·mana — check setup** in the Start menu if needed.
 
@@ -127,7 +153,8 @@ The app publishes `iCloud Drive/AImana/usage-relay.json` by itself.
    brew install p4ranoic0/tap/usage-relay
    ```
 
-   The binary needs the system `libcurl` (Ubuntu: `sudo apt install libcurl4`).
+   The binary needs the system `libcurl` (Ubuntu: `sudo apt install libcurl4`). To see your quotas on the computer
+   too, install the tray app (the `.deb` file on [Releases](https://github.com/p4ranoic0/AI-mana/releases)).
 2. Publish into a folder that syncs with your iPhone:
 
    ```sh
@@ -148,7 +175,7 @@ a publish every five minutes in the background (a hidden scheduled task on Windo
 
 ### Android: install the app
 
-Download [AImana.apk](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana.apk) on your Android phone and open it to install. Android may ask you to allow installs from your browser or Files app. In AI·mana, choose the same `usage-relay.json` through Android's file picker. You can revoke the install permission afterward.
+Download [AImana.apk](https://github.com/p4ranoic0/AI-mana/releases/latest/download/AImana.apk) on your Android phone and open it to install. Android may ask you to allow installs from your browser or Files app. In AI·mana, choose the same `usage-relay.json` through Android's file picker. You can revoke the install permission afterward. Without a relay, sign in or add API keys in **Settings** (see [Direct access](#direct-access-optional)).
 
 ### If something does not show up
 
@@ -198,6 +225,9 @@ Run `swift test` in `AImana/AImanaCore` and in `AImana/Relay`.
 AI·mana depends on formats that other companies control, and those can change without notice. Each provider's
 parser is isolated and covered by fixture tests. If numbers look wrong, please open an issue using the
 **Provider changed** template.
+
+If a provider asks us to stop, or closes a direct-access endpoint, the next release turns that integration off and
+the app goes back to the relay. The change is announced in the [changelog](CHANGELOG.md).
 
 ## Support the project
 

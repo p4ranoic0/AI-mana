@@ -2,7 +2,33 @@
 
 All notable changes to AI·mana are documented here. This project follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## [Unreleased]
+## [1.3.0] - 2026-11-08
+
+### Added
+
+- Optional direct access on Mac and iPhone, off by default: sign in with Claude or ChatGPT on the iPhone, or let the
+  Mac read the session Claude Code or Codex already keeps. A notice explains the providers' terms before it turns on.
+- The dashboard says when it is showing relay data because direct access failed.
+- Windows and Linux tray app: click the icon to see your Claude Code and Codex quotas on the computer. With direct
+  access on, it reads the session the CLI already keeps; otherwise it shows what `usage-relay` publishes. The Windows
+  installer includes it; Linux gets a `.deb`.
+- Optional direct access on Android, off by default: sign in with Claude (paste the code) or ChatGPT (device code,
+  or the browser when device codes are off). Sessions are encrypted with the Android Keystore and kept out of backups.
+- API balances on Android with your own keys: DeepSeek, Moonshot (Kimi), xAI, OpenRouter and GitHub Copilot, with the
+  same numbers as the iPhone.
+- Android and the Windows/Linux tray say when a newer release is out (one anonymous request to GitHub a day; can be
+  turned off in Settings). Android's About shows the installed version instead of a fixed number.
+- An old reading says why when it can tell: your computer stopped publishing (with how long ago), or the CLI simply
+  hasn't been used since. On iPhone, Mac, Android and the Windows/Linux tray.
+
+### Changed
+
+- Retry-After limits now survive app and widget restarts.
+
+### Fixed
+
+- Windows: `usage-relay setup` and the installer no longer fail when `~/.claude/settings.json` has a top-level `true` or
+  `false` value, which left the scheduled task uninstalled.
 
 ## [1.2.0] - 2026-10-14
 

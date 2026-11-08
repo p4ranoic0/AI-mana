@@ -1,6 +1,6 @@
 #define PackageDir "..\..\package"
 #ifndef AppVersion
-  #define AppVersion "1.2.0"
+  #define AppVersion "1.3.0"
 #endif
 [Setup]
 AppId={{8CE4A31D-450F-4B18-9825-C986137FB6DB}
@@ -25,14 +25,28 @@ Source: "{#PackageDir}\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 Source: "InstallHelper.ps1"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
+Name: "{group}\AI·mana"; Filename: "{app}\app\AImana.exe"; Check: HasTrayApp
 Name: "{group}\AI·mana — check setup"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoExit -NoProfile -ExecutionPolicy Bypass -File ""{app}\InstallHelper.ps1"" -Mode doctor"
 Name: "{group}\AI·mana — set up again"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoExit -NoProfile -ExecutionPolicy Bypass -File ""{app}\InstallHelper.ps1"" -Mode setup-again"
 Name: "{group}\Uninstall AI·mana"; Filename: "{uninstallexe}"
 
+[Registry]
+; Opens the tray app at login (the app's Settings can turn this off).
+Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "AImana"; ValueData: """{app}\app\AImana.exe"" --tray"; Flags: uninsdeletevalue; Check: HasTrayApp
+
+[Run]
+Filename: "{app}\app\AImana.exe"; Description: "Open AI·mana"; Flags: postinstall nowait skipifsilent; Check: HasTrayApp
+
 [UninstallRun]
+Filename: "{sys}\taskkill.exe"; Parameters: "/IM AImana.exe /F"; Flags: runhidden; RunOnceId: "StopTrayApp"
 Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -ExecutionPolicy Bypass -File ""{app}\InstallHelper.ps1"" -Mode uninstall"; Flags: runhidden waituntilterminated
 
 [Code]
+function HasTrayApp: Boolean;
+begin
+  Result := FileExists(ExpandConstant('{app}\app\AImana.exe'));
+end;
+
 var
   OptionsPage: TInputOptionWizardPage;
   FolderPage: TInputDirWizardPage;

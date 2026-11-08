@@ -18,5 +18,20 @@ fun quotaStatus(window: UsageWindow, lastUpdated: Instant, now: Instant): QuotaS
     }
 }
 
+/** Why an old reading is old, when it can be told: the computer stopped publishing, or the CLI was not used since. */
+enum class StaleReason { PUBLISHER_SILENT, NO_RECENT_USE }
+
+fun staleReason(usage: UsageInfo, now: Instant): StaleReason? {
+    val hour = now.minusSeconds(3600)
+    if (!usage.lastUpdated.isBefore(hour)) return null
+    val published = usage.relayPublishedAt ?: return null
+    return when {
+        published.isBefore(hour) -> StaleReason.PUBLISHER_SILENT
+        // Endpoint readings refresh on every publish; these only change when the CLI writes something new.
+        usage.source == "statusline" || usage.source == "logs" -> StaleReason.NO_RECENT_USE
+        else -> null
+    }
+}
+
 fun demoCostTokenTotals(now: Instant = Instant.now(), zone: java.time.ZoneId = java.time.ZoneId.systemDefault()): Map<String, Long> =
     DemoData.envelope(now, zone).costs.associate { it.providerID to it.total(7, now.atZone(zone).toLocalDate()).tokens.total }

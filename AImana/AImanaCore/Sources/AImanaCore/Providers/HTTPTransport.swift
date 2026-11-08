@@ -69,20 +69,49 @@ public struct StoredTokenSource: AccessTokenSource {
     }
 }
 
-/// Remembers a 429 so repeat calls inside the window never reach the network.
-actor BackoffGate {
+/// Remembers a 429 so repeat calls inside the window never reach the network. With a key and defaults the block is
+/// persisted, so every provider instance for the same account (the Mac's per-publish providers, the app and the
+/// widget) honors it; without them it lives only in this instance.
+public final class BackoffGate: @unchecked Sendable {   // `lock` guards `blockedUntil`; UserDefaults is thread-safe
+    private let lock = NSLock()
     private var blockedUntil: Date?
+    private let key: String?
+    private let defaults: UserDefaults?
 
-    func check(now: Date) -> Date? {
-        guard let blockedUntil, blockedUntil > now else { return nil }
-        return blockedUntil
+    public init(key: String? = nil, defaults: UserDefaults? = nil) {
+        self.key = key
+        self.defaults = defaults
     }
 
-    func block(until date: Date) { blockedUntil = date }
+    /// The persisted gate for one provider's direct endpoint (`backoff.<providerID>.until`).
+    public static func shared(_ providerID: String, defaults: UserDefaults) -> BackoffGate {
+        BackoffGate(key: "backoff.\(providerID).until", defaults: defaults)
+    }
+
+    /// The latest block known here or by any other instance sharing the key.
+    public func check(now: Date) async -> Date? {
+        let until = [lock.withLock { blockedUntil }, persisted()].compactMap { $0 }.max()
+        guard let until, until > now else { return nil }
+        return until
+    }
+
+    /// Never shortens a later block another instance already recorded.
+    public func block(until date: Date) async {
+        lock.withLock {
+            let latest = [blockedUntil, persisted(), date].compactMap { $0 }.max() ?? date
+            blockedUntil = latest
+            if let key, let defaults { defaults.set(latest.timeIntervalSince1970, forKey: key) }
+        }
+    }
+
+    private func persisted() -> Date? {
+        guard let key, let defaults, defaults.object(forKey: key) != nil else { return nil }
+        return Date(timeIntervalSince1970: defaults.double(forKey: key))
+    }
 }
 
-enum RetryAfter {
-    static func date(from response: HTTPURLResponse, now: Date, fallback: TimeInterval = 60) -> Date {
+public enum RetryAfter {
+    public static func date(from response: HTTPURLResponse, now: Date, fallback: TimeInterval = 60) -> Date {
         guard let raw = response.value(forHTTPHeaderField: "Retry-After")?
             .trimmingCharacters(in: .whitespacesAndNewlines), !raw.isEmpty else {
             return now.addingTimeInterval(fallback)
